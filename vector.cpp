@@ -130,9 +130,9 @@ Vector3_t<T> Vector3_t<T>::operator-(const T& n) const{
 template<typename T>
 Vector3_t<T> Vector3_t<T>::operator*(const Vector3_t<T>& _v) const{
 	return Vector3_t<T>(
-		(y * _v.z) - (z * _v.y),
-		(z * _v.x) - (x * _v.z),
-		(x * _v.y) - (y * _v.x)
+		x * _v.x,
+		y * _v.y,
+		z * _v.z
 		);
 }
 
@@ -176,6 +176,15 @@ T Vector3_t<T>::length() const{
 template<typename T>
 T Vector3_t<T>::dot(const Vector3_t<T>& _v) const{
 	return (x * _v.x) + (y * _v.y) + (z * _v.z);
+}
+
+template<typename T>
+Vector3_t<T> Vector3_t<T>::cross(const Vector3_t<T>& _v) const{
+	return Vector3_t<T>(
+		(y * _v.z) - (z * _v.y),
+		(z * _v.x) - (x * _v.z),
+		(x * _v.y) - (y * _v.x)
+		);
 }
 
 template<typename T>

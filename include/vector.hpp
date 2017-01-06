@@ -72,6 +72,7 @@ struct Vector3_t
 
 	T length() const;
 	T dot(const Vector3_t<T>& _v) const;
+	Vector3_t<T> cross(const Vector3_t<T>& _v) const;
 	Vector3_t<T> normalize() const;
 
 	void display();

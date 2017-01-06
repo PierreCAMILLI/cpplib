@@ -298,7 +298,7 @@ bool Ray_t<T>::operator()(const Triangle_t<T>& _t, Hit_t<T>& _h){
 	Vector3_t<T> edge2 = (_t.a - _t.c);
 
 	// Begin calculating determinant - also used to calculate U parameter
-	Vector3_t<T> pvec = d * edge2;
+	Vector3_t<T> pvec = d.cross(edge2);
 
 	// If determinant is near zero, ray lies in plane of triangle
 	T det = edge1.dot(pvec);
@@ -316,7 +316,7 @@ bool Ray_t<T>::operator()(const Triangle_t<T>& _t, Hit_t<T>& _h){
 		return 0.0f;
 
 	// Prepare to test V parameter
-	Vector3_t<T> qvec = tvec * edge1;
+	Vector3_t<T> qvec = tvec.cross(edge1);
 
 	// Calculate V parameter and test bounds
 	T v = d.dot(qvec) * inv_det;
