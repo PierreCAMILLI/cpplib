@@ -80,7 +80,7 @@ bool Curve_t<T>::move(const unsigned int& i, const unsigned int& _x){
 		return false;
 	controls[i].x = _x;
 	sort();
-	return cont;
+	return true;
 }
 
 template<typename T>

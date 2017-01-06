@@ -21,16 +21,16 @@ class Matrix_r{
 
 		T& operator()(const unsigned int& x, const unsigned int& y);
 		T operator()(const unsigned int& x, const unsigned int& y) const;
-		inline Matrix_r<T,V,V> operator*(const Matrix_r<T,V,U>& _m) const;
-		inline Matrix_r<T,U,V> operator*(const T& n) const;
-		inline Matrix_r<T,U,V> operator+(const Matrix_r<T,U,V>& _m) const;
-		inline Matrix_r<T,U,V> operator+(const T& n) const;
-		inline Matrix_r<T,U,V> operator-() const;
-		inline Matrix_r<T,U,V> operator-(const Matrix_r<T,U,V>& _m) const;
-		inline Matrix_r<T,U,V> operator-(const T& n) const;
-		inline Matrix_r<T,U,V> operator/(const T& n) const;
-		inline bool operator==(const Matrix_r<T,U,V>& _m);
-		inline bool operator!=(const Matrix_r<T,U,V>& _m);
+		Matrix_r<T,V,V> operator*(const Matrix_r<T,V,U>& _m) const;
+		Matrix_r<T,U,V> operator*(const T& n) const;
+		Matrix_r<T,U,V> operator+(const Matrix_r<T,U,V>& _m) const;
+		Matrix_r<T,U,V> operator+(const T& n) const;
+		Matrix_r<T,U,V> operator-() const;
+		Matrix_r<T,U,V> operator-(const Matrix_r<T,U,V>& _m) const;
+		Matrix_r<T,U,V> operator-(const T& n) const;
+		Matrix_r<T,U,V> operator/(const T& n) const;
+		bool operator==(const Matrix_r<T,U,V>& _m);
+		bool operator!=(const Matrix_r<T,U,V>& _m);
 
 		template<typename TT, unsigned int UU, unsigned int VV, unsigned int WW>
 		friend Matrix_r<TT,WW,VV> operator*(const Matrix_r<TT,UU,VV>& _m1, const Matrix_r<TT,WW,UU>& _m2);
@@ -120,51 +120,51 @@ class Matrix_r<T,U,U>{
 		/**
 		* Retourne la valeur de la matrice en (x,y)
 		* */
-		inline T& operator()(const unsigned int& x, const unsigned int& y);
+		T& operator()(const unsigned int& x, const unsigned int& y);
 		/**
 		* Retourne la valeur de la matrice en (x,y)
 		* */
-		inline T operator()(const unsigned int& x, const unsigned int& y) const;
+		T operator()(const unsigned int& x, const unsigned int& y) const;
 		/**
 		* Retourne le produit des deux matrices
 		* */
-		inline Matrix_r<T,U,U> operator*(const Matrix_r<T,U,U>& _m) const;
+		Matrix_r<T,U,U> operator*(const Matrix_r<T,U,U>& _m) const;
 		/**
 		* Retourne la matrice dont les valeurs ont été multipliées par n
 		* */
-		inline Matrix_r<T,U,U> operator*(const T& n) const;
+		Matrix_r<T,U,U> operator*(const T& n) const;
 		/**
 		* Retourne la somme des deux matrices
 		* */
-		inline Matrix_r<T,U,U> operator+(const Matrix_r<T,U,U>& _m) const;
+		Matrix_r<T,U,U> operator+(const Matrix_r<T,U,U>& _m) const;
 		/**
 		* Retourne la matrice dont les valeurs ont été additionnées avec n
 		* */
-		inline Matrix_r<T,U,U> operator+(const T& n) const;
+		Matrix_r<T,U,U> operator+(const T& n) const;
 		/**
 		* Retourne la matrice "différenciée" de la matrice d'origine
 		* */
-		inline Matrix_r<T,U,U> operator-() const;
+		Matrix_r<T,U,U> operator-() const;
 		/**
 		* Retourne la différence des deux matrices
 		* */
-		inline Matrix_r<T,U,U> operator-(const Matrix_r<T,U,U>& _m) const;
+		Matrix_r<T,U,U> operator-(const Matrix_r<T,U,U>& _m) const;
 		/**
 		* Retourne la matrice dont les valeurs ont été soustraites avec n
 		* */
-		inline Matrix_r<T,U,U> operator-(const T& n) const;
+		Matrix_r<T,U,U> operator-(const T& n) const;
 		/**
 		* Retourne la matrice dont les valeurs ont été divisées par n
 		* */
-		inline Matrix_r<T,U,U> operator/(const T& n) const;
+		Matrix_r<T,U,U> operator/(const T& n) const;
 		/**
 		* Indique si la matrice est identique avec l'autre matrice
 		* */
-		inline bool operator==(const Matrix_r<T,U,U>& _m);
+		bool operator==(const Matrix_r<T,U,U>& _m);
 		/**
 		* Indique si la matrice est différente de l'autre matrice
 		* */
-		inline bool operator!=(const Matrix_r<T,U,U>& _m);
+		bool operator!=(const Matrix_r<T,U,U>& _m);
 		
 		/**
 		* Retourne un tableau constant des données de la matrice

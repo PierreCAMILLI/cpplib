@@ -3,7 +3,7 @@
 // ------------------ VECTOR2 ------------------ //
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::operator()(const T _x, const T _y){
+Vector2_t<T>& Vector2_t<T>::operator()(const T _x, const T _y){
 	x = _x;
 	y = _y;
 	return (*this);
@@ -95,7 +95,7 @@ void Vector2_t<T>::display(){
 // ------------------ VECTOR3 ------------------ //
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::operator()(const T _x, const T _y, const T _z){
+Vector3_t<T>& Vector3_t<T>::operator()(const T _x, const T _y, const T _z){
 	x = _x;
 	y = _y;
 	z = _z;
@@ -192,7 +192,7 @@ void Vector3_t<T>::display(){
 // ------------------ POINT ------------------ //
 
 template<typename T>
-Point_t<T> Point_t<T>::operator()(const T _x, const T _y, const T _z){
+Point_t<T>& Point_t<T>::operator()(const T _x, const T _y, const T _z){
 	x = _x;
 	y = _y;
 	z = _z;
@@ -280,6 +280,105 @@ template<typename T>
 void Point_t<T>::display(){
 	std::cout << x << "\t" << y << "\t" << z << std::endl;
 }
+
+// ------------------ VECTOR4 --------------------- //
+
+template<typename T>
+Vector4_t<T>& Vector4_t<T>::operator()(const T _x, const T _y, const T _z, const T _w){
+	x = _x;
+	y = _y;
+	z = _z;
+	w = _w;
+	return (*this);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::operator+(const Vector4_t<T>& _v) const{
+	return Vector4_t<T>(x + _v.x, y + _v.y, z + _v.z, w + _v.w);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::operator+(const T& n) const{
+	return Vector4_t<T>(x + n, y + n, z + n, w + n);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::operator-() const{
+	return (*this) * (-1);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::operator-(const Vector4_t<T>& _v) const{
+	return (*this) + (-_v);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::operator-(const T& n) const{
+	return (*this) + (-n);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::operator*(const Vector4_t<T>& _v) const{
+	return Vector4_t<T>(x * _v.x,
+						y * _v.y,
+						z * _v.z,
+						w * _v.w);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::operator*(const T& n) const{
+	return Vector3_t<T>(x * n, y * n, z * n, w * n);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::operator/(const T& n) const{
+	return (*this) * (1/n);
+}
+
+template<typename T>
+bool Vector4_t<T>::operator==(const Vector4_t<T>& _v){
+	return (x == _v.x && y == _v.y && z == _v.z && w == _v.w);
+}
+
+template<typename T>
+bool Vector4_t<T>::operator!=(const Vector4_t<T>& _v){
+	return !((*this) == _v);
+}
+
+template<typename T>
+T Vector4_t<T>::operator[](const unsigned int& i) const{
+	assert(i < 4);
+	return (&x)[i];
+}
+
+template<typename T>
+T& Vector4_t<T>::operator[](const unsigned int& i){
+	assert(i < 4);
+	return (&x)[i];
+}
+
+template<typename T>
+T Vector4_t<T>::length() const{
+	return sqrt((x * x) + (y * y) + (z * z) + (w * w));
+}
+
+template<typename T>
+T Vector4_t<T>::dot(const Vector3_t<T>& _v) const{
+	return (x * _v.x) + (y * _v.y) + (z * _v.z) + (w * _v.w);
+}
+
+template<typename T>
+Vector4_t<T> Vector4_t<T>::normalize() const{
+	T kk = 1/length();
+	return (*this) * kk;
+}
+
+template<typename T>
+void Vector4_t<T>::display(){
+	std::cout << x << "\t" << y << "\t" << z << "\t" << w << std::endl;
+}
+
+
 
 template class Vector2_t<double>;
 template class Vector2_t<float>;
