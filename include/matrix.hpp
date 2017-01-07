@@ -8,6 +8,12 @@ struct Vector2_t;
 template<typename T>
 struct Vector3_t;
 
+template<typename T>
+struct Point_t;
+
+template<typename T>
+struct Vector4_t;
+
 template<typename T,unsigned int U>
 class Matrix_{
 	private:

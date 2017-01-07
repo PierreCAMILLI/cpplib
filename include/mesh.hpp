@@ -52,23 +52,38 @@ class Mesh{
 		MeshTexturesIndex const & getTexturesIndex() const{	return textures_index;	}
 		MeshNormalsIndex const & getNormalsIndex() const{	return normals_index;	}
 
-		void vertice(const Vector3_t<double> & _v){	vertices.push_back(_v);	}
-		void vertice(const double& x, const double& y, const double& z);
+		Index vertice(const Vector3_t<double> & _v);
+		Index vertice(const double& x, const double& y, const double& z);
 
-		void texture(const Vector2_t<double> & _t){	textures.push_back(_t);	}
-		void texture(const double& x, const double& y);
+		Mesh& texture(const Vector2_t<double> & _t);
+		Mesh& texture(const double& x, const double& y);
 
-		void normal(const Vector3_t<double> & _t){	normals.push_back(_t);	}
-		void normal(const double& x, const double& y, const double& z);
+		Mesh& normal(const Vector3_t<double> & _n);
+		Mesh& normal(const double& x, const double& y, const double& z);
 
-		void vertice_index(const Index & _vi){	vertices_index.push_back(_vi);	}
-		void texture_index(const Index & _ti){	textures_index.push_back(_ti);	}
-		void normal_index(const Index & _ni){	normals_index.push_back(_ni);	}
+		Mesh& vertice_index(const Index & _vi);
+		Mesh& texture_index(const Index & _ti);
+		Mesh& normal_index(const Index & _ni);
+
+		//! Insère une face dont a, b, c sont les nouveaux sommets à insérer
+		Mesh& triangle(const Vector3_t<double> & a, const Vector3_t<double> & b, const Vector3_t<double> & c);
+		//! Insère une face dont a, b, c sont les indices des sommets
+		Mesh& triangle(const Index & a, const Index & b, const Index & c);
+		/*! Insère une face dont a, b, c sont les indices des sommets en comptant en partant du dernier
+		\code
+		m.vertice(v0);
+		m.vertice(v1);
+		m.vertice(v2);
+		m.triangle_last(-3,-2,-1);
+		\endcode
+		*/
+		Mesh& triangle_last(const int & a, const int & b, const int & c);
 
 		bool importOBJ(const std::string & filename);
-		bool exportOBJ(const std::string & filename);
+		bool exportOBJ(const std::string & filename, const double scale = 0.01);
 
 		void merge(const Mesh & _m);
 		void bounds(Point_t<double>& pmin, Point_t<double>& pmax);
+		void resize(const double& scale);
 		void clear();
 };

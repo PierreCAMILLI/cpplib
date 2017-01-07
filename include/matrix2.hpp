@@ -42,6 +42,14 @@ class Matrix_r{
 		friend Vector3_t<TT> operator*(const Matrix_r<TT,3,3>& _m, const Vector3_t<TT>& _v);
 		template<typename TT>
 		friend Vector3_t<TT> operator*(const Vector3_t<TT>& _v, const Matrix_r<TT,3,3>& _m);
+		template<typename TT>
+		friend Point_t<TT> operator*(const Matrix_r<TT,3,3>& _m, const Point_t<TT>& _p);
+		template<typename TT>
+		friend Point_t<TT> operator*(const Point_t<TT>& _v, const Matrix_r<TT,3,3>& _m);
+		template<typename TT>
+		friend Vector4_t<TT> operator*(const Matrix_r<TT,4,4>& _m, const Vector4_t<TT>& _v);
+		template<typename TT>
+		friend Vector4_t<TT> operator*(const Vector4_t<TT>& _v, const Matrix_r<TT,4,4>& _m);
 		template<typename TT,unsigned int UU, unsigned int VV>
 		friend inline std::ostream& operator<<(std::ostream& o, const Matrix_r<TT,UU,VV>& _m);
 
@@ -267,9 +275,6 @@ class Matrix_r<T,U,U>{
 		void displayRow(const unsigned int& y);
 };
 
-template<typename T>
-class Vector2_t;
-
 template<typename TT, unsigned int UU, unsigned int VV, unsigned int WW>
 Matrix_r<TT,WW,VV> operator*(const Matrix_r<TT,UU,VV>& _m1, const Matrix_r<TT,WW,UU>& _m2);
 
@@ -284,6 +289,18 @@ Vector3_t<TT> operator*(const Matrix_r<TT,3,3>& _m, const Vector3_t<TT>& _v);
 
 template<typename TT>
 Vector3_t<TT> operator*(const Vector3_t<TT>& _v, const Matrix_r<TT,3,3>& _m);
+
+template<typename TT>
+Point_t<TT> operator*(const Matrix_r<TT,3,3>& _m, const Point_t<TT>& _p);
+
+template<typename TT>
+Point_t<TT> operator*(const Point_t<TT>& _p, const Matrix_r<TT,3,3>& _m);
+
+template<typename TT>
+Vector4_t<TT> operator*(const Matrix_r<TT,4,4>& _m, const Vector4_t<TT>& _v);
+
+template<typename TT>
+Vector4_t<TT> operator*(const Vector3_t<TT>& _v, const Matrix_r<TT,4,4>& _m);
 
 template<typename T>
 class Matrix_r<T,0,0>{
@@ -389,6 +406,40 @@ Vector3_t<TT> operator*(const Vector3_t<TT>& _v, const Matrix_r<TT,3,3>& _m){
 		(_m(0,0) * _v.x) + (_m(0,1) * _v.y) + (_m(0,2) * _v.z),
 		(_m(1,0) * _v.x) + (_m(1,1) * _v.y) + (_m(1,2) * _v.z),
 		(_m(2,0) * _v.x) + (_m(2,1) * _v.y) + (_m(2,2) * _v.z));
+}
+
+template<typename TT>
+Point_t<TT> operator*(const Matrix_r<TT,3,3>& _m, const Point_t<TT>& _p){
+	return Point_t<TT>(
+		(_m(0,0) * _p.x) + (_m(1,0) * _p.y) + (_m(2,0) * _p.z),
+		(_m(0,1) * _p.x) + (_m(1,1) * _p.y) + (_m(2,1) * _p.z),
+		(_m(0,2) * _p.x) + (_m(1,2) * _p.y) + (_m(2,2) * _p.z));
+}
+
+template<typename TT>
+Point_t<TT> operator*(const Point_t<TT>& _p, const Matrix_r<TT,3,3>& _m){
+	return Point_t<TT>(
+		(_m(0,0) * _p.x) + (_m(0,1) * _p.y) + (_m(0,2) * _p.z),
+		(_m(1,0) * _p.x) + (_m(1,1) * _p.y) + (_m(1,2) * _p.z),
+		(_m(2,0) * _p.x) + (_m(2,1) * _p.y) + (_m(2,2) * _p.z));
+}
+
+template<typename TT>
+Vector4_t<TT> operator*(const Matrix_r<TT,4,4>& _m, const Vector4_t<TT>& _v){
+	return Vector4_t<TT>(
+		(_m(0,0) * _v.x) + (_m(1,0) * _v.y) + (_m(2,0) * _v.z) + (_m(3,0) * _v.w),
+		(_m(0,1) * _v.x) + (_m(1,1) * _v.y) + (_m(2,1) * _v.z) + (_m(3,1) * _v.w),
+		(_m(0,2) * _v.x) + (_m(1,2) * _v.y) + (_m(2,2) * _v.z) + (_m(3,2) * _v.w),
+		(_m(0,3) * _v.x) + (_m(1,3) * _v.y) + (_m(2,3) * _v.z) + (_m(3,3) * _v.w));
+}
+
+template<typename TT>
+Vector4_t<TT> operator*(const Vector4_t<TT>& _v, const Matrix_r<TT,4,4>& _m){
+	return Vector4_t<TT>(
+		(_m(0,0) * _v.x) + (_m(0,1) * _v.y) + (_m(0,2) * _v.z) + (_m(0,3) * _v.w),
+		(_m(1,0) * _v.x) + (_m(1,1) * _v.y) + (_m(1,2) * _v.z) + (_m(1,3) * _v.w),
+		(_m(2,0) * _v.x) + (_m(2,1) * _v.y) + (_m(2,2) * _v.z) + (_m(2,3) * _v.w),
+		(_m(3,0) * _v.x) + (_m(3,1) * _v.y) + (_m(3,2) * _v.z) + (_m(3,3) * _v.w));
 }
 
 template<typename TT,unsigned int UU, unsigned int VV>
