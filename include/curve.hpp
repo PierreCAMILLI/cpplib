@@ -16,7 +16,6 @@ class Curve_t{
 		
 		VectorControl_t<T> controls;
 		
-		void sort();
 		unsigned int getIndexOf(const T& _x);
 
 	public:
@@ -31,13 +30,14 @@ class Curve_t{
 		T const & operator[] (const unsigned int& i) const{	return controls[i].y;	}
 		T& operator[](const unsigned int& i){	return controls[i].y;	}
 
-		Curve_t<T> point(const T& _x, const T& _y);
-		Curve_t<T> point(const Vector2_t<T>& _v);
+		Curve_t<T>& point(const T& _x, const T& _y);
+		Curve_t<T>& point(const Vector2_t<T>& _v);
 		bool contains(const T& _x);
 		bool contains(const T& _x, const T& _y);
 		bool move(const unsigned int& i, const unsigned int& _x);
 		bool remove(const unsigned int& i);
 		size_t const size() const{	return controls.size();	}
+		void sort();
 
 		T const Linear(const T& _x);
 		T const Sine(const T& _x);

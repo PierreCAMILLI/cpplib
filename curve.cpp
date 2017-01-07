@@ -33,7 +33,7 @@ void Curve_t<T>::sort(){
 }
 
 template<typename T>
-Curve_t<T> Curve_t<T>::point(const T& _x, const T& _y){
+Curve_t<T>& Curve_t<T>::point(const T& _x, const T& _y){
 	int index = getIndexOf(_x);
 	if(index != -1)
 		controls[index].y = _y;
@@ -45,7 +45,7 @@ Curve_t<T> Curve_t<T>::point(const T& _x, const T& _y){
 }
 
 template<typename T>
-Curve_t<T> Curve_t<T>::point(const Vector2_t<T>& _v){
+Curve_t<T>& Curve_t<T>::point(const Vector2_t<T>& _v){
 	int index = getIndexOf(_v.x);
 	if(index != -1)
 		controls[index].y = _v.y;
@@ -124,19 +124,19 @@ template<typename T>
 T const Curve_t<T>::Sine(const T& _x){
 	if(size() == 0)
 		return default_value;
-	if(_x <= controls[0].x)
+	if(_x <= controls[0].x)	// Avant le premier point de contrôle
 		return controls[0].y;
-	if(_x >= controls[size()-1].x)
+	if(_x >= controls[size()-1].x)	// Après le dernier point de contrôle
 		return controls[size()-1].y;
-	for(unsigned int i = 0; i < size() - 1; i++){
-		if(_x < controls[i+1].x){
-			T Y = controls[i].y - controls[i+1].y;
-			if(Y == 0)
+	for(unsigned int i = 1; i < size(); i++){
+		if(_x < controls[i].x){
+			T Y = controls[i].y - controls[i - 1].y;
+			if(Y == 0)					// Si on est sur un point de contrôle
 				return controls[i].y;
-			T X = controls[i].x - controls[i+1].x;
+			T X = controls[i].x - controls[i - 1].x;
 			T _X = (_x - controls[i].x) / X;
 			T _Y = ((cos(_X * CURVE_PI) + 1) / 2) * Y;
-			return controls[i].y + _Y;
+			return controls[i - 1].y + _Y;
 		}
 	}
 	return default_value;

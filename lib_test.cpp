@@ -1,6 +1,7 @@
 #include "include/includes.hpp"
 
 int main(int argc, char** argv){
+	/*
 	float _m3[] = {-1, 2, 5,
 					1, 2, 3,
 				   -2, 8,10	};
@@ -58,4 +59,15 @@ int main(int argc, char** argv){
 	mat4.release();
 
 	return 0;
+	*/
+
+	Curve c = Curve().point(0.0, 1.0).point(6.0, 10.0).point(3.0, 20.0);
+
+	std::cout << "Linear :" << std::endl;
+	for(double i = -1.0; i <= 7.0; i+=0.5)
+		std::cout << c.Linear(i) << std::endl;
+
+	std::cout << "Sine :" << std::endl;
+	for(double i = -1.0; i <= 7.0; i+=0.5)
+		std::cout << c(i) << std::endl;
 }
