@@ -93,8 +93,8 @@ int main(int argc, char** argv){
 	std::cout << m3 << std::endl;
 
 	Vector2 v2(4.0, 5.0);
-	Vector3 v3(4.0, 5.0, 6.0);
-	Vector4 v4(4.0, 5.0, 6.0, 7.0);
+	Vector3 v3(3.0, v2);
+	Vector4 v4(v3);
 	std::cout << v2 << std::endl;
 	std::cout << v3 << std::endl;
 	std::cout << v4 << std::endl;
