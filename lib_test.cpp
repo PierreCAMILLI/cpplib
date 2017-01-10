@@ -94,7 +94,7 @@ int main(int argc, char** argv){
 
 	Vector2 v2(4.0, 5.0);
 	Vector3 v3(3.0, v2);
-	Vector4 v4(v3);
+	Vector4 v4(1.0, v3);
 	std::cout << v2 << std::endl;
 	std::cout << v3 << std::endl;
 	std::cout << v4 << std::endl;
@@ -102,5 +102,8 @@ int main(int argc, char** argv){
 	std::cout << v2 * m1 << std::endl;
 	std::cout << m1 * v2 << std::endl;
 
-	std::cout << v4 * Matrix4x4::Identity() << std::endl;
+	std::cout << m3 << std::endl;
+	std::cout << "Transformation" << std::endl;
+	m3.fillRow(2, 1.0, 2.0, 3.0, 4.0).fillColumn(2, 1.0, 2.0, 3.0, 4.0).fillColumn(1, 2.0);
+	std::cout << m3 << std::endl;
 }
