@@ -88,7 +88,19 @@ int main(int argc, char** argv){
 					 1, 2, 3,-2,
 				    -2, 8,10, 7,
 					 9,-1, 6, 3);
-	std::cout << m1.determinant() << std::endl;
-	std::cout << m2.determinant() << std::endl;
-	std::cout << m3.determinant() << std::endl;
+	std::cout << m1 << std::endl;
+	std::cout << m2 << std::endl;
+	std::cout << m3 << std::endl;
+
+	Vector2 v2(4.0, 5.0);
+	Vector3 v3(4.0, 5.0, 6.0);
+	Vector4 v4(4.0, 5.0, 6.0, 7.0);
+	std::cout << v2 << std::endl;
+	std::cout << v3 << std::endl;
+	std::cout << v4 << std::endl;
+
+	std::cout << v2 * m1 << std::endl;
+	std::cout << m1 * v2 << std::endl;
+
+	std::cout << v4 * Matrix4x4::Identity() << std::endl;
 }

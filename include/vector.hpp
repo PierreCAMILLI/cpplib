@@ -22,6 +22,9 @@ struct Vector2_t
 	explicit Vector2_t(const Point_t<T>& p) : x(p.x), y(p.y){};
 	explicit Vector2_t(const Vector4_t<T>& v) : x(v.x), y(v.y){};
 
+	template<typename TT>
+	friend std::ostream& operator<<(std::ostream& o, const Vector2_t<TT>& _v);
+
 	Vector2_t<T>& operator()(const T _x = T(), const T _y = T());
 	Vector2_t<T> operator+(const Vector2_t<T>& _v) const;
 	Vector2_t<T> operator+(const T& n) const;
@@ -42,6 +45,12 @@ struct Vector2_t
 
 	void display();
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& o, const Vector2_t<T>& _v){
+	o << "v(" << _v.x << "," << _v.y << ")";
+	return o;
+}
 
 template<typename T>
 struct Vector3_t
@@ -79,6 +88,12 @@ struct Vector3_t
 };
 
 template<typename T>
+std::ostream& operator<<(std::ostream& o, const Vector3_t<T>& _v){
+	o << "v(" << _v.x << "," << _v.y << "," << _v.z << ")";
+	return o;
+}
+
+template<typename T>
 struct Point_t
 {
 	T x, y, z;
@@ -111,6 +126,12 @@ struct Point_t
 
 	void display();
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& o, const Point_t<T>& _p){
+	o << "p(" << _p.x << "," << _p.y << "," << _p.z << ")";
+	return o;
+}
 
 template<typename T>
 struct Vector4_t
@@ -150,6 +171,12 @@ struct Vector4_t
 
 	void display();
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& o, const Vector4_t<T>& _v){
+	o << "v(" << _v.x << "," << _v.y << "," << _v.z << "," << _v.w << ")";
+	return o;
+}
 
 typedef Vector2_t<double> Vector2;
 typedef Vector2_t<float> Vector2f;
