@@ -61,7 +61,8 @@ int main(int argc, char** argv){
 	return 0;
 	*/
 
-	Curve c = Curve().point(0.0, 1.0).point(6.0, 10.0).point(3.0, 20.0);
+	/*
+	Curve c = Curve().point(0.0, 1.0).point(6.0, 10.0);
 
 	std::cout << "Linear :" << std::endl;
 	for(double i = -1.0; i <= 7.0; i+=0.5)
@@ -70,4 +71,9 @@ int main(int argc, char** argv){
 	std::cout << "Sine :" << std::endl;
 	for(double i = -1.0; i <= 7.0; i+=0.5)
 		std::cout << c(i) << std::endl;
+	*/
+
+	Matrix2x2 m(5.0, 2.0,
+				3.0, 4.0);
+	std::cout << m.determinant() << std::endl;
 }
