@@ -866,10 +866,10 @@ Matrix_r<T,U,U>::Matrix_r(	const T m00, const T m10, const T m20, const T m30,
 							const T m03, const T m13, const T m23, const T m33){
 	assert(U >= 4);
 	m = (T*) malloc(sizeof(T)*U*U);
-	(*this)(0,0) = m00;	(*this)(1,0) = m10;	(*this)(2,0) = m20;	(*this)(2,0) = m30;
-	(*this)(0,1) = m01;	(*this)(1,1) = m11;	(*this)(2,1) = m21;	(*this)(2,1) = m31;
-	(*this)(0,2) = m02;	(*this)(1,2) = m12;	(*this)(2,1) = m22;	(*this)(2,1) = m32;
-	(*this)(0,2) = m03;	(*this)(1,2) = m13;	(*this)(2,1) = m23;	(*this)(2,1) = m33;
+	(*this)(0,0) = m00;	(*this)(1,0) = m10;	(*this)(2,0) = m20;	(*this)(3,0) = m30;
+	(*this)(0,1) = m01;	(*this)(1,1) = m11;	(*this)(2,1) = m21;	(*this)(3,1) = m31;
+	(*this)(0,2) = m02;	(*this)(1,2) = m12;	(*this)(2,2) = m22;	(*this)(3,2) = m32;
+	(*this)(0,3) = m03;	(*this)(1,3) = m13;	(*this)(2,3) = m23;	(*this)(3,3) = m33;
 }
 
 

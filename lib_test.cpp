@@ -73,7 +73,22 @@ int main(int argc, char** argv){
 		std::cout << c(i) << std::endl;
 	*/
 
-	Matrix2x2 m(5.0, 2.0,
-				3.0, 4.0);
-	std::cout << m.determinant() << std::endl;
+	Matrix2x2 m1(	5.0, 2.0,
+					3.0, 4.0);
+	Matrix3x3 m2(	5.0, 2.0, 8.0,
+					3.0, 4.0, 6.0,
+					7.0, 1.0, 9.0);
+	/*
+	Matrix4x4 m3(	5.0, 2.0, 8.0, 12.0,
+					3.0, 5.0, 6.0, 10.0,
+					7.0, 1.0, 9.0, 16.0,
+					11.0,13.0,15.0,14.0);
+	*/
+	Matrix4x4 m3(	-1, 2, 5, 7,
+					 1, 2, 3,-2,
+				    -2, 8,10, 7,
+					 9,-1, 6, 3);
+	std::cout << m1.determinant() << std::endl;
+	std::cout << m2.determinant() << std::endl;
+	std::cout << m3.determinant() << std::endl;
 }
