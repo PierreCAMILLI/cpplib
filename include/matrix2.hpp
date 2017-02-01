@@ -302,14 +302,14 @@ class Matrix_r<T,0,0>{
 		Matrix_r<T,0,0>& fill(T* const _t){	return (*this);	}
 		Matrix_r<T,0,0>& fill(T** const _t){	return (*this);	}
 		Matrix_r<T,0,0>& fill(	const T m00, const T m10,
-								const T m01, const T m11){};
+								const T m01, const T m11){	return (*this);	};
 		Matrix_r<T,0,0>& fill(	const T m00, const T m10, const T m20,
 								const T m01, const T m11, const T m21,
-								const T m02, const T m12, const T m22){};
+								const T m02, const T m12, const T m22){	return (*this);	};
 		Matrix_r<T,0,0>& fill(	const T m00, const T m10, const T m20, const T m30,
 								const T m01, const T m11, const T m21, const T m31,
 								const T m02, const T m12, const T m22, const T m32,
-								const T m03, const T m13, const T m23, const T m33){};
+								const T m03, const T m13, const T m23, const T m33){	return (*this);	};
 		Matrix_r<T,0,0>& fillRow(const unsigned int r, const T n){	return (*this);	}
 		Matrix_r<T,0,0>& fillRow(const unsigned int r, const T* const _t){	return (*this);	}
 		Matrix_r<T,0,0>& fillRow(const unsigned int r, T* const _t){	return (*this);	}

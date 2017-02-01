@@ -43,6 +43,7 @@ struct Plane_t
 	Vector3_t<T> n;
 
 	Plane_t(const Point_t<T>& _a = Point_t<T>(), const Vector3_t<T>& _n = Vector3_t<T>()) : a(_a), n(_n){}
+	Plane_t(const Vector3_t<T>& _a = Vector3_t<T>(), const Vector3_t<T>& _n = Vector3_t<T>()) : a(_a), n(_n){}
 	Plane_t(const Plane_t<T>& _p) = default;
 
 	T distance(const Point_t<T>& _p) const;
@@ -114,6 +115,7 @@ struct Sphere_t
 	T r;
 
 	Sphere_t(const Point_t<T>& _c = Point_t<T>(), const T& _r = T()) : c(_c), r(_r){};
+	Sphere_t(const Vector3_t<T>& _c = Vector3_t<T>(), const T& _r = T()) : c(_c), r(_r){};
 	Sphere_t(const Sphere_t<T>& _s) = default;
 
 	T distance(const Point_t<T>& _p) const;
@@ -154,6 +156,24 @@ struct Geo_Scene_t
 	VectorDisc_t<T> discs;
 	VectorSphere_t<T> spheres;
 	VectorBox_t<T> boxes;
+
+	void operator()(const Plane_t<T> & _p){	planes.push_back(_p);	}
+	void operator()(const Triangle_t<T> & _t){	triangles.push_back(_t);	}
+	void operator()(const Disc_t<T> & _d){	discs.push_back(_d);	}
+	void operator()(const Sphere_t<T> & _s){	spheres.push_back(_s);	}
+	void operator()(const Box_t<T> & _b){	boxes.push_back(_b);	}
+
+	Geo_Scene_t<T>& operator<<(const Plane_t<T> & _p){	planes.push_back(_p);	return *this;	}
+	Geo_Scene_t<T>& operator<<(const Triangle_t<T> & _t){	triangles.push_back(_t);	return *this;	}
+	Geo_Scene_t<T>& operator<<(const Disc_t<T> & _d){	discs.push_back(_d);	return *this;	}
+	Geo_Scene_t<T>& operator<<(const Sphere_t<T> & _s){	spheres.push_back(_s);	return *this;	}
+	Geo_Scene_t<T>& operator<<(const Box_t<T> & _b){	boxes.push_back(_b);	return *this;	}
+
+	int size(){	return 		planes.size()
+						+	triangles.size()
+						+	discs.size()
+						+	spheres.size()
+						+	boxes.size();}
 };
 
 template<typename T>
@@ -178,6 +198,7 @@ struct Ray_t
 	Vector3_t<T> d;
 
 	Ray_t(const Point_t<T>& _o = Point_t<T>(), const Vector3_t<T>& _d = Vector3_t<T>()) : o(_o), d(_d){};
+	Ray_t(const Vector3_t<T>& _o = Vector3_t<T>(), const Vector3_t<T>& _d = Vector3_t<T>()) : o(_o), d(_d){};
 	Ray_t(const Ray_t<T>& r) = default;
 
 	static void orderHits(VectorHit_t<T>& hits);
@@ -236,6 +257,10 @@ typedef Box_t<int> Boxi;
 typedef Plane_t<double> Plane;
 typedef Plane_t<float> Planef;
 typedef Plane_t<int> Planei;
+
+typedef Geo_Scene_t<double> Geo_Scene;
+typedef Geo_Scene_t<float> Geo_Scenef;
+typedef Geo_Scene_t<int> Geo_Scenei;
 
 typedef Hit_t<double> Hit;
 typedef Hit_t<float> Hitf;

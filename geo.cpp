@@ -143,8 +143,11 @@ Point_t<T> Triangle_t<T>::circumscribedCenter() const{
 
 template<typename T>
 Point_t<T> Triangle_t<T>::inscribedCenter() const{
-	// TODO
-	return Point_t<T>();
+	double 	A = b.distance(c),
+			B = a.distance(c),
+			C = a.distance(b),
+			P = A + B + C;
+	return Point_t<T>((Vector3_t<T>(a * A) + Vector3_t<T>(b * B) + Vector3_t<T>(c * C)) / P);
 }
 
 // ------------------------- CIRCLE --------------------------//
@@ -461,7 +464,7 @@ bool Ray_t<T>::operator()(const Geo_Scene_t<T>& _sc, Hit_t<T>& _h){
 	touched = (touched ? true : (*this)(_sc.boxes, h_temp));
 	if(h_temp.d < _h.d)
 		_h = h_temp;
-	return false;
+	return touched;
 }
 
 template<typename T>
