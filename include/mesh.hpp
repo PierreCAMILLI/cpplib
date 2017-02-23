@@ -3,6 +3,8 @@
 #include "includes.hpp"
 #include "vector.hpp"
 
+#define MESH_PI 3.14159265359
+
 template<typename T>
 struct Vector2_t;
 
@@ -86,4 +88,7 @@ class Mesh{
 		void bounds(Point_t<double>& pmin, Point_t<double>& pmax);
 		void resize(const double& scale);
 		void clear();
+
+		static Mesh Cube(const double & size);
+		static Mesh Sphere(const double & radius, const unsigned int rows = 30, const unsigned int cols = 90);
 };

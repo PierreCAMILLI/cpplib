@@ -18,9 +18,9 @@ struct Vector2_t
 
 	Vector2_t(const T _x = T(), const T _y = T()) : x(_x), y(_y){}
 	Vector2_t(const Vector2_t<T>& v) = default;
-	explicit Vector2_t(const Vector3_t<T>& v) : x(v.x), y(v.y){};
-	explicit Vector2_t(const Point_t<T>& p) : x(p.x), y(p.y){};
-	explicit Vector2_t(const Vector4_t<T>& v) : x(v.x), y(v.y){};
+	Vector2_t(const Vector3_t<T>& v) : x(v.x), y(v.y){};
+	Vector2_t(const Point_t<T>& p) : x(p.x), y(p.y){};
+	Vector2_t(const Vector4_t<T>& v) : x(v.x), y(v.y){};
 
 	template<typename TT>
 	friend std::ostream& operator<<(std::ostream& o, const Vector2_t<TT>& _v);
@@ -59,10 +59,11 @@ struct Vector3_t
 
 	Vector3_t(const T _x = T(), const T _y = T(), const T _z = T()) : x(_x), y(_y), z(_z){}
 	Vector3_t(const Vector3_t<T>& v) = default;
+	Vector3_t(const Vector2_t<T>& v) : x(v.x), y(v.y), z(T()){};
 	explicit Vector3_t(const Vector2_t<T>& v, const T _z = T()) : x(v.x), y(v.y), z(_z){};
 	explicit Vector3_t(const T _x, const Vector2_t<T>& v) : x(_x), y(v.x), z(v.y){};
-	explicit Vector3_t(const Point_t<T>& p) : x(p.x), y(p.y), z(p.z){}
-	explicit Vector3_t(const Vector4_t<T>& v) : x(v.x), y(v.y), z(v.z){};
+	Vector3_t(const Point_t<T>& p) : x(p.x), y(p.y), z(p.z){}
+	Vector3_t(const Vector4_t<T>& v) : x(v.x), y(v.y), z(v.z){};
 
 	template<typename TT>
 	friend std::ostream& operator<<(std::ostream& o, const Vector3_t<TT>& _v);
@@ -102,10 +103,11 @@ struct Point_t
 
 	Point_t(const T _x = T(), const T _y = T(), const T _z = T()) : x(_x), y(_y), z(_z){}
 	Point_t(const Point_t<T>& _p) = default;
+	Point_t(const Vector2_t<T>& v) : x(v.x), y(v.y), z(T()){};
 	explicit Point_t(const Vector2_t<T>& v, const T _z = T()) : x(v.x), y(v.y), z(_z){};
 	explicit Point_t(const T _x, const Vector2_t<T>& v) : x(_x), y(v.x), z(v.y){};
-	explicit Point_t(const Vector3_t<T>& v) : x(v.x), y(v.y), z(v.z){};
-	explicit Point_t(const Vector4_t<T>& v) : x(v.x), y(v.y), z(v.z){};
+	Point_t(const Vector3_t<T>& v) : x(v.x), y(v.y), z(v.z){};
+	Point_t(const Vector4_t<T>& v) : x(v.x), y(v.y), z(v.z){};
 
 	template<typename TT>
 	friend std::ostream& operator<<(std::ostream& o, const Point_t<TT>& _p);
@@ -144,13 +146,15 @@ struct Vector4_t
 
 	Vector4_t(const T _x = T(), const T _y = T(), const T _z = T(), const T _w = T()) : x(_x), y(_y), z(_z), w(_w){}
 	Vector4_t(const Vector4_t<T>& v) = default;
+	Vector4_t(const Vector2_t<T>& v) : x(v.x), y(v.y), z(T()), w(T()){};
 	explicit Vector4_t(const Vector2_t<T>& v, const T _z = T(), const T _w = T()) : x(v.x), y(v.y), z(_z), w(_w){};
 	explicit Vector4_t(const T _x, const Vector2_t<T>& v, const T _w = T()) : x(_x), y(v.x), z(v.y), w(_w){};
 	explicit Vector4_t(const T _x, const T _y, const Vector2_t<T>& v) : x(_x), y(_y), z(v.x), w(v.y){};
 	explicit Vector4_t(const Vector2_t<T>& v1, const Vector2_t<T>& v2) : x(v1.x), y(v1.y), z(v2.x), w(v2.y){};
+	Vector4_t(const Vector3_t<T>& v) : x(v.x), y(v.y), z(v.z), w(T()){};
 	explicit Vector4_t(const Vector3_t<T>& v, const T _w = T()) : x(v.x), y(v.y), z(v.z), w(_w){};
 	explicit Vector4_t(const T _x, const Vector3_t<T>& v) : x(_x), y(v.x), z(v.y), w(v.z){};
-	explicit Vector4_t(const Point_t<T>& p) : x(p.x), y(p.y), z(p.z), w(T()){}
+	Vector4_t(const Point_t<T>& p) : x(p.x), y(p.y), z(p.z), w(T()){}
 	explicit Vector4_t(const Point_t<T>& p, const T _w = T()) : x(p.x), y(p.y), z(p.z), w(_w){};
 	explicit Vector4_t(const T _x, const Point_t<T>& p) : x(_x), y(p.x), z(p.y), w(p.z){};
 

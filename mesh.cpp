@@ -249,3 +249,73 @@ void Mesh::clear()
 	textures_index.clear();
 	normals_index.clear();
 }
+
+Mesh Mesh::Cube(const double & size){
+	Mesh m;
+	float offset = size/2;
+	// Génération des vertices
+	for(int i = 0; i < 8; i++)
+		m.vertice(
+			((i&4) == 4 ? 1 : -1) * offset,
+			((i&2) == 2 ? 1 : -1) * offset,
+			((i&1) == 1 ? 1 : -1) * offset
+			);
+	// Génération des faces
+	m	.triangle(0, 1, 3)
+		.triangle(0, 3, 2)
+		.triangle(1, 5, 7)
+		.triangle(1, 7, 3)
+		.triangle(5, 4, 6)
+		.triangle(5, 6, 7)
+		.triangle(4, 0, 2)
+		.triangle(4, 2, 6)
+		.triangle(4, 5, 1)
+		.triangle(4, 1, 0)
+		.triangle(2, 3, 7)
+		.triangle(2, 7, 6);
+	return m;
+}
+
+Mesh Mesh::Sphere(const double & radius, const unsigned int rows, const unsigned int cols){
+	Mesh m;
+	unsigned int nb_vert =	rows * cols;	// Nombre de vertex hormis le premier et le dernier
+	Index v_last_index =	nb_vert + 1;	// Index du dernier vertex
+
+	// Sommet haut de la sphère
+	m.vertice(0,radius,0);
+
+	for(unsigned int i = 0; i < cols; i++){
+		// Dessin des faces liées au sommet haut de la sphère
+		Index 	actual = ((i * rows) + 1),
+				next = (actual + rows) % nb_vert;
+		m.triangle(	0, next, actual);
+		// Dessin des vertexs et des portions de la sphère
+		for(unsigned int j = 1; j <= rows; j++){
+			double 	portion_x = (i / (double)cols) * (2 * MESH_PI),
+					portion_y = - ((MESH_PI/(rows + 1)) * j) + (MESH_PI / 2),
+					delta = cos(portion_y),
+					v_y = sin(portion_y),
+					v_x = cos(portion_x) * delta,
+					v_z = sin(portion_x) * delta;
+			Index start = m.vertice(v_x * radius, v_y * radius, v_z * radius);
+
+			// Dessin des portions
+			if(j % rows != 0){
+				std::cout << "Index : " << (start + rows + 1) % nb_vert << ", j : " << j << std::endl;
+				// C'est dégueulasse...
+				Index next_index = ((start + rows + 1) == nb_vert ? nb_vert : (start + rows + 1) % nb_vert);
+				m	.triangle(start, (start + rows) % nb_vert, next_index )
+					.triangle(start, next_index, start + 1 );
+			}
+		}
+		// Dessin des faces liées au sommet bas de la sphère
+		actual = (i + 1) * rows;
+		// C'est dégueulasse aussi...
+		next = ((actual + rows) == nb_vert ? nb_vert : (actual + rows) % nb_vert);
+		m.triangle( v_last_index, actual, next );
+	}
+	// Sommet bas de la sphère
+	m.vertice(0,-radius,0);
+
+	return m;
+}

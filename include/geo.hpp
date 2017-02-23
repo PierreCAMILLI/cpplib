@@ -20,6 +20,9 @@ struct Line_t
 	Point_t<T> a, b;
 
 	Line_t(const Point_t<T>& _a = Point_t<T>(), const Point_t<T>& _b = Point_t<T>()) : a(_a), b(_b){}
+	Line_t(const Vector3_t<T>& _a = Vector3_t<T>(), const Vector3_t<T>& _b = Vector3_t<T>()) : a(_a), b(_b){}
+	Line_t(const Vector3_t<T>& _a = Vector3_t<T>(), const Point_t<T>& _b = Point_t<T>()) : a(_a), b(_b){}
+	Line_t(const Point_t<T>& _a = Point_t<T>(), const Vector3_t<T>& _b = Vector3_t<T>()) : a(_a), b(_b){}
 	Line_t(const Line_t<T>& l) = default;
 
 	inline T length() const;
@@ -60,6 +63,13 @@ struct Triangle_t
 	Point_t<T> a, b, c;
 
 	Triangle_t(const Point_t<T>& _a = Point_t<T>(), const Point_t<T>& _b = Point_t<T>(), const Point_t<T>& _c = Point_t<T>()) : a(_a), b(_b), c(_c){}
+	Triangle_t(const Point_t<T>& _a = Point_t<T>(), const Point_t<T>& _b = Point_t<T>(), const Vector3_t<T>& _c = Vector3_t<T>()) : a(_a), b(_b), c(_c){}
+	Triangle_t(const Point_t<T>& _a = Point_t<T>(), const Vector3_t<T>& _b = Vector3_t<T>(), const Point_t<T>& _c = Point_t<T>()) : a(_a), b(_b), c(_c){}
+	Triangle_t(const Point_t<T>& _a = Point_t<T>(), const Vector3_t<T>& _b = Vector3_t<T>(), const Vector3_t<T>& _c = Vector3_t<T>()) : a(_a), b(_b), c(_c){}
+	Triangle_t(const Vector3_t<T>& _a = Vector3_t<T>(), const Point_t<T>& _b = Point_t<T>(), const Point_t<T>& _c = Point_t<T>()) : a(_a), b(_b), c(_c){}
+	Triangle_t(const Vector3_t<T>& _a = Vector3_t<T>(), const Point_t<T>& _b = Point_t<T>(), const Vector3_t<T>& _c = Vector3_t<T>()) : a(_a), b(_b), c(_c){}
+	Triangle_t(const Vector3_t<T>& _a = Vector3_t<T>(), const Vector3_t<T>& _b = Vector3_t<T>(), const Point_t<T>& _c = Point_t<T>()) : a(_a), b(_b), c(_c){}
+	Triangle_t(const Vector3_t<T>& _a = Vector3_t<T>(), const Vector3_t<T>& _b = Vector3_t<T>(), const Vector3_t<T>& _c = Vector3_t<T>()) : a(_a), b(_b), c(_c){}
 	Triangle_t(const Triangle_t<T>& _t) = default;
 
 	bool areCollinear();
@@ -84,6 +94,7 @@ struct Circle_t
 	T r;
 
 	Circle_t(const Point_t<T>& _c = Point_t<T>(), const Vector3_t<T>& _n = Vector3_t<T>(), const T& _r = T()) : c(_c), n(_n), r(_r){}
+	Circle_t(const Vector3_t<T>& _c = Point_t<T>(), const Vector3_t<T>& _n = Vector3_t<T>(), const T& _r = T()) : c(_c), n(_n), r(_r){}
 	Circle_t(const Circle_t& _c) = default;
 
 	T distance(const Point_t<T>& _p) const;
@@ -100,6 +111,7 @@ struct Disc_t
 	T r;
 
 	Disc_t(const Point_t<T>& _c = Point_t<T>(), const Vector3_t<T>& _n = Vector3_t<T>(), const T& _r = T()) : c(_c), n(_n), r(_r){}
+	Disc_t(const Vector3_t<T>& _c = Point_t<T>(), const Vector3_t<T>& _n = Vector3_t<T>(), const T& _r = T()) : c(_c), n(_n), r(_r){}
 	Disc_t(const Disc_t& _d) = default;
 
 	T distance(const Point_t<T>& _p) const;
