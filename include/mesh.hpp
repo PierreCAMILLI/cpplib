@@ -40,6 +40,15 @@ class Mesh{
 		Mesh(const std::string & filename){	importOBJ(filename);	}
 		void release();
 
+		// Translation
+		Mesh& operator+=(const Vector3_t<double> & t);
+		Mesh operator+(const Vector3_t<double> & t){	return (*this) += t; }
+		// Rescaling
+		Mesh& operator*=(const double & s);
+		Mesh& operator*=(const Vector3_t<double> & s);
+		Mesh operator*(const double & s){	return (*this) *= s; }
+		Mesh operator*(const Vector3_t<double> & s){	return (*this) *= s; }
+		
 		MeshVertices & getVertices(){	return vertices;	}
 		MeshTextures & getTextures(){	return textures;	}
 		MeshNormals & getNormals(){	return normals;	}

@@ -26,7 +26,5 @@ int main(int argc, char** argv){
 	*/
 	// Mesh::Cube(1.0).exportOBJ("cube.obj");
 	// Mesh::Sphere(5.0, 100).exportOBJ("sphere.obj");
-	Mesh m = Mesh::Sphere(5.0, 100).merge(Mesh::Cube(1.0));
-	Mesh::Cube(1.0).exportOBJ("cube.obj");
-	m.exportOBJ("merged.obj");
+	Mesh::Sphere(5.0, 100).merge(Mesh::Cube(1.0) + Vector3(10,0,0)).exportOBJ("merged.obj");
 }

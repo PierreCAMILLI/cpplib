@@ -11,6 +11,27 @@ void Mesh::release()
 	MeshNormalsIndex normals_index;
 }
 
+Mesh& Mesh::operator+=(const Vector3_t<double> & t){
+	for(unsigned int i = 0; i < vertices.size(); i++){
+		vertices[i] = vertices[i] + t;
+	}
+	return (*this);
+}
+
+Mesh& Mesh::operator*=(const double & s){
+	for(unsigned int i = 0; i < vertices.size(); i++){
+		vertices[i] = vertices[i] * s;
+	}
+	return (*this);
+}
+
+Mesh& Mesh::operator*=(const Vector3_t<double> & s){
+	for(unsigned int i = 0; i < vertices.size(); i++){
+		vertices[i] = vertices[i] * s;
+	}
+	return (*this);
+}
+
 Index Mesh::vertice(const Vector3_t<double> & _v){
 	vertices.push_back(_v);
 	return vertices.size() - 1;
