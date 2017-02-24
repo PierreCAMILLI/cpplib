@@ -200,21 +200,26 @@ bool Mesh::exportOBJ(const std::string & filename, const double scale)
 	return true;
 }
 
-void Mesh::merge(const Mesh& _m)
+Mesh& Mesh::merge(const Mesh& _m)
 {
+	unsigned int 	v_size = vertices.size(),
+					t_size = textures.size(),
+					n_size = normals.size();
 	for(MeshVerticesIndex::const_iterator it = _m.vertices_index.begin(); it != _m.vertices_index.end(); it++){
-		vertices_index.push_back(*it + vertices.size());
+		vertices_index.push_back(*it + v_size);
 	}
 	for(MeshTexturesIndex::const_iterator it = _m.textures_index.begin(); it != _m.textures_index.end(); it++){
-		textures_index.push_back(*it + textures.size());
+		textures_index.push_back(*it + t_size);
 	}
 	for(MeshNormalsIndex::const_iterator it = _m.normals_index.begin(); it != _m.normals_index.end(); it++){
-		normals_index.push_back(*it + normals.size());
+		normals_index.push_back(*it + n_size);
 	}
 
-	vertices.insert(vertices.end(),vertices.begin(),vertices.end());
-	textures.insert(textures.end(),textures.begin(),textures.end());
-	normals.insert(normals.end(),normals.begin(),normals.end());
+	vertices.insert(vertices.end(),_m.vertices.begin(),_m.vertices.end());
+	textures.insert(textures.end(),_m.textures.begin(),_m.textures.end());
+	normals.insert(normals.end(),_m.normals.begin(),_m.normals.end());
+
+	return *this;
 }
 
 
@@ -276,23 +281,20 @@ Mesh Mesh::Cube(const double & size){
 	return m;
 }
 
-Mesh Mesh::Sphere(const double & radius, const unsigned int rows, const unsigned int cols){
+Mesh Mesh::Sphere(const double & radius, const unsigned int lod){
 	Mesh m;
-	unsigned int nb_vert =	rows * cols;	// Nombre de vertex hormis le premier et le dernier
+	unsigned int nb_vert =	lod * lod;	// Nombre de vertex hormis le premier et le dernier
 	Index v_last_index =	nb_vert + 1;	// Index du dernier vertex
 
-	// Sommet haut de la sphère
-	m.vertice(0,radius,0);
-
-	for(unsigned int i = 0; i < cols; i++){
+	for(unsigned int i = 0; i < lod; i++){
 		// Dessin des faces liées au sommet haut de la sphère
-		Index 	actual = ((i * rows) + 1),
-				next = (actual + rows) % nb_vert;
-		m.triangle(	0, next, actual);
+		Index 	actual = i * lod,
+				next = (actual + lod) % nb_vert;
+		m.triangle(	nb_vert, next, actual);
 		// Dessin des vertexs et des portions de la sphère
-		for(unsigned int j = 1; j <= rows; j++){
-			double 	portion_x = (i / (double)cols) * (2 * MESH_PI),
-					portion_y = - ((MESH_PI/(rows + 1)) * j) + (MESH_PI / 2),
+		for(unsigned int j = 1; j <= lod; j++){
+			double 	portion_x = (i / (double)lod) * (2 * MESH_PI),
+					portion_y = - ((MESH_PI/(lod + 1)) * j) + (MESH_PI / 2),
 					delta = cos(portion_y),
 					v_y = sin(portion_y),
 					v_x = cos(portion_x) * delta,
@@ -300,22 +302,18 @@ Mesh Mesh::Sphere(const double & radius, const unsigned int rows, const unsigned
 			Index start = m.vertice(v_x * radius, v_y * radius, v_z * radius);
 
 			// Dessin des portions
-			if(j % rows != 0){
-				std::cout << "Index : " << (start + rows + 1) % nb_vert << ", j : " << j << std::endl;
-				// C'est dégueulasse...
-				Index next_index = ((start + rows + 1) == nb_vert ? nb_vert : (start + rows + 1) % nb_vert);
-				m	.triangle(start, (start + rows) % nb_vert, next_index )
-					.triangle(start, next_index, start + 1 );
+			if(j % lod != 0){
+				m	.triangle(start, (start + lod) % nb_vert, (start + lod + 1) % nb_vert )
+					.triangle(start, (start + lod + 1) % nb_vert, start + 1 );
 			}
 		}
 		// Dessin des faces liées au sommet bas de la sphère
-		actual = (i + 1) * rows;
-		// C'est dégueulasse aussi...
-		next = ((actual + rows) == nb_vert ? nb_vert : (actual + rows) % nb_vert);
-		m.triangle( v_last_index, actual, next );
+		m.triangle( v_last_index, ((lod * i) - 1) % nb_vert, (lod * (i+1)) - 1 );
 	}
+	// Sommet haut de la sphère
+	m.vertice(0,radius,0);
 	// Sommet bas de la sphère
 	m.vertice(0,-radius,0);
 
-	return m;
+	return m;	
 }
