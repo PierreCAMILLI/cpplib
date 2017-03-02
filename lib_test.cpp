@@ -26,5 +26,18 @@ int main(int argc, char** argv){
 	*/
 	// Mesh::Cube(1.0).exportOBJ("cube.obj");
 	// Mesh::Sphere(5.0, 100).exportOBJ("sphere.obj");
-	Mesh::Sphere(5.0, 100).merge(Mesh::Cube(1.0) + Vector3(10,0,0)).exportOBJ("merged.obj");
+	// Mesh::Sphere(5.0, 100).merge(Mesh::Cube(1.0) + Vector3(10,0,0)).exportOBJ("merged.obj");
+
+	unsigned int res = 100;
+	Mesh sphere = Mesh::Sphere(5.0, res);
+
+	for(unsigned int i = 0; i < res; i++){
+		for(unsigned int j = 0; j < res; j++){
+			int index = (i * res) + j;
+			double perlin = PerlinNoise::Noise2D(i,j);
+			sphere.getVertices()[index] = sphere.getVertices()[index] + (sphere.getNormals()[index] * perlin * 0.1);
+		}
+	}
+
+	sphere.exportOBJ("patate.obj");
 }

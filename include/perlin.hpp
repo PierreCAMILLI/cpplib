@@ -16,4 +16,7 @@ class PerlinNoise{
 		PerlinNoise(const unsigned int& seed);
 
 		double noise( double x, double y, double z) const;
+
+		static float Noise2D(int x, int y);
+
 };

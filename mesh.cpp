@@ -320,7 +320,9 @@ Mesh Mesh::Sphere(const double & radius, const unsigned int lod){
 					v_y = sin(portion_y),
 					v_x = cos(portion_x) * delta,
 					v_z = sin(portion_x) * delta;
-			Index start = m.vertice(v_x * radius, v_y * radius, v_z * radius);
+			Vector3 _v(v_x * radius, v_y * radius, v_z * radius);
+			Index start = m.vertice(_v);
+			m.normal(_v);
 
 			// Dessin des portions
 			if(j % lod != 0){
@@ -333,8 +335,10 @@ Mesh Mesh::Sphere(const double & radius, const unsigned int lod){
 	}
 	// Sommet haut de la sphère
 	m.vertice(0,radius,0);
+	m.normal(0,radius,0);
 	// Sommet bas de la sphère
 	m.vertice(0,-radius,0);
+	m.normal(0,-radius,0);
 
 	return m;	
 }
