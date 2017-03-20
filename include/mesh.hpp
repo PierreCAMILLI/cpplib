@@ -25,7 +25,6 @@ typedef std::vector<Index> MeshNormalsIndex;
 
 class Mesh{
 	private:
-		
 		MeshVertices vertices;
 		MeshTextures textures;
 		MeshNormals normals;
@@ -36,7 +35,8 @@ class Mesh{
 
 	public:
 
-		Mesh() = default;
+		Mesh(){}
+		Mesh(const Mesh& _m) = default;
 		Mesh(const std::string & filename){	importOBJ(filename);	}
 		void release();
 

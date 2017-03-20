@@ -26,14 +26,23 @@ struct Vector2_t
 	friend std::ostream& operator<<(std::ostream& o, const Vector2_t<TT>& _v);
 
 	Vector2_t<T>& operator()(const T _x = T(), const T _y = T());
-	Vector2_t<T> operator+(const Vector2_t<T>& _v) const;
-	Vector2_t<T> operator+(const T& n) const;
-	Vector2_t<T> operator-() const;
-	Vector2_t<T> operator-(const Vector2_t<T>& _v) const;
-	Vector2_t<T> operator-(const T& n) const;
-	Vector2_t<T> operator*(const Vector2_t<T>& _v) const;
-	Vector2_t<T> operator*(const T& n) const;
-	Vector2_t<T> operator/(const T& n) const;
+	Vector2_t<T>& operator+=(const Vector2_t<T>& _v);
+	Vector2_t<T>& operator+=(const T& n);
+	Vector2_t<T>& operator-=(const Vector2_t<T>& _v);
+	Vector2_t<T>& operator-=(const T& n);
+	Vector2_t<T>& operator*=(const Vector2_t<T>& _v);
+	Vector2_t<T>& operator*=(const T& n);
+	Vector2_t<T>& operator/=(const T& n);
+
+	Vector2_t<T> operator+(const Vector2_t<T>& _v) const{	return Vector2_t<T>(*this) += _v;	};
+	Vector2_t<T> operator+(const T& n) const{	return Vector2_t<T>(*this) += n;	};
+	Vector2_t<T> operator-() const{	return (*this) * (-1);	};
+	Vector2_t<T> operator-(const Vector2_t<T>& _v) const{	return Vector2_t<T>(*this) -= _v;	};
+	Vector2_t<T> operator-(const T& n) const{	return Vector2_t<T>(*this) -= n;	};
+	Vector2_t<T> operator*(const Vector2_t<T>& _v) const{	return Vector2_t<T>(*this) *= _v;	};
+	Vector2_t<T> operator*(const T& n) const{	return Vector2_t<T>(*this) *= n;	};
+	Vector2_t<T> operator/(const T& n) const{	return Vector2_t<T>(*this) /= n;	};
+
 	bool operator==(const Vector2_t<T>& _v);
 	bool operator!=(const Vector2_t<T>& _v);
 	T operator[](const unsigned int& i) const;
@@ -69,14 +78,22 @@ struct Vector3_t
 	friend std::ostream& operator<<(std::ostream& o, const Vector3_t<TT>& _v);
 
 	Vector3_t<T>& operator()(const T _x = T(), const T _y = T(), const T _z = T());
-	Vector3_t<T> operator+(const Vector3_t<T>& _v) const;
-	Vector3_t<T> operator+(const T& n) const;
-	Vector3_t<T> operator-() const;
-	Vector3_t<T> operator-(const Vector3_t<T>& _v) const;
-	Vector3_t<T> operator-(const T& n) const;
-	Vector3_t<T> operator*(const Vector3_t<T>& _v) const;
-	Vector3_t<T> operator*(const T& n) const;
-	Vector3_t<T> operator/(const T& n) const;
+	Vector3_t<T>& operator+=(const Vector3_t<T>& _v);
+	Vector3_t<T>& operator+=(const T& n);
+	Vector3_t<T>& operator-=(const Vector3_t<T>& _v);
+	Vector3_t<T>& operator-=(const T& n);
+	Vector3_t<T>& operator*=(const Vector3_t<T>& _v);
+	Vector3_t<T>& operator*=(const T& n);
+	Vector3_t<T>& operator/=(const T& n);
+
+	Vector3_t<T> operator+(const Vector3_t<T>& _v) const{	return Vector3_t<T>(*this) += _v;	};
+	Vector3_t<T> operator+(const T& n) const{	return Vector3_t<T>(*this) += n;	};
+	Vector3_t<T> operator-() const{	return (*this) * (-1);	};
+	Vector3_t<T> operator-(const Vector3_t<T>& _v) const{	return Vector3_t<T>(*this) -= _v;	};
+	Vector3_t<T> operator-(const T& n) const{	return Vector3_t<T>(*this) -= n;	};
+	Vector3_t<T> operator*(const Vector3_t<T>& _v) const{	return Vector3_t<T>(*this) *= _v;	};
+	Vector3_t<T> operator*(const T& n) const{	return Vector3_t<T>(*this) *= n;	};
+	Vector3_t<T> operator/(const T& n) const{	return Vector3_t<T>(*this) *= n;	};
 	bool operator==(const Vector3_t<T>& _v);
 	bool operator!=(const Vector3_t<T>& _v);
 	T operator[](const unsigned int& i) const;
@@ -112,16 +129,25 @@ struct Point_t
 	template<typename TT>
 	friend std::ostream& operator<<(std::ostream& o, const Point_t<TT>& _p);
 
-	Vector3_t<T> operator-(const Point_t<T>& _p) const;
 	Point_t<T>& operator()(const T _x = T(), const T _y = T(), const T _z = T());
-	Point_t<T> operator+(const Vector3_t<T>& _v) const;
-	Point_t<T> operator+(const T& n) const;
-	Point_t<T> operator-() const;
-	Point_t<T> operator-(const Vector3_t<T>& _v) const;
-	Point_t<T> operator-(const T& n) const;
-	Point_t<T> operator*(const Vector3_t<T>& _v) const;
-	Point_t<T> operator*(const T& n) const;
-	Point_t<T> operator/(const T& n) const;
+	Point_t<T>& operator+=(const Vector3_t<T>& _v);
+	Point_t<T>& operator+=(const T& n);
+	Point_t<T>& operator-=(const Vector3_t<T>& _v);
+	Point_t<T>& operator-=(const T& n);
+	Point_t<T>& operator*=(const Vector3_t<T>& _v);
+	Point_t<T>& operator*=(const T& n);
+	Point_t<T>& operator/=(const T& n);
+
+	Point_t<T> operator+(const Vector3_t<T>& _v) const{	return Point_t<T>(*this) += _v;	};
+	Point_t<T> operator+(const T& n) const{	return Point_t<T>(*this) += n;	};
+	Point_t<T> operator-() const{	return Point_t<T>(*this) * (-1);	};
+	Point_t<T> operator-(const Vector3_t<T>& _v) const{	return Point_t<T>(*this) -= _v;	};
+	Point_t<T> operator-(const T& n) const{	return Point_t<T>(*this) -= n;	};
+	Point_t<T> operator*(const Vector3_t<T>& _v) const{	return Point_t<T>(*this) *= _v;	};
+	Point_t<T> operator*(const T& n) const{	return Point_t<T>(*this) *= n;	};
+	Point_t<T> operator/(const T& n) const{	return Point_t<T>(*this) /= n;	};
+
+	Vector3_t<T> operator-(const Point_t<T>& _p) const;
 	bool operator==(const Point_t<T>& _v);
 	bool operator!=(const Point_t<T>& _v);
 	T operator[](const unsigned int& i) const;
@@ -162,14 +188,22 @@ struct Vector4_t
 	friend std::ostream& operator<<(std::ostream& o, const Vector4_t<TT>& _v);
 
 	Vector4_t<T>& operator()(const T _x = T(), const T _y = T(), const T _z = T(), const T _w = T());
-	Vector4_t<T> operator+(const Vector4_t<T>& _v) const;
-	Vector4_t<T> operator+(const T& n) const;
-	Vector4_t<T> operator-() const;
-	Vector4_t<T> operator-(const Vector4_t<T>& _v) const;
-	Vector4_t<T> operator-(const T& n) const;
-	Vector4_t<T> operator*(const Vector4_t<T>& _v) const;
-	Vector4_t<T> operator*(const T& n) const;
-	Vector4_t<T> operator/(const T& n) const;
+	Vector4_t<T>& operator+=(const Vector4_t<T>& _v);
+	Vector4_t<T>& operator+=(const T& n);
+	Vector4_t<T>& operator-=(const Vector4_t<T>& _v);
+	Vector4_t<T>& operator-=(const T& n);
+	Vector4_t<T>& operator*=(const Vector4_t<T>& _v);
+	Vector4_t<T>& operator*=(const T& n);
+	Vector4_t<T>& operator/=(const T& n);
+
+	Vector4_t<T> operator+(const Vector4_t<T>& _v) const{	return Vector4_t<T>(*this) += _v;	};
+	Vector4_t<T> operator+(const T& n) const{	return Vector4_t<T>(*this) += n;	};
+	Vector4_t<T> operator-() const{	return (*this) * (-1);	};
+	Vector4_t<T> operator-(const Vector4_t<T>& _v) const{	return Vector4_t<T>(*this) -= _v;	};
+	Vector4_t<T> operator-(const T& n) const{	return Vector4_t<T>(*this) -= n;	};
+	Vector4_t<T> operator*(const Vector4_t<T>& _v) const{	return Vector4_t<T>(*this) *= _v;	};
+	Vector4_t<T> operator*(const T& n) const{	return Vector4_t<T>(*this) *= n;	};
+	Vector4_t<T> operator/(const T& n) const{	return Vector4_t<T>(*this) /= n;	};
 	bool operator==(const Vector4_t<T>& _v);
 	bool operator!=(const Vector4_t<T>& _v);
 	T operator[](const unsigned int& i) const;

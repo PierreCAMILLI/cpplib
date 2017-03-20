@@ -10,43 +10,46 @@ Vector2_t<T>& Vector2_t<T>::operator()(const T _x, const T _y){
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::operator+(const Vector2_t<T>& _v) const{
-	return Vector2_t<T>(x + _v.x, y + _v.y);
+Vector2_t<T>& Vector2_t<T>::operator+=(const Vector2_t<T>& _v){
+	x += _v.x;
+	y += _v.y;
+	return (*this);
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::operator+(const T& n) const{
-	return Vector2_t<T>(x + n, y + n);
+Vector2_t<T>& Vector2_t<T>::operator+=(const T& n){
+	x += n;
+	y += n;
+	return (*this);
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::operator-() const{
-	return (*this) * (-1);
+Vector2_t<T>& Vector2_t<T>::operator-=(const Vector2_t<T>& _v){
+	return (*this) += (-_v);
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::operator-(const Vector2_t<T>& _v) const{
-	return (*this) + (-_v);
+Vector2_t<T>& Vector2_t<T>::operator-=(const T& n){
+	return (*this) += (-n);
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::operator-(const T& n) const{
-	return (*this) + (-n);
+Vector2_t<T>& Vector2_t<T>::operator*=(const Vector2_t<T>& _v){
+	x *= _v.x;
+	y *= _v.y;
+	return (*this);
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::operator*(const Vector2_t<T>& _v) const{
-	return Vector2_t<T>(x * _v.x, y * _v.y);
+Vector2_t<T>& Vector2_t<T>::operator*=(const T& n){
+	x *= n;
+	y *= n;
+	return (*this);
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::operator*(const T& n) const{
-	return Vector2_t<T>(x * n, y * n);
-}
-
-template<typename T>
-Vector2_t<T> Vector2_t<T>::operator/(const T& n) const{
-	return (*this) * (1/n);
+Vector2_t<T>& Vector2_t<T>::operator/=(const T& n){
+	return (*this) *= (1/n);
 }
 
 template<typename T>
@@ -103,47 +106,50 @@ Vector3_t<T>& Vector3_t<T>::operator()(const T _x, const T _y, const T _z){
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::operator+(const Vector3_t<T>& _v) const{
-	return Vector3_t<T>(x + _v.x, y + _v.y, z + _v.z);
+Vector3_t<T>& Vector3_t<T>::operator+=(const Vector3_t<T>& _v){
+	x += _v.x;
+	y += _v.y;
+	z += _v.z;
+	return (*this);
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::operator+(const T& n) const{
-	return Vector3_t<T>(x + n, y + n, z + n);
+Vector3_t<T>& Vector3_t<T>::operator+=(const T& n){
+	x += n;
+	y += n;
+	z += n;
+	return (*this);
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::operator-() const{
-	return (*this) * (-1);
+Vector3_t<T>& Vector3_t<T>::operator-=(const Vector3_t<T>& _v){
+	return (*this) += (-_v);
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::operator-(const Vector3_t<T>& _v) const{
-	return (*this) + (-_v);
+Vector3_t<T>& Vector3_t<T>::operator-=(const T& n){
+	return (*this) += (-n);
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::operator-(const T& n) const{
-	return (*this) + (-n);
+Vector3_t<T>& Vector3_t<T>::operator*=(const Vector3_t<T>& _v){
+		x *= _v.x;
+		y *= _v.y;
+		z *= _v.z;
+		return (*this);
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::operator*(const Vector3_t<T>& _v) const{
-	return Vector3_t<T>(
-		x * _v.x,
-		y * _v.y,
-		z * _v.z
-		);
+Vector3_t<T>& Vector3_t<T>::operator*=(const T& n){
+	x *= n;
+	y *= n;
+	z *= n;
+	return (*this);
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::operator*(const T& n) const{
-	return Vector3_t<T>(x * n, y * n, z * n);
-}
-
-template<typename T>
-Vector3_t<T> Vector3_t<T>::operator/(const T& n) const{
-	return (*this) * (1/n);
+Vector3_t<T>& Vector3_t<T>::operator/=(const T& n){
+	return (*this) *= (1/n);
 }
 
 template<typename T>
@@ -209,48 +215,55 @@ Point_t<T>& Point_t<T>::operator()(const T _x, const T _y, const T _z){
 }
 
 template<typename T>
+Point_t<T>& Point_t<T>::operator+=(const Vector3_t<T>& _v){
+	x += _v.x;
+	y += _v.y;
+	z += _v.z;
+	return (*this);
+}
+
+template<typename T>
+Point_t<T>& Point_t<T>::operator+=(const T& n){
+	x -= n;
+	y -= n;
+	z -= n;
+	return (*this);
+}
+
+template<typename T>
+Point_t<T>& Point_t<T>::operator-=(const Vector3_t<T>& _v){
+	return (*this) += (-_v);
+}
+
+template<typename T>
+Point_t<T>& Point_t<T>::operator-=(const T& n){
+	return (*this) += (-n);
+}
+
+template<typename T>
+Point_t<T>& Point_t<T>::operator*=(const Vector3_t<T>& _v){
+	x *= _v.x;
+	y *= _v.y;
+	z *= _v.z;
+	return (*this);
+}
+
+template<typename T>
+Point_t<T>& Point_t<T>::operator*=(const T& n){
+	x *= n;
+	y *= n;
+	z *= n;
+	return (*this);
+}
+
+template<typename T>
+Point_t<T>& Point_t<T>::operator/=(const T& n){
+	return (*this) *= (1/n);
+}
+
+template<typename T>
 Vector3_t<T> Point_t<T>::operator-(const Point_t<T>& _p) const{
-	return Vector3_t<T>(x - _p.x, y - _p.y);
-}
-
-template<typename T>
-Point_t<T> Point_t<T>::operator+(const Vector3_t<T>& _v) const{
-	return Point_t<T>(x + _v.x, y + _v.y, z + _v.z);
-}
-
-template<typename T>
-Point_t<T> Point_t<T>::operator+(const T& n) const{
-	return Point_t<T>(x + n, y + n, z + n);
-}
-
-template<typename T>
-Point_t<T> Point_t<T>::operator-() const{
-	return (*this) * (-1);
-}
-
-template<typename T>
-Point_t<T> Point_t<T>::operator-(const Vector3_t<T>& _v) const{
-	return (*this) + (-_v);
-}
-
-template<typename T>
-Point_t<T> Point_t<T>::operator-(const T& n) const{
-	return (*this) + (-n);
-}
-
-template<typename T>
-Point_t<T> Point_t<T>::operator*(const Vector3_t<T>& _v) const{
-	return Point_t<T>(x * _v.x, y * _v.y, z * _v.z);
-}
-
-template<typename T>
-Point_t<T> Point_t<T>::operator*(const T& n) const{
-	return Point_t<T>(x * n, y * n, z * n);
-}
-
-template<typename T>
-Point_t<T> Point_t<T>::operator/(const T& n) const{
-	return (*this) * (1/n);
+	return Vector3_t<T>(x - _p.x, y - _p.y, z - _p.z);
 }
 
 template<typename T>
@@ -302,46 +315,54 @@ Vector4_t<T>& Vector4_t<T>::operator()(const T _x, const T _y, const T _z, const
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::operator+(const Vector4_t<T>& _v) const{
-	return Vector4_t<T>(x + _v.x, y + _v.y, z + _v.z, w + _v.w);
+Vector4_t<T>& Vector4_t<T>::operator+=(const Vector4_t<T>& _v){
+	x += _v.x;
+	y += _v.y;
+	z += _v.z;
+	w += _v.w;
+	return (*this);
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::operator+(const T& n) const{
-	return Vector4_t<T>(x + n, y + n, z + n, w + n);
+Vector4_t<T>& Vector4_t<T>::operator+=(const T& n){
+	x += n;
+	y += n;
+	z += n;
+	w += n;
+	return (*this);
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::operator-() const{
-	return (*this) * (-1);
+Vector4_t<T>& Vector4_t<T>::operator-=(const Vector4_t<T>& _v){
+	return (*this) += (-_v);
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::operator-(const Vector4_t<T>& _v) const{
-	return (*this) + (-_v);
+Vector4_t<T>& Vector4_t<T>::operator-=(const T& n){
+	return (*this) += (-n);
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::operator-(const T& n) const{
-	return (*this) + (-n);
+Vector4_t<T>& Vector4_t<T>::operator*=(const Vector4_t<T>& _v){
+	x *= _v.x;
+	y *= _v.y;
+	z *= _v.z;
+	w *= _v.w;
+	return (*this);
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::operator*(const Vector4_t<T>& _v) const{
-	return Vector4_t<T>(x * _v.x,
-						y * _v.y,
-						z * _v.z,
-						w * _v.w);
+Vector4_t<T>& Vector4_t<T>::operator*=(const T& n){
+	x *= n;
+	y *= n;
+	z *= n;
+	w *= n;
+	return (*this);
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::operator*(const T& n) const{
-	return Vector3_t<T>(x * n, y * n, z * n, w * n);
-}
-
-template<typename T>
-Vector4_t<T> Vector4_t<T>::operator/(const T& n) const{
-	return (*this) * (1/n);
+Vector4_t<T>& Vector4_t<T>::operator/=(const T& n){
+	return (*this) *= (1/n);
 }
 
 template<typename T>

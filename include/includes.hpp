@@ -20,4 +20,6 @@
 #include "matrix2.hpp"
 #include "curve.hpp"
 #include "mesh.hpp"
-#include "geo.hpp"
+#include "ray.hpp"
+#include "shape.hpp"
+#include "shape2d.hpp"
