@@ -85,7 +85,7 @@ T Vector2_t<T>::dot(const Vector2_t<T>& _v) const{
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::normalize() const{
+Vector2_t<T> Vector2_t<T>::normalized() const{
 	T kk = 1/length();
 	return (*this) * kk;
 }
@@ -194,7 +194,7 @@ Vector3_t<T> Vector3_t<T>::cross(const Vector3_t<T>& _v) const{
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::normalize() const{
+Vector3_t<T> Vector3_t<T>::normalized() const{
 	T kk = 1/length();
 	return (*this) * kk;
 }
@@ -398,7 +398,7 @@ T Vector4_t<T>::dot(const Vector3_t<T>& _v) const{
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::normalize() const{
+Vector4_t<T> Vector4_t<T>::normalized() const{
 	T kk = 1/length();
 	return (*this) * kk;
 }

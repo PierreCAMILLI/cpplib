@@ -50,7 +50,7 @@ struct Vector2_t
 
 	T length() const;
 	T dot(const Vector2_t<T>& _v) const;
-	Vector2_t<T> normalize() const;
+	Vector2_t<T> normalized() const;
 
 	void display();
 };
@@ -102,7 +102,7 @@ struct Vector3_t
 	T length() const;
 	T dot(const Vector3_t<T>& _v) const;
 	Vector3_t<T> cross(const Vector3_t<T>& _v) const;
-	Vector3_t<T> normalize() const;
+	Vector3_t<T> normalized() const;
 
 	void display();
 };
@@ -211,7 +211,7 @@ struct Vector4_t
 
 	T length() const;
 	T dot(const Vector3_t<T>& _v) const;
-	Vector4_t<T> normalize() const;
+	Vector4_t<T> normalized() const;
 
 	void display();
 };
