@@ -16,7 +16,6 @@
 
 #include "perlin.hpp"
 #include "vector.hpp"
-#include "matrix.hpp"
 #include "matrix2.hpp"
 #include "curve.hpp"
 #include "mesh.hpp"

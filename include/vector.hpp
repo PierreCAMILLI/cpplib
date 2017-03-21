@@ -48,11 +48,11 @@ struct Vector2_t
 	T operator[](const unsigned int& i) const;
 	T& operator[](const unsigned int& i);
 
-	T length() const;
-	T dot(const Vector2_t<T>& _v) const;
-	Vector2_t<T> normalized() const;
+	T Length() const;
+	T Dot(const Vector2_t<T>& _v) const;
+	Vector2_t<T> Normalized() const;
 
-	void display();
+	void Display();
 };
 
 template<typename T>
@@ -99,12 +99,12 @@ struct Vector3_t
 	T operator[](const unsigned int& i) const;
 	T& operator[](const unsigned int& i);
 
-	T length() const;
-	T dot(const Vector3_t<T>& _v) const;
-	Vector3_t<T> cross(const Vector3_t<T>& _v) const;
-	Vector3_t<T> normalized() const;
+	T Length() const;
+	T Dot(const Vector3_t<T>& _v) const;
+	Vector3_t<T> Cross(const Vector3_t<T>& _v) const;
+	Vector3_t<T> Normalized() const;
 
-	void display();
+	void Display();
 };
 
 template<typename T>
@@ -153,10 +153,10 @@ struct Point_t
 	T operator[](const unsigned int& i) const;
 	T& operator[](const unsigned int& i);
 
-	T distance(const Point_t<T>& _p) const;
-	Point_t<T> center(const Point_t<T>& _p) const;
+	T Distance(const Point_t<T>& _p) const;
+	Point_t<T> Center(const Point_t<T>& _p) const;
 
-	void display();
+	void Display();
 };
 
 template<typename T>
@@ -209,11 +209,11 @@ struct Vector4_t
 	T operator[](const unsigned int& i) const;
 	T& operator[](const unsigned int& i);
 
-	T length() const;
-	T dot(const Vector3_t<T>& _v) const;
-	Vector4_t<T> normalized() const;
+	T Length() const;
+	T Dot(const Vector3_t<T>& _v) const;
+	Vector4_t<T> Normalized() const;
 
-	void display();
+	void Display();
 };
 
 template<typename T>

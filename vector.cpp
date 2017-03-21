@@ -75,23 +75,23 @@ T& Vector2_t<T>::operator[](const unsigned int& i){
 }
 
 template<typename T>
-T Vector2_t<T>::length() const{
+T Vector2_t<T>::Length() const{
 	return sqrt((x * x) + (y * y));
 }
 
 template<typename T>
-T Vector2_t<T>::dot(const Vector2_t<T>& _v) const{
+T Vector2_t<T>::Dot(const Vector2_t<T>& _v) const{
 	return (x * _v.x) + (y * _v.y);
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::normalized() const{
-	T kk = 1/length();
+Vector2_t<T> Vector2_t<T>::Normalized() const{
+	T kk = 1/Length();
 	return (*this) * kk;
 }
 
 template<typename T>
-void Vector2_t<T>::display(){
+void Vector2_t<T>::Display(){
 	std::cout << x << "\t" << y << std::endl;
 }
 
@@ -175,17 +175,17 @@ T& Vector3_t<T>::operator[](const unsigned int& i){
 }
 
 template<typename T>
-T Vector3_t<T>::length() const{
+T Vector3_t<T>::Length() const{
 	return sqrt((x * x) + (y * y) + (z * z));
 }
 
 template<typename T>
-T Vector3_t<T>::dot(const Vector3_t<T>& _v) const{
+T Vector3_t<T>::Dot(const Vector3_t<T>& _v) const{
 	return (x * _v.x) + (y * _v.y) + (z * _v.z);
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::cross(const Vector3_t<T>& _v) const{
+Vector3_t<T> Vector3_t<T>::Cross(const Vector3_t<T>& _v) const{
 	return Vector3_t<T>(
 		(y * _v.z) - (z * _v.y),
 		(z * _v.x) - (x * _v.z),
@@ -194,13 +194,13 @@ Vector3_t<T> Vector3_t<T>::cross(const Vector3_t<T>& _v) const{
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::normalized() const{
-	T kk = 1/length();
+Vector3_t<T> Vector3_t<T>::Normalized() const{
+	T kk = 1/Length();
 	return (*this) * kk;
 }
 
 template<typename T>
-void Vector3_t<T>::display(){
+void Vector3_t<T>::Display(){
 	std::cout << x << "\t" << y << "\t" << z << std::endl;
 }
 
@@ -289,17 +289,17 @@ T& Point_t<T>::operator[](const unsigned int& i){
 }
 
 template<typename T>
-T Point_t<T>::distance(const Point_t<T>& _p) const{
-	return (Vector3_t<T>(_p) - Vector3_t<T>(*this)).length();
+T Point_t<T>::Distance(const Point_t<T>& _p) const{
+	return (Vector3_t<T>(_p) - Vector3_t<T>(*this)).Length();
 }
 
 template<typename T>
-Point_t<T> Point_t<T>::center(const Point_t<T>& _p) const{
+Point_t<T> Point_t<T>::Center(const Point_t<T>& _p) const{
 	return Point_t<T>(x + _p.x, y + _p.y, z + _p.z) / 2.0f;
 }
 
 template<typename T>
-void Point_t<T>::display(){
+void Point_t<T>::Display(){
 	std::cout << x << "\t" << y << "\t" << z << std::endl;
 }
 
@@ -388,23 +388,23 @@ T& Vector4_t<T>::operator[](const unsigned int& i){
 }
 
 template<typename T>
-T Vector4_t<T>::length() const{
+T Vector4_t<T>::Length() const{
 	return sqrt((x * x) + (y * y) + (z * z) + (w * w));
 }
 
 template<typename T>
-T Vector4_t<T>::dot(const Vector3_t<T>& _v) const{
+T Vector4_t<T>::Dot(const Vector3_t<T>& _v) const{
 	return (x * _v.x) + (y * _v.y) + (z * _v.z) + (w * _v.w);
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::normalized() const{
-	T kk = 1/length();
+Vector4_t<T> Vector4_t<T>::Normalized() const{
+	T kk = 1/Length();
 	return (*this) * kk;
 }
 
 template<typename T>
-void Vector4_t<T>::display(){
+void Vector4_t<T>::Display(){
 	std::cout << x << "\t" << y << "\t" << z << "\t" << w << std::endl;
 }
 

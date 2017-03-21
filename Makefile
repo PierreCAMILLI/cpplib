@@ -14,7 +14,7 @@ BIND 		= 	bin
 
 EXEC 		=	lib_test
 
-OBJFILES 	=	lib_test.o perlin.o vector.o matrix.o matrix2.o curve.o mesh.o ray.o shape.o shape2d.o
+OBJFILES 	=	lib_test.o perlin.o vector.o matrix2.o curve.o mesh.o ray.o shape.o shape2d.o
 OBJS 		= 	$(OBJFILES:%.o=$(OBJD)/%.o)
 
 NO_COLOR	=	$(shell $(ECHO) "\033[0;0m")

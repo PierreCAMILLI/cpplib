@@ -2,6 +2,18 @@
 
 #include "includes.hpp"
 
+template<typename T>
+struct Vector2_t;
+
+template<typename T>
+struct Vector3_t;
+
+template<typename T>
+struct Point_t;
+
+template<typename T>
+struct Vector4_t;
+
 template<typename T, unsigned int U, unsigned int V>
 class Matrix_r{
 	private:
@@ -14,8 +26,8 @@ class Matrix_r{
 		Matrix_r<T,U,V>(T* const _t);
 		Matrix_r<T,U,V>(T** const _t);
 		Matrix_r<T,U,V>(const Matrix_r<T,U,V>& _m);
-		Matrix_r<T,U,V> copy() const;
-		void release();
+		Matrix_r<T,U,V> Copy() const;
+		void Release();
 		static Matrix_r<T,U,V> Identity();
 
 		Matrix_r<T,U,V>(const T m00, const T m10,
@@ -62,46 +74,46 @@ class Matrix_r{
 		template<typename TT,unsigned int UU, unsigned int VV>
 		friend std::ostream& operator<<(std::ostream& o, const Matrix_r<TT,UU,VV>& _m);
 
-		const T* constData() const;
-		T* data() const;
-		T** data2D() const;
+		const T* ConstData() const;
+		T* Data() const;
+		T** Data2D() const;
 
-		Matrix_r<T,U,V>& fill(const T n);
-		Matrix_r<T,U,V>& fill(const T* const _t);
-		Matrix_r<T,U,V>& fill(T* const _t);
-		Matrix_r<T,U,V>& fill(T** const _t);
-		Matrix_r<T,U,V>& fill(	const T m00, const T m10,
+		Matrix_r<T,U,V>& Fill(const T n);
+		Matrix_r<T,U,V>& Fill(const T* const _t);
+		Matrix_r<T,U,V>& Fill(T* const _t);
+		Matrix_r<T,U,V>& Fill(T** const _t);
+		Matrix_r<T,U,V>& Fill(	const T m00, const T m10,
 								const T m01, const T m11);
-		Matrix_r<T,U,V>& fill(	const T m00, const T m10, const T m20,
+		Matrix_r<T,U,V>& Fill(	const T m00, const T m10, const T m20,
 								const T m01, const T m11, const T m21,
 								const T m02, const T m12, const T m22);
-		Matrix_r<T,U,V>& fill(	const T m00, const T m10, const T m20, const T m30,
+		Matrix_r<T,U,V>& Fill(	const T m00, const T m10, const T m20, const T m30,
 								const T m01, const T m11, const T m21, const T m31,
 								const T m02, const T m12, const T m22, const T m32,
 								const T m03, const T m13, const T m23, const T m33);
 
-		Matrix_r<T,U,V>& fillRow(const unsigned int r, const T n);
-		Matrix_r<T,U,V>& fillRow(const unsigned int r, const T* const _t);
-		Matrix_r<T,U,V>& fillRow(const unsigned int r, T* const _t);
-		Matrix_r<T,U,V>& fillRow(const unsigned int r, const T m0, const T m1);
-		Matrix_r<T,U,V>& fillRow(const unsigned int r, const T m0, const T m1, const T m2);
-		Matrix_r<T,U,V>& fillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3);
-		Matrix_r<T,U,V>& fillColumn(const unsigned int c, const T n);
-		Matrix_r<T,U,V>& fillColumn(const unsigned int c, const T* const _t);
-		Matrix_r<T,U,V>& fillColumn(const unsigned int c, T* const _t);
-		Matrix_r<T,U,V>& fillColumn(const unsigned int c, const T m0, const T m1);
-		Matrix_r<T,U,V>& fillColumn(const unsigned int c, const T m0, const T m1, const T m2);
-		Matrix_r<T,U,V>& fillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3);
-		Matrix_r<T,U,V>& switchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2);
+		Matrix_r<T,U,V>& FillRow(const unsigned int r, const T n);
+		Matrix_r<T,U,V>& FillRow(const unsigned int r, const T* const _t);
+		Matrix_r<T,U,V>& FillRow(const unsigned int r, T* const _t);
+		Matrix_r<T,U,V>& FillRow(const unsigned int r, const T m0, const T m1);
+		Matrix_r<T,U,V>& FillRow(const unsigned int r, const T m0, const T m1, const T m2);
+		Matrix_r<T,U,V>& FillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3);
+		Matrix_r<T,U,V>& FillColumn(const unsigned int c, const T n);
+		Matrix_r<T,U,V>& FillColumn(const unsigned int c, const T* const _t);
+		Matrix_r<T,U,V>& FillColumn(const unsigned int c, T* const _t);
+		Matrix_r<T,U,V>& FillColumn(const unsigned int c, const T m0, const T m1);
+		Matrix_r<T,U,V>& FillColumn(const unsigned int c, const T m0, const T m1, const T m2);
+		Matrix_r<T,U,V>& FillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3);
+		Matrix_r<T,U,V>& SwitchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2);
 
-		void setToIdentity();
-		Matrix_r<T,U-1,V-1> reduce(const unsigned int x, const unsigned int y) const;
-		Matrix_r<T,V,U> transpose() const;
+		void SetToIdentity();
+		Matrix_r<T,U-1,V-1> Reduce(const unsigned int x, const unsigned int y) const;
+		Matrix_r<T,V,U> Transpose() const;
 
-		void display();
-		void display(const unsigned int x, const unsigned int y);
-		void displayColumn(const unsigned int x);
-		void displayRow(const unsigned int y);
+		void Display();
+		void Display(const unsigned int x, const unsigned int y);
+		void DisplayColumn(const unsigned int x);
+		void DisplayRow(const unsigned int y);
 };
 
 template<typename T,unsigned int U>
@@ -124,9 +136,9 @@ class Matrix_r<T,U,U>{
 		//! Construit une matrice de taille U à partir de la matrice _m
 		Matrix_r<T,U,U>(const Matrix_r<T,U,U>& _m);
 		//! Retourne une copie de la matrice
-		Matrix_r<T,U,U> copy() const;
+		Matrix_r<T,U,U> Copy() const;
 		//! Libère la matrice en mémoire
-		void release();
+		void Release();
 		//! Retourne l'identité de la matrice de taille U
 		static Matrix_r<T,U,U> Identity();
 
@@ -169,71 +181,71 @@ class Matrix_r<T,U,U>{
 		bool operator!=(const Matrix_r<T,U,U>& _m);
 		
 		//! Retourne un tableau constant des données de la matrice
-		const T* constData() const;
+		const T* ConstData() const;
 		//! Retourne un tableau des données de la matrice
-		T* data() const;
+		T* Data() const;
 		//! Retourne un tableau 2D des données de la matrice
-		T** data2D() const;
+		T** Data2D() const;
 
 		//! Rempli la matrice avec la valeur n
-		Matrix_r<T,U,U>& fill(const T n);
+		Matrix_r<T,U,U>& Fill(const T n);
 		//! Rempli la matrice avec les valeurs dans _t
-		Matrix_r<T,U,U>& fill(const T* const _t);
+		Matrix_r<T,U,U>& Fill(const T* const _t);
 		//! Rempli la matrice avec les valeurs dans _t
-		Matrix_r<T,U,U>& fill(T* const _t);
+		Matrix_r<T,U,U>& Fill(T* const _t);
 		//! Rempli la matrice avec les valeurs dans _t
-		Matrix_r<T,U,U>& fill(T** const _t);
-		Matrix_r<T,U,U>& fill(	const T m00, const T m10,
+		Matrix_r<T,U,U>& Fill(T** const _t);
+		Matrix_r<T,U,U>& Fill(	const T m00, const T m10,
 								const T m01, const T m11);
-		Matrix_r<T,U,U>& fill(	const T m00, const T m10, const T m20,
+		Matrix_r<T,U,U>& Fill(	const T m00, const T m10, const T m20,
 								const T m01, const T m11, const T m21,
 								const T m02, const T m12, const T m22);
-		Matrix_r<T,U,U>& fill(	const T m00, const T m10, const T m20, const T m30,
+		Matrix_r<T,U,U>& Fill(	const T m00, const T m10, const T m20, const T m30,
 								const T m01, const T m11, const T m21, const T m31,
 								const T m02, const T m12, const T m22, const T m32,
 								const T m03, const T m13, const T m23, const T m33);
 		//! Rempli la ligne r de la matrice avec la valeur n
-		Matrix_r<T,U,U>& fillRow(const unsigned int r, const T n);
+		Matrix_r<T,U,U>& FillRow(const unsigned int r, const T n);
 		//! Rempli la ligne r de la matrice avec les valeurs dans _t
-		Matrix_r<T,U,U>& fillRow(const unsigned int r, const T* const _t);
+		Matrix_r<T,U,U>& FillRow(const unsigned int r, const T* const _t);
 		//! Rempli la ligne r de la matrice avec les valeurs dans _t
-		Matrix_r<T,U,U>& fillRow(const unsigned int r, T* const _t);
-		Matrix_r<T,U,U>& fillRow(const unsigned int r, const T m0, const T m1);
-		Matrix_r<T,U,U>& fillRow(const unsigned int r, const T m0, const T m1, const T m2);
-		Matrix_r<T,U,U>& fillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3);
+		Matrix_r<T,U,U>& FillRow(const unsigned int r, T* const _t);
+		Matrix_r<T,U,U>& FillRow(const unsigned int r, const T m0, const T m1);
+		Matrix_r<T,U,U>& FillRow(const unsigned int r, const T m0, const T m1, const T m2);
+		Matrix_r<T,U,U>& FillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3);
 		//! Rempli la colonne c de la matrice avec la valeur n
-		Matrix_r<T,U,U>& fillColumn(const unsigned int c, const T n);
+		Matrix_r<T,U,U>& FillColumn(const unsigned int c, const T n);
 		//! Rempli la colonne c de la matrice avec les valeurs dans _t
-		Matrix_r<T,U,U>& fillColumn(const unsigned int c, const T* const _t);
+		Matrix_r<T,U,U>& FillColumn(const unsigned int c, const T* const _t);
 		//! Rempli la colonne c de la matrice avec les valeurs dans _t
-		Matrix_r<T,U,U>& fillColumn(const unsigned int c, T* const _t);
-		Matrix_r<T,U,U>& fillColumn(const unsigned int c, const T m0, const T m1);
-		Matrix_r<T,U,U>& fillColumn(const unsigned int c, const T m0, const T m1, const T m2);
-		Matrix_r<T,U,U>& fillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3);
+		Matrix_r<T,U,U>& FillColumn(const unsigned int c, T* const _t);
+		Matrix_r<T,U,U>& FillColumn(const unsigned int c, const T m0, const T m1);
+		Matrix_r<T,U,U>& FillColumn(const unsigned int c, const T m0, const T m1, const T m2);
+		Matrix_r<T,U,U>& FillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3);
 		//! Inverse les cellules aux coordonnées (x1,y1) et (x2,y2)
-		Matrix_r<T,U,U>&  switchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2);
+		Matrix_r<T,U,U>&  SwitchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2);
 
 		//! Transforme les valeurs de la matrice en celles de l'identité
-		void setToIdentity();
+		void SetToIdentity();
 		//! Retourne la matrice privée de sa colonne x et de sa ligne y
-		Matrix_r<T,U-1,U-1> reduce(const unsigned int x, const unsigned int y) const;
+		Matrix_r<T,U-1,U-1> Reduce(const unsigned int x, const unsigned int y) const;
 		//! Retourne le déterminant de la matrice
-		T determinant() const;
+		T Determinant() const;
 		//! Retourne la transposée de la matrice
-		Matrix_r<T,U,U> transpose() const;
+		Matrix_r<T,U,U> Transpose() const;
 		//! Retourne l'inverse de la matrice
-		Matrix_r<T,U,U> invert() const;
+		Matrix_r<T,U,U> Invert() const;
 		//! Retourne la normale de la matrice
-		Matrix_r<T,U,U> normale() const;
+		Matrix_r<T,U,U> Normale() const;
 
 		//! Affiche la matrice entière
-		void display();
+		void Display();
 		//! Affiche la cellule (x,y) de la matrice
-		void display(const unsigned int x, const unsigned int y);
+		void Display(const unsigned int x, const unsigned int y);
 		//! Affiche la colonne x de la matrice
-		void displayColumn(const unsigned int x);
+		void DisplayColumn(const unsigned int x);
 		//! Affiche la ligne y de la matrice
-		void displayRow(const unsigned int y);
+		void DisplayRow(const unsigned int y);
 };
 
 template<typename TT, unsigned int UU, unsigned int VV, unsigned int WW>
@@ -275,8 +287,8 @@ class Matrix_r<T,0,0>{
 		Matrix_r<T,0,0>(T* const _t){}
 		Matrix_r<T,0,0>(T** const _t){}
 		Matrix_r<T,0,0>(const Matrix_r<T,0,0>& _m){}
-		Matrix_r<T,0,0> copy() const{	Matrix_r<T,0,0>();	}
-		void release(){}
+		Matrix_r<T,0,0> Copy() const{	Matrix_r<T,0,0>();	}
+		void Release(){}
 		static Matrix_r<T,0,0> Identity(){	return Matrix_r<T,0,0>();	}
 
 
@@ -293,48 +305,48 @@ class Matrix_r<T,0,0>{
 		bool operator==(const Matrix_r<T,0,0>& _m){	return true;	}
 		bool operator!=(const Matrix_r<T,0,0>& _m){	return false;	}
 
-		const T* constData() const{	return m;	}
-		T* data() const{	return m;	}
-		T** data2D() const{	return NULL; }
+		const T* ConstData() const{	return m;	}
+		T* Data() const{	return m;	}
+		T** Data2D() const{	return NULL; }
 
-		Matrix_r<T,0,0>& fill(const T n){	return (*this);	}
-		Matrix_r<T,0,0>& fill(const T* const _t){	return (*this);	}
-		Matrix_r<T,0,0>& fill(T* const _t){	return (*this);	}
-		Matrix_r<T,0,0>& fill(T** const _t){	return (*this);	}
-		Matrix_r<T,0,0>& fill(	const T m00, const T m10,
+		Matrix_r<T,0,0>& Fill(const T n){	return (*this);	}
+		Matrix_r<T,0,0>& Fill(const T* const _t){	return (*this);	}
+		Matrix_r<T,0,0>& Fill(T* const _t){	return (*this);	}
+		Matrix_r<T,0,0>& Fill(T** const _t){	return (*this);	}
+		Matrix_r<T,0,0>& Fill(	const T m00, const T m10,
 								const T m01, const T m11){	return (*this);	};
-		Matrix_r<T,0,0>& fill(	const T m00, const T m10, const T m20,
+		Matrix_r<T,0,0>& Fill(	const T m00, const T m10, const T m20,
 								const T m01, const T m11, const T m21,
 								const T m02, const T m12, const T m22){	return (*this);	};
-		Matrix_r<T,0,0>& fill(	const T m00, const T m10, const T m20, const T m30,
+		Matrix_r<T,0,0>& Fill(	const T m00, const T m10, const T m20, const T m30,
 								const T m01, const T m11, const T m21, const T m31,
 								const T m02, const T m12, const T m22, const T m32,
 								const T m03, const T m13, const T m23, const T m33){	return (*this);	};
-		Matrix_r<T,0,0>& fillRow(const unsigned int r, const T n){	return (*this);	}
-		Matrix_r<T,0,0>& fillRow(const unsigned int r, const T* const _t){	return (*this);	}
-		Matrix_r<T,0,0>& fillRow(const unsigned int r, T* const _t){	return (*this);	}
-		Matrix_r<T,0,0>& fillRow(const unsigned int r, const T m0, const T m1){	return (*this);	}
-		Matrix_r<T,0,0>& fillRow(const unsigned int r, const T m0, const T m1, const T m2){	return (*this);	}
-		Matrix_r<T,0,0>& fillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3){	return (*this);	}
-		Matrix_r<T,0,0>& fillColumn(const unsigned int c, const T n){	return (*this);	}
-		Matrix_r<T,0,0>& fillColumn(const unsigned int c, const T* const _t){	return (*this);	}
-		Matrix_r<T,0,0>& fillColumn(const unsigned int c, T* const _t){	return (*this);	}
-		Matrix_r<T,0,0>& fillColumn(const unsigned int c, const T m0, const T m1){	return (*this);	}
-		Matrix_r<T,0,0>& fillColumn(const unsigned int c, const T m0, const T m1, const T m2){	return (*this);	}
-		Matrix_r<T,0,0>& fillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3){	return (*this);	}
-		Matrix_r<T,0,0>& switchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2){	return (*this);	}
+		Matrix_r<T,0,0>& FillRow(const unsigned int r, const T n){	return (*this);	}
+		Matrix_r<T,0,0>& FillRow(const unsigned int r, const T* const _t){	return (*this);	}
+		Matrix_r<T,0,0>& FillRow(const unsigned int r, T* const _t){	return (*this);	}
+		Matrix_r<T,0,0>& FillRow(const unsigned int r, const T m0, const T m1){	return (*this);	}
+		Matrix_r<T,0,0>& FillRow(const unsigned int r, const T m0, const T m1, const T m2){	return (*this);	}
+		Matrix_r<T,0,0>& FillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3){	return (*this);	}
+		Matrix_r<T,0,0>& FillColumn(const unsigned int c, const T n){	return (*this);	}
+		Matrix_r<T,0,0>& FillColumn(const unsigned int c, const T* const _t){	return (*this);	}
+		Matrix_r<T,0,0>& FillColumn(const unsigned int c, T* const _t){	return (*this);	}
+		Matrix_r<T,0,0>& FillColumn(const unsigned int c, const T m0, const T m1){	return (*this);	}
+		Matrix_r<T,0,0>& FillColumn(const unsigned int c, const T m0, const T m1, const T m2){	return (*this);	}
+		Matrix_r<T,0,0>& FillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3){	return (*this);	}
+		Matrix_r<T,0,0>& SwitchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2){	return (*this);	}
 
-		void setToIdentity(){}
-		Matrix_r<T,0,0> reduce(const unsigned int x, const unsigned int y) const{	return Matrix_r<T,0,0>();	}
-		T determinant() const{	return m[0];	}
-		Matrix_r<T,0,0> transpose() const{	return Matrix_r<T,0,0>();	}
-		Matrix_r<T,0,0> invert() const{	return Matrix_r<T,0,0>();	}
-		Matrix_r<T,0,0> normale() const{	return Matrix_r<T,0,0>();	}
+		void SetToIdentity(){}
+		Matrix_r<T,0,0> Reduce(const unsigned int x, const unsigned int y) const{	return Matrix_r<T,0,0>();	}
+		T Determinant() const{	return m[0];	}
+		Matrix_r<T,0,0> Transpose() const{	return Matrix_r<T,0,0>();	}
+		Matrix_r<T,0,0> Invert() const{	return Matrix_r<T,0,0>();	}
+		Matrix_r<T,0,0> Normale() const{	return Matrix_r<T,0,0>();	}
 
-		void display(){}
-		void display(const unsigned int x, const unsigned int y){}
-		void displayColumn(const unsigned int x){}
-		void displayRow(const unsigned int y){}
+		void Display(){}
+		void Display(const unsigned int x, const unsigned int y){}
+		void DisplayColumn(const unsigned int x){}
+		void DisplayRow(const unsigned int y){}
 };
 
 /*
@@ -445,31 +457,31 @@ std::ostream& operator<<(std::ostream& o, const Matrix_r<TT,UU,VV>& _m)
 template<typename T,unsigned int U, unsigned int V>
 Matrix_r<T,U,V>::Matrix_r(){
 	m = (T*) malloc(sizeof(T)*U*V);
-	setToIdentity();
+	SetToIdentity();
 }
 
 template<typename T,unsigned int U, unsigned int V>
 Matrix_r<T,U,V>::Matrix_r(const T n){
 	m = (T*) malloc(sizeof(T)*U*V);
-	fill(n);
+	Fill(n);
 }
 
 template<typename T,unsigned int U, unsigned int V>
 Matrix_r<T,U,V>::Matrix_r(const T* const _t){
 	m = (T*) malloc(sizeof(T)*U*V);
-	fill(_t);
+	Fill(_t);
 }
 
 template<typename T,unsigned int U, unsigned int V>
 Matrix_r<T,U,V>::Matrix_r(T* const _t){
 	m = (T*) malloc(sizeof(T)*U*V);
-	fill(_t);
+	Fill(_t);
 }
 
 template<typename T,unsigned int U, unsigned int V>
 Matrix_r<T,U,V>::Matrix_r(T** const _t){
 	m = (T*) malloc(sizeof(T)*U*V);
-	fill(_t);
+	Fill(_t);
 }
 
 template<typename T,unsigned int U, unsigned int V>
@@ -482,11 +494,11 @@ Matrix_r<T,U,V>::Matrix_r(const Matrix_r<T,U,V>& _m){
 
 template<typename T,unsigned int U, unsigned int V>
 Matrix_r<T,U,V>::~Matrix_r<T,U,V>(){
-	//	release();
+	//	Release();
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V> Matrix_r<T,U,V>::copy() const{
+Matrix_r<T,U,V> Matrix_r<T,U,V>::Copy() const{
 	Matrix_r<T,U,V> res;
 	for(unsigned int i = 0; i < U*V; i++)
 		res.m[i] = m[i];
@@ -494,7 +506,7 @@ Matrix_r<T,U,V> Matrix_r<T,U,V>::copy() const{
 }
 
 template<typename T,unsigned int U, unsigned int V>
-void Matrix_r<T,U,V>::release(){
+void Matrix_r<T,U,V>::Release(){
 	free(m);
 }
 
@@ -510,7 +522,7 @@ Matrix_r<T,U,V>::Matrix_r(	const T m00, const T m10,
 	assert(U >= 2);
 	assert(V >= 2);
 	m = (T*) malloc(sizeof(T)*U*V);
-	fill(m00, m10,
+	Fill(m00, m10,
 		 m01, m11);
 }
 
@@ -521,7 +533,7 @@ Matrix_r<T,U,V>::Matrix_r(	const T m00, const T m10, const T m20,
 	assert(U >= 3);
 	assert(V >= 3);
 	m = (T*) malloc(sizeof(T)*U*V);
-	fill(m00, m10, m20,
+	Fill(m00, m10, m20,
 		 m01, m11, m21,
 		 m02, m12, m22);
 }
@@ -534,7 +546,7 @@ Matrix_r<T,U,V>::Matrix_r(	const T m00, const T m10, const T m20, const T m30,
 	assert(U >= 4);
 	assert(V >= 4);
 	m = (T*) malloc(sizeof(T)*U*V);
-	fill(m00, m10, m20, m30,
+	Fill(m00, m10, m20, m30,
 		 m01, m11, m21, m31,
 		 m02, m12, m22, m32,
 		 m03, m13, m23, m33);
@@ -639,17 +651,17 @@ bool Matrix_r<T,U,V>::operator!=(const Matrix_r<T,U,V>& _m){
 
 
 template<typename T,unsigned int U, unsigned int V>
-const T* Matrix_r<T,U,V>::constData() const{
+const T* Matrix_r<T,U,V>::ConstData() const{
 	return m;
 }
 
 template<typename T,unsigned int U, unsigned int V>
-T* Matrix_r<T,U,V>::data() const{
+T* Matrix_r<T,U,V>::Data() const{
 	return m;
 }
 
 template<typename T,unsigned int U, unsigned int V>
-T** Matrix_r<T,U,V>::data2D() const{
+T** Matrix_r<T,U,V>::Data2D() const{
 	T** res = (T**) malloc(V * sizeof(T*));
 	for(unsigned int i = 0; i < V; i++){
 		res[i] = (T*) malloc(U * sizeof(T));
@@ -661,28 +673,28 @@ T** Matrix_r<T,U,V>::data2D() const{
 
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(const T n) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::Fill(const T n) {
 	for(unsigned int i = 0; i < U * V; i++)
 		m[i] = n;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(const T* const _t) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::Fill(const T* const _t) {
 	for(unsigned int i = 0; i < U * V; i++)
 		m[i] = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(T* const _t) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::Fill(T* const _t) {
 	for(unsigned int i = 0; i < U * V; i++)
 		m[i] = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(T** const _t) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::Fill(T** const _t) {
 	for(unsigned int i = 0; i < U; i++)
 		for(unsigned int j = 0; j < V; j++)
 			(*this)(i,j) = _t[j][i];
@@ -690,7 +702,7 @@ Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(T** const _t) {
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(	const T m00, const T m10,
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::Fill(	const T m00, const T m10,
 						const T m01, const T m11){
 	(*this)(0,0) = m00;	(*this)(1,0) = m10;
 	(*this)(0,1) = m01;	(*this)(1,1) = m11;
@@ -698,7 +710,7 @@ Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(	const T m00, const T m10,
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(	const T m00, const T m10, const T m20,
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::Fill(	const T m00, const T m10, const T m20,
 						const T m01, const T m11, const T m21,
 						const T m02, const T m12, const T m22){
 
@@ -709,7 +721,7 @@ Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(	const T m00, const T m10, const T m20,
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(	const T m00, const T m10, const T m20, const T m30,
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::Fill(	const T m00, const T m10, const T m20, const T m30,
 						const T m01, const T m11, const T m21, const T m31,
 						const T m02, const T m12, const T m22, const T m32,
 						const T m03, const T m13, const T m23, const T m33){
@@ -721,85 +733,85 @@ Matrix_r<T,U,V>& Matrix_r<T,U,V>::fill(	const T m00, const T m10, const T m20, c
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillRow(const unsigned int r, const T n) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillRow(const unsigned int r, const T n) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(i,r) = n;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillRow(const unsigned int r, const T* const _t) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillRow(const unsigned int r, const T* const _t) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(i,r) = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillRow(const unsigned int r, T* const _t) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillRow(const unsigned int r, T* const _t) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(i,r) = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillRow(const unsigned int r, const T m0, const T m1){
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillRow(const unsigned int r, const T m0, const T m1){
 	(*this)(0,r) = m0;	(*this)(1,r) = m1;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillRow(const unsigned int r, const T m0, const T m1, const T m2){
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillRow(const unsigned int r, const T m0, const T m1, const T m2){
 	(*this)(0,r) = m0;	(*this)(1,r) = m1;	(*this)(2,r) = m2;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3){
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3){
 	(*this)(0,r) = m0;	(*this)(1,r) = m1;	(*this)(2,r) = m2;	(*this)(3,r) = m3;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillColumn(const unsigned int c, const T n) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillColumn(const unsigned int c, const T n) {
 	for(unsigned int i = 0; i < V; i++)
 		(*this)(c,i) = n;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillColumn(const unsigned int c, const T* const _t) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillColumn(const unsigned int c, const T* const _t) {
 	for(unsigned int i = 0; i < V; i++)
 		(*this)(c,i) = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillColumn(const unsigned int c, T* const _t) {
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillColumn(const unsigned int c, T* const _t) {
 	for(unsigned int i = 0; i < V; i++)
 		(*this)(c,i) = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillColumn(const unsigned int c, const T m0, const T m1){
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillColumn(const unsigned int c, const T m0, const T m1){
 	(*this)(c,0) = m0;	(*this)(c,1) = m1;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillColumn(const unsigned int c, const T m0, const T m1, const T m2){
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillColumn(const unsigned int c, const T m0, const T m1, const T m2){
 	(*this)(c,0) = m0;	(*this)(c,1) = m1;	(*this)(c,2) = m2;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::fillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3){
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::FillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3){
 	(*this)(c,0) = m0;	(*this)(c,1) = m1;	(*this)(c,2) = m2;	(*this)(c,3) = m3;
 	return (*this);
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U,V>& Matrix_r<T,U,V>::switchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2){
+Matrix_r<T,U,V>& Matrix_r<T,U,V>::SwitchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2){
 	T temp = (*this)(x1,y1);
 	(*this)(x1,y1) = (*this)(x2,y2);
 	(*this)(x2,y2) = temp;
@@ -807,15 +819,15 @@ Matrix_r<T,U,V>& Matrix_r<T,U,V>::switchPositions(const unsigned int x1, const u
 }
 
 template<typename T,unsigned int U, unsigned int V>
-void Matrix_r<T,U,V>::setToIdentity(){
-	fill(0.0f);
+void Matrix_r<T,U,V>::SetToIdentity(){
+	Fill(0.0f);
 	unsigned int W = (U < V ? U : V);
 	for(unsigned int i = 0; i < W; i++)
 		(*this)(i,i) = 1;
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,U-1,V-1> Matrix_r<T,U,V>::reduce(const unsigned int x, const unsigned int y) const{
+Matrix_r<T,U-1,V-1> Matrix_r<T,U,V>::Reduce(const unsigned int x, const unsigned int y) const{
 	Matrix_r<T,U-1,V-1> res;
 	for(unsigned int i = 0; i < U-1; i++)
 		for(unsigned int j = 0; j < V-1; j++){
@@ -827,7 +839,7 @@ Matrix_r<T,U-1,V-1> Matrix_r<T,U,V>::reduce(const unsigned int x, const unsigned
 }
 
 template<typename T,unsigned int U, unsigned int V>
-Matrix_r<T,V,U> Matrix_r<T,U,V>::transpose() const{
+Matrix_r<T,V,U> Matrix_r<T,U,V>::Transpose() const{
 	Matrix_r<T,V,U> res;
 	for(unsigned int i = 0; i < U; i++)
 		for(unsigned int j = 0; j < V; j++)
@@ -836,7 +848,7 @@ Matrix_r<T,V,U> Matrix_r<T,U,V>::transpose() const{
 }
 
 template<typename T,unsigned int U, unsigned int V>
-void Matrix_r<T,U,V>::display(){
+void Matrix_r<T,U,V>::Display(){
 	for(unsigned int j = 0; j < V; j++){
 		for(unsigned int i = 0; i < U; i++)
 			std::cout << (*this)(i,j) << "\t";
@@ -845,19 +857,19 @@ void Matrix_r<T,U,V>::display(){
 }
 
 template<typename T,unsigned int U, unsigned int V>
-void Matrix_r<T,U,V>::display(const unsigned int x, const unsigned int y){
+void Matrix_r<T,U,V>::Display(const unsigned int x, const unsigned int y){
 	std::cout << (*this)(x,y) << std::flush;
 }
 
 template<typename T,unsigned int U, unsigned int V>
-void Matrix_r<T,U,V>::displayColumn(const unsigned int x){
+void Matrix_r<T,U,V>::DisplayColumn(const unsigned int x){
 	for(unsigned int i = 0; i < V; i++)
 		std::cout << (*this)(x,i) << std::endl;
 	std::cout << std::endl;
 }
 
 template<typename T,unsigned int U, unsigned int V>
-void Matrix_r<T,U,V>::displayRow(const unsigned int y){
+void Matrix_r<T,U,V>::DisplayRow(const unsigned int y){
 	for(unsigned int i = 0; i < U; i++)
 		std::cout << (*this)(i,y) << "\t";
 	std::cout << std::endl;
@@ -868,31 +880,31 @@ void Matrix_r<T,U,V>::displayRow(const unsigned int y){
 template<typename T,unsigned int U>
 Matrix_r<T,U,U>::Matrix_r(){
 	m = (T*) malloc(sizeof(T)*U*U);
-	setToIdentity();
+	SetToIdentity();
 }
 
 template<typename T,unsigned int U>
 Matrix_r<T,U,U>::Matrix_r(const T n){
 	m = (T*) malloc(sizeof(T)*U*U);
-	fill(n);
+	Fill(n);
 }
 
 template<typename T,unsigned int U>
 Matrix_r<T,U,U>::Matrix_r(const T* const _t){
 	m = (T*) malloc(sizeof(T)*U*U);
-	fill(_t);
+	Fill(_t);
 }
 
 template<typename T,unsigned int U>
 Matrix_r<T,U,U>::Matrix_r(T* const _t){
 	m = (T*) malloc(sizeof(T)*U*U);
-	fill(_t);
+	Fill(_t);
 }
 
 template<typename T,unsigned int U>
 Matrix_r<T,U,U>::Matrix_r(T** const _t){
 	m = (T*) malloc(sizeof(T)*U*U);
-	fill(_t);
+	Fill(_t);
 }
 
 template<typename T,unsigned int U>
@@ -904,11 +916,11 @@ Matrix_r<T,U,U>::Matrix_r(const Matrix_r<T,U,U>& _m){
 
 template<typename T,unsigned int U>
 Matrix_r<T,U,U>::~Matrix_r<T,U,U>(){
-	//	release();
+	//	Release();
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U> Matrix_r<T,U,U>::copy() const{
+Matrix_r<T,U,U> Matrix_r<T,U,U>::Copy() const{
 	Matrix_r<T,U,U> res;
 	for(unsigned int i = 0; i < U*U; i++)
 		res.m[i] = m[i];
@@ -916,7 +928,7 @@ Matrix_r<T,U,U> Matrix_r<T,U,U>::copy() const{
 }
 
 template<typename T,unsigned int U>
-void Matrix_r<T,U,U>::release(){
+void Matrix_r<T,U,U>::Release(){
 	free(m);
 }
 
@@ -931,7 +943,7 @@ Matrix_r<T,U,U>::Matrix_r(	const T m00, const T m10,
 							const T m01, const T m11){
 	assert(U >= 2);
 	m = (T*) malloc(sizeof(T)*U*U);
-	fill(m00, m10,
+	Fill(m00, m10,
 		 m01, m11);
 }
 
@@ -941,7 +953,7 @@ Matrix_r<T,U,U>::Matrix_r(	const T m00, const T m10, const T m20,
 							const T m02, const T m12, const T m22){
 	assert(U >= 3);
 	m = (T*) malloc(sizeof(T)*U*U);
-	fill(m00, m10, m20,
+	Fill(m00, m10, m20,
 		 m01, m11, m21,
 		 m02, m12, m22);
 }
@@ -953,7 +965,7 @@ Matrix_r<T,U,U>::Matrix_r(	const T m00, const T m10, const T m20, const T m30,
 							const T m03, const T m13, const T m23, const T m33){
 	assert(U >= 4);
 	m = (T*) malloc(sizeof(T)*U*U);
-	fill(m00, m10, m20, m30,
+	Fill(m00, m10, m20, m30,
 		 m01, m11, m21, m31,
 		 m02, m12, m22, m32,
 		 m03, m13, m23, m33);
@@ -1058,17 +1070,17 @@ bool Matrix_r<T,U,U>::operator!=(const Matrix_r<T,U,U>& _m){
 
 
 template<typename T,unsigned int U>
-const T* Matrix_r<T,U,U>::constData() const{
+const T* Matrix_r<T,U,U>::ConstData() const{
 	return m;
 }
 
 template<typename T,unsigned int U>
-T* Matrix_r<T,U,U>::data() const{
+T* Matrix_r<T,U,U>::Data() const{
 	return m;
 }
 
 template<typename T,unsigned int U>
-T** Matrix_r<T,U,U>::data2D() const{
+T** Matrix_r<T,U,U>::Data2D() const{
 	T** res = (T**) malloc(U * sizeof(T*));
 	for(unsigned int i = 0; i < U; i++){
 		res[i] = (T*) malloc(U * sizeof(T));
@@ -1080,28 +1092,28 @@ T** Matrix_r<T,U,U>::data2D() const{
 
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(const T n) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::Fill(const T n) {
 	for(unsigned int i = 0; i < U * U; i++)
 		m[i] = n;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(const T* const _t) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::Fill(const T* const _t) {
 	for(unsigned int i = 0; i < U * U; i++)
 		m[i] = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(T* const _t) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::Fill(T* const _t) {
 	for(unsigned int i = 0; i < U * U; i++)
 		m[i] = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(T** const _t) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::Fill(T** const _t) {
 	for(unsigned int i = 0; i < U; i++)
 		for(unsigned int j = 0; j < U; j++)
 			(*this)(i,j) = _t[j][i];
@@ -1109,7 +1121,7 @@ Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(T** const _t) {
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(	const T m00, const T m10,
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::Fill(	const T m00, const T m10,
 										const T m01, const T m11){
 	(*this)(0,0) = m00;	(*this)(1,0) = m10;
 	(*this)(0,1) = m01;	(*this)(1,1) = m11;
@@ -1117,7 +1129,7 @@ Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(	const T m00, const T m10,
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(	const T m00, const T m10, const T m20,
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::Fill(	const T m00, const T m10, const T m20,
 										const T m01, const T m11, const T m21,
 										const T m02, const T m12, const T m22){
 	(*this)(0,0) = m00;	(*this)(1,0) = m10;	(*this)(2,0) = m20;
@@ -1127,7 +1139,7 @@ Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(	const T m00, const T m10, const T m20,
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(	const T m00, const T m10, const T m20, const T m30,
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::Fill(	const T m00, const T m10, const T m20, const T m30,
 										const T m01, const T m11, const T m21, const T m31,
 										const T m02, const T m12, const T m22, const T m32,
 										const T m03, const T m13, const T m23, const T m33){
@@ -1139,85 +1151,85 @@ Matrix_r<T,U,U>& Matrix_r<T,U,U>::fill(	const T m00, const T m10, const T m20, c
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillRow(const unsigned int r, const T n) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillRow(const unsigned int r, const T n) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(i,r) = n;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillRow(const unsigned int r, const T* const _t) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillRow(const unsigned int r, const T* const _t) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(i,r) = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillRow(const unsigned int r, T* const _t) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillRow(const unsigned int r, T* const _t) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(i,r) = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillRow(const unsigned int r, const T m0, const T m1){
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillRow(const unsigned int r, const T m0, const T m1){
 	(*this)(0,r) = m0;	(*this)(1,r) = m1;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillRow(const unsigned int r, const T m0, const T m1, const T m2){
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillRow(const unsigned int r, const T m0, const T m1, const T m2){
 	(*this)(0,r) = m0;	(*this)(1,r) = m1;	(*this)(2,r) = m2;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3){
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillRow(const unsigned int r, const T m0, const T m1, const T m2, const T m3){
 	(*this)(0,r) = m0;	(*this)(1,r) = m1;	(*this)(2,r) = m2;	(*this)(3,r) = m3;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillColumn(const unsigned int c, const T n) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillColumn(const unsigned int c, const T n) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(c,i) = n;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillColumn(const unsigned int c, const T* const _t) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillColumn(const unsigned int c, const T* const _t) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(c,i) = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillColumn(const unsigned int c, T* const _t) {
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillColumn(const unsigned int c, T* const _t) {
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(c,i) = _t[i];
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillColumn(const unsigned int c, const T m0, const T m1){
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillColumn(const unsigned int c, const T m0, const T m1){
 	(*this)(c,0) = m0;	(*this)(c,1) = m1;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillColumn(const unsigned int c, const T m0, const T m1, const T m2){
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillColumn(const unsigned int c, const T m0, const T m1, const T m2){
 	(*this)(c,0) = m0;	(*this)(c,1) = m1;	(*this)(c,2) = m2;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::fillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3){
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::FillColumn(const unsigned int c, const T m0, const T m1, const T m2, const T m3){
 	(*this)(c,0) = m0;	(*this)(c,1) = m1;	(*this)(c,2) = m2;	(*this)(c,3) = m3;
 	return (*this);
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U>& Matrix_r<T,U,U>::switchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2){
+Matrix_r<T,U,U>& Matrix_r<T,U,U>::SwitchPositions(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2){
 	T temp = (*this)(x1,y1);
 	(*this)(x1,y1) = (*this)(x2,y2);
 	(*this)(x2,y2) = temp;
@@ -1225,14 +1237,14 @@ Matrix_r<T,U,U>& Matrix_r<T,U,U>::switchPositions(const unsigned int x1, const u
 }
 
 template<typename T,unsigned int U>
-void Matrix_r<T,U,U>::setToIdentity(){
-	fill(0.0f);
+void Matrix_r<T,U,U>::SetToIdentity(){
+	Fill(0.0f);
 	for(unsigned int i = 0; i < U; i++)
 		(*this)(i,i) = 1;
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U-1,U-1> Matrix_r<T,U,U>::reduce(const unsigned int x, const unsigned int y) const{
+Matrix_r<T,U-1,U-1> Matrix_r<T,U,U>::Reduce(const unsigned int x, const unsigned int y) const{
 	Matrix_r<T,U-1,U-1> res;
 	for(unsigned int i = 0; i < U-1; i++)
 		for(unsigned int j = 0; j < U-1; j++){
@@ -1244,7 +1256,7 @@ Matrix_r<T,U-1,U-1> Matrix_r<T,U,U>::reduce(const unsigned int x, const unsigned
 }
 
 template<typename T,unsigned int U>
-T Matrix_r<T,U,U>::determinant() const{
+T Matrix_r<T,U,U>::Determinant() const{
 	// Cas où la matrice est de taille 1 ou 2
 	if(U == 1)
 		return m[0];
@@ -1252,14 +1264,14 @@ T Matrix_r<T,U,U>::determinant() const{
 		return m[0]*m[3] - m[1]*m[2];
 	T res = 0.0f;
 	for(unsigned int i = 0; i < U; i++){
-		Matrix_r<T,U-1,U-1> mat = reduce(i,0);
-		res += ((i&1) == 1 ? -1 : 1) * m[i] * mat.determinant();
+		Matrix_r<T,U-1,U-1> mat = Reduce(i,0);
+		res += ((i&1) == 1 ? -1 : 1) * m[i] * mat.Determinant();
 	}
 	return res;
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U> Matrix_r<T,U,U>::transpose() const{
+Matrix_r<T,U,U> Matrix_r<T,U,U>::Transpose() const{
 	Matrix_r<T,U,U> res;
 	for(unsigned int i = 0; i < U; i++)
 		for(unsigned int j = 0; j < U; j++)
@@ -1268,26 +1280,26 @@ Matrix_r<T,U,U> Matrix_r<T,U,U>::transpose() const{
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U> Matrix_r<T,U,U>::invert() const{
-	T det = determinant();
+Matrix_r<T,U,U> Matrix_r<T,U,U>::Invert() const{
+	T det = Determinant();
 	// On vérifie si la matrice est inversible
 	if(det == 0.0f)
 		return *this;
 	Matrix_r<T,U,U> res;
 	for(unsigned int i = 0; i < U; i++)
 		for(unsigned int j = 0; j < U; j++)
-			res(j,i) = (((i+j)&1) == 1 ? -1 : 1) * reduce(j,i).determinant();
-	return res.transpose() / det;
+			res(j,i) = (((i+j)&1) == 1 ? -1 : 1) * Reduce(j,i).Determinant();
+	return res.Transpose() / det;
 }
 
 template<typename T,unsigned int U>
-Matrix_r<T,U,U> Matrix_r<T,U,U>::normale() const{
-	return invert().transpose();
+Matrix_r<T,U,U> Matrix_r<T,U,U>::Normale() const{
+	return Invert().Transpose();
 }
 
 
 template<typename T,unsigned int U>
-void Matrix_r<T,U,U>::display(){
+void Matrix_r<T,U,U>::Display(){
 	for(unsigned int j = 0; j < U; j++){
 		for(unsigned int i = 0; i < U; i++)
 			std::cout << (*this)(i,j) << "\t";
@@ -1296,19 +1308,19 @@ void Matrix_r<T,U,U>::display(){
 }
 
 template<typename T,unsigned int U>
-void Matrix_r<T,U,U>::display(const unsigned int x, const unsigned int y){
+void Matrix_r<T,U,U>::Display(const unsigned int x, const unsigned int y){
 	std::cout << (*this)(x,y) << std::flush;
 }
 
 template<typename T,unsigned int U>
-void Matrix_r<T,U,U>::displayColumn(const unsigned int x){
+void Matrix_r<T,U,U>::DisplayColumn(const unsigned int x){
 	for(unsigned int i = 0; i < U; i++)
 		std::cout << (*this)(x,i) << std::endl;
 	std::cout << std::endl;
 }
 
 template<typename T,unsigned int U>
-void Matrix_r<T,U,U>::displayRow(const unsigned int y){
+void Matrix_r<T,U,U>::DisplayRow(const unsigned int y){
 	for(unsigned int i = 0; i < U; i++)
 		std::cout << (*this)(i,y) << "\t";
 	std::cout << std::endl;
