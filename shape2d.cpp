@@ -1,24 +1,35 @@
 #include "include/shape2d.hpp"
 
 template<typename T>
+Vector2_t<T> Line_t<T>::Vector() const{
+	return b - a;
+}
+
+template<typename T>
 T Line_t<T>::Length() const{
-	return (a - b).Length();
+	return Vector().Length();
 }
 
 template<typename T>
 bool Line_t<T>::IsUpside(const Vector2_t<T> & point){
-	return ((b.x - a.x) * (point.y - a.y) - (b.y - a.y) * (point.x - a.x)) > 0;
+	return ((b.x - a.x) * (point.y - a.y) - (b.y - a.y) * (point.x - a.x)) > T(0);
+}
 
+template<typename T>
+bool Line_t<T>::AreInSameSide(const Vector2_t<T> & p1, const Vector2_t<T> & p2){
+	return IsUpside(p1) == IsUpside(p2);
 }
 
 template<typename T>
 bool Line_t<T>::Cross(const Line_t<T>& line, Vector2_t<T>& point){
-	Vector2_t<T> 	A(b - a),
-					B(line.b - line.a);
-	T 	s = (-A.y * (a.x - line.a.x) + A.x * (a.y - line.a.y)) / ((-B.x * A.y) + (A.x * B.y)),
-		t = ( B.x * (a.y - line.a.y) - B.y * (a.x - line.a.x)) / ((-B.x * A.y) + (A.x * B.y));
+	// Code piqué ici : http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+	Vector2_t<T> 	A(Vector()),
+					B(line.Vector());
+	T 	crossProduct = (-B.x * A.y) + (A.x * B.y),
+		s = (-A.y * (a.x - line.a.x) + A.x * (a.y - line.a.y)) / crossProduct,
+		t = ( B.x * (a.y - line.a.y) - B.y * (a.x - line.a.x)) / crossProduct;
 
-	if(s >= (T)0.0 && s <= (T)1.0 && t >= (T)0.0 && t <= (T)1.0){
+	if(s >= T(0) && s <= T(1) && t >= T(0) && t <= T(1)){
 		point(a.x + (t * A.x), a.y + (t * A.y));
 		return true;
 	}
@@ -29,11 +40,12 @@ bool Line_t<T>::Cross(const Line_t<T>& line, Vector2_t<T>& point){
 template<typename T>
 Vector2_t<T> Line_t<T>::Projection(const Vector2_t<T>& point) const{
 	// Code piqué ici : http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
-	const T squaredLength = (b - a).SquaredLength();
+	Vector2_t<T> v = Vector();
+	const T squaredLength = v.SquaredLength();
 	if(squaredLength == 0.0f)	return a;
 
-	const T t = std::max((T)0.0, std::min((T)1.0, (point - a).Dot(b - a) / squaredLength));
-	return a + (b - a) * t;
+	const T t = std::max((T)0.0, std::min((T)1.0, (point - a).Dot(v) / squaredLength));
+	return a + (v) * t;
 }
 
 template<typename T>
@@ -61,6 +73,33 @@ void Line_t<T>::Bounds(Vector2_t<T>& min, Vector2_t<T>& max){
 
 template<typename T>
 bool Line_t<T>::operator()(const Raycast2D_t<T>& ray, RaycastHit2D_t<T>& hit){
+	Vector2_t<T> 	A(Vector()),
+					B(ray.direction);
+	T 	crossProduct = (-B.x * A.y) + (A.x * B.y),
+		s = (-A.y * (a.x - ray.origin.x) + A.x * (a.y - ray.origin.y)) / crossProduct,
+		t = ( B.x * (a.y - ray.origin.y) - B.y * (a.x - ray.origin.x)) / crossProduct;
+
+	// Test de respect de distance
+	bool distanceCheck = true;
+	Vector2_t<T> point(a.x + (t * A.x), a.y + (t * A.y));
+	if(ray.maxDistance >= T(0)){
+		T distance = (point - ray.origin).SquaredLength();
+		distanceCheck = (distance <= (ray.maxDistance * ray.maxDistance));
+	}
+
+	// On checke si le rayon touche la ligne
+	if(s >= T(0) && t >= T(0) && t <= T(1) && distanceCheck){
+		hit.origin = ray.origin;
+		hit.point = point;
+
+		// Gestion de la normale
+		hit.normal(-A.y, A.x);
+		if(!AreInSameSide(ray.origin, hit.point + hit.normal)){
+			hit.normal *= -1;
+		}
+		return true;
+	}
+
 	return false;
 }
 

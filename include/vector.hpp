@@ -51,7 +51,8 @@ struct Vector2_t
 	T SquaredLength() const;
 	T Length() const;
 	T Dot(const Vector2_t<T>& _v) const;
-	Vector2_t<T> Normalized() const;
+	Vector2_t<T>& Normalize();
+	Vector2_t<T> Normalized() const{	return Vector2_t<T>(*this).Normalize();	};
 
 	void Display();
 };
@@ -104,7 +105,8 @@ struct Vector3_t
 	T Length() const;
 	T Dot(const Vector3_t<T>& _v) const;
 	Vector3_t<T> Cross(const Vector3_t<T>& _v) const;
-	Vector3_t<T> Normalized() const;
+	Vector3_t<T>& Normalize();
+	Vector3_t<T> Normalized() const{	return Vector3_t<T>(*this).Normalize();	};
 
 	void Display();
 };
@@ -214,7 +216,8 @@ struct Vector4_t
 	T SquaredLength() const;
 	T Length() const;
 	T Dot(const Vector3_t<T>& _v) const;
-	Vector4_t<T> Normalized() const;
+	Vector4_t<T>& Normalize();
+	Vector4_t<T> Normalized() const{	return Vector4_t<T>(*this).Normalize();	};
 
 	void Display();
 };

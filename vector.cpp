@@ -90,9 +90,9 @@ T Vector2_t<T>::Dot(const Vector2_t<T>& _v) const{
 }
 
 template<typename T>
-Vector2_t<T> Vector2_t<T>::Normalized() const{
+Vector2_t<T>& Vector2_t<T>::Normalize(){
 	T kk = 1/Length();
-	return (*this) * kk;
+	return (*this) *= kk;
 }
 
 template<typename T>
@@ -204,9 +204,9 @@ Vector3_t<T> Vector3_t<T>::Cross(const Vector3_t<T>& _v) const{
 }
 
 template<typename T>
-Vector3_t<T> Vector3_t<T>::Normalized() const{
+Vector3_t<T>& Vector3_t<T>::Normalize(){
 	T kk = 1/Length();
-	return (*this) * kk;
+	return (*this) *= kk;
 }
 
 template<typename T>
@@ -413,9 +413,9 @@ T Vector4_t<T>::Dot(const Vector3_t<T>& _v) const{
 }
 
 template<typename T>
-Vector4_t<T> Vector4_t<T>::Normalized() const{
+Vector4_t<T>& Vector4_t<T>::Normalize(){
 	T kk = 1/Length();
-	return (*this) * kk;
+	return (*this) *= kk;
 }
 
 template<typename T>

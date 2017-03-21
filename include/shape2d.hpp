@@ -31,8 +31,10 @@ class Line_t : public Shape2D_t<T>{
 		Line_t<T>(const Line_t<T> & l) = default;
 		Line_t<T>(const Vector2_t<T>& _a = Vector2_t<T>(), const Vector2_t<T>& _b = Vector2_t<T>()) : a(_a), b(_b){}
 		
+		Vector2_t<T> Vector() const;
 		T Length() const;
 		bool IsUpside(const Vector2_t<T> & point);
+		bool AreInSameSide(const Vector2_t<T> & p1, const Vector2_t<T> & p2);
 		bool Cross(const Line_t<T>& line, Vector2_t<T>& point);
 		Vector2_t<T> Projection(const Vector2_t<T>& point) const;
 
