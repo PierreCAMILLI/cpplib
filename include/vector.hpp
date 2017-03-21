@@ -48,6 +48,7 @@ struct Vector2_t
 	T operator[](const unsigned int& i) const;
 	T& operator[](const unsigned int& i);
 
+	T SquaredLength() const;
 	T Length() const;
 	T Dot(const Vector2_t<T>& _v) const;
 	Vector2_t<T> Normalized() const;
@@ -99,6 +100,7 @@ struct Vector3_t
 	T operator[](const unsigned int& i) const;
 	T& operator[](const unsigned int& i);
 
+	T SquaredLength() const;
 	T Length() const;
 	T Dot(const Vector3_t<T>& _v) const;
 	Vector3_t<T> Cross(const Vector3_t<T>& _v) const;
@@ -209,6 +211,7 @@ struct Vector4_t
 	T operator[](const unsigned int& i) const;
 	T& operator[](const unsigned int& i);
 
+	T SquaredLength() const;
 	T Length() const;
 	T Dot(const Vector3_t<T>& _v) const;
 	Vector4_t<T> Normalized() const;

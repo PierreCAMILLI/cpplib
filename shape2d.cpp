@@ -13,6 +13,15 @@ bool Line_t<T>::IsUpside(const Vector2_t<T> & point){
 
 template<typename T>
 bool Line_t<T>::Cross(const Line_t<T>& line, Vector2_t<T>& point){
+	Vector2_t<T> 	A(b - a),
+					B(line.b - line.a);
+	T 	s = (-A.y * (a.x - line.a.x) + A.x * (a.y - line.a.y)) / ((-B.x * A.y) + (A.x * B.y)),
+		t = ( B.x * (a.y - line.a.y) - B.y * (a.x - line.a.x)) / ((-B.x * A.y) + (A.x * B.y));
+
+	if(s >= (T)0.0 && s <= (T)1.0 && t >= (T)0.0 && t <= (T)1.0){
+		point(a.x + (t * A.x), a.y + (t * A.y));
+		return true;
+	}
 
 	return false;
 }
@@ -20,8 +29,7 @@ bool Line_t<T>::Cross(const Line_t<T>& line, Vector2_t<T>& point){
 template<typename T>
 Vector2_t<T> Line_t<T>::Projection(const Vector2_t<T>& point) const{
 	// Code piqué ici : http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
-	Vector2_t<T> v = (b - a);
-	const T squaredLength = (v.x * v.x) + (v.y * v.y);
+	const T squaredLength = (b - a).SquaredLength();
 	if(squaredLength == 0.0f)	return a;
 
 	const T t = std::max((T)0.0, std::min((T)1.0, (point - a).Dot(b - a) / squaredLength));

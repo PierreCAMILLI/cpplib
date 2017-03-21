@@ -58,7 +58,7 @@ class Circle_t : public Shape2D_t<T>{
 		
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
-		T Distance(const Point_t<T>& point) const;
+		T Distance(const Vector2_t<T>& point) const;
 		void Bounds(Vector2_t<T>& min, Vector2_t<T>& max);
 		bool operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit);
 };
@@ -78,7 +78,7 @@ class Triangle2D_t : public Shape2D_t<T>{
 
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
-		T Distance(const Point_t<T>& point) const;
+		T Distance(const Vector2_t<T>& point) const;
 		void Bounds(Vector2_t<T>& min, Vector2_t<T>& max);
 		bool operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit);
 };

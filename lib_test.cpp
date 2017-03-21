@@ -28,8 +28,12 @@ int main(int argc, char** argv){
 	// Mesh::Sphere(5.0, 100).exportOBJ("sphere.obj");
 	// Mesh::Sphere(5.0, 100).merge(Mesh::Cube(1.0) + Vector3(10,0,0)).exportOBJ("merged.obj");
 
-	Line l(Vector2(-3.0, 0.0), Vector2(5.0, -2.5));
+	Line l1(Vector2(-3.0, 0.0), Vector2(5.0, -2.5));
 	Vector2 point(2.5, 5.0);
-	std::cout << "Projection : " << l.Projection(point) << std::endl;
-	std::cout << "Distance : " << l.Distance(point) << std::endl;
+	std::cout << "Projection : " << l1.Projection(point) << std::endl;
+	std::cout << "Distance : " << l1.Distance(point) << std::endl;
+
+	Line l2(Vector2(0.0, -2.0), Vector2(2.0, 0.0));
+	std::cout << l1.Cross(l2, point) << std::endl;
+	std::cout << point << std::endl;
 }

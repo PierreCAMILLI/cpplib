@@ -75,8 +75,13 @@ T& Vector2_t<T>::operator[](const unsigned int& i){
 }
 
 template<typename T>
+T Vector2_t<T>::SquaredLength() const{
+	return (x * x) + (y * y);
+}
+
+template<typename T>
 T Vector2_t<T>::Length() const{
-	return sqrt((x * x) + (y * y));
+	return sqrt(SquaredLength());
 }
 
 template<typename T>
@@ -175,8 +180,13 @@ T& Vector3_t<T>::operator[](const unsigned int& i){
 }
 
 template<typename T>
+T Vector3_t<T>::SquaredLength() const{
+	return (x * x) + (y * y) + (z * z);
+}
+
+template<typename T>
 T Vector3_t<T>::Length() const{
-	return sqrt((x * x) + (y * y) + (z * z));
+	return sqrt(SquaredLength());
 }
 
 template<typename T>
@@ -388,8 +398,13 @@ T& Vector4_t<T>::operator[](const unsigned int& i){
 }
 
 template<typename T>
+T Vector4_t<T>::SquaredLength() const{
+	return (x * x) + (y * y) + (z * z) + (w * w);
+}
+
+template<typename T>
 T Vector4_t<T>::Length() const{
-	return sqrt((x * x) + (y * y) + (z * z) + (w * w));
+	return sqrt(SquaredLength());
 }
 
 template<typename T>
