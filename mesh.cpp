@@ -1,6 +1,6 @@
 #include "include/mesh.hpp"
 
-void Mesh::release()
+void Mesh::Release()
 {
 	MeshVertices vertices;
 	MeshTextures textures;
@@ -32,85 +32,85 @@ Mesh& Mesh::operator*=(const Vector3_t<double> & s){
 	return (*this);
 }
 
-Index Mesh::vertice(const Vector3_t<double> & _v){
+Index Mesh::Vertice(const Vector3_t<double> & _v){
 	vertices.push_back(_v);
 	return vertices.size() - 1;
 }
 
-Index Mesh::vertice(const double& x, const double& y, const double& z)
+Index Mesh::Vertice(const double& x, const double& y, const double& z)
 {
-	vertice(Vector3_t<double>(x,y,z));
+	Vertice(Vector3_t<double>(x,y,z));
 	return vertices.size() - 1;
 }
 
-Mesh& Mesh::texture(const Vector2_t<double> & _t){
+Mesh& Mesh::Texture(const Vector2_t<double> & _t){
 	textures.push_back(_t);
 	return (*this);
 }
 
-Mesh& Mesh::texture(const double& x, const double& y)
+Mesh& Mesh::Texture(const double& x, const double& y)
 {
-	texture(Vector2_t<double>(x,y));
+	Texture(Vector2_t<double>(x,y));
 	return (*this);
 }
 
-Mesh& Mesh::normal(const Vector3_t<double> & _n){
+Mesh& Mesh::Normal(const Vector3_t<double> & _n){
 	normals.push_back(_n);
 	return (*this);
 }
 
-Mesh& Mesh::normal(const double& x, const double& y, const double& z)
+Mesh& Mesh::Normal(const double& x, const double& y, const double& z)
 {
-	normal(Vector3_t<double>(x,y,z));
+	Normal(Vector3_t<double>(x,y,z));
 	return (*this);
 }
 
-Mesh& Mesh::vertice_index(const Index & _vi){
+Mesh& Mesh::VerticeIndex(const Index & _vi){
 	vertices_index.push_back(_vi);
 	return (*this);
 }
 
-Mesh& Mesh::texture_index(const Index & _ti){
+Mesh& Mesh::TextureIndex(const Index & _ti){
 	textures_index.push_back(_ti);
 	return (*this);
 }
 
-Mesh& Mesh::normal_index(const Index & _ni){
+Mesh& Mesh::NormalIndex(const Index & _ni){
 	normals_index.push_back(_ni);
 	return (*this);
 }
 
-Mesh& Mesh::triangle(const Vector3_t<double> & a, const Vector3_t<double> & b, const Vector3_t<double> & c){
+Mesh& Mesh::Triangle(const Vector3_t<double> & a, const Vector3_t<double> & b, const Vector3_t<double> & c){
 	unsigned int v_size = vertices.size();
 
-	vertice(a);
-	vertice(b);
-	vertice(c);
+	Vertice(a);
+	Vertice(b);
+	Vertice(c);
 
-	vertice_index(v_size);
-	vertice_index(v_size+1);
-	vertice_index(v_size+2);
-
-	return (*this);
-}
-
-Mesh& Mesh::triangle(const Index & a, const Index & b, const Index & c){
-	vertice_index(a);
-	vertice_index(b);
-	vertice_index(c);
+	VerticeIndex(v_size);
+	VerticeIndex(v_size+1);
+	VerticeIndex(v_size+2);
 
 	return (*this);
 }
 
-Mesh& Mesh::triangle_last(const int & a, const int & b, const int & c){
-	vertice_index(vertices.size() + a);
-	vertice_index(vertices.size() + b);
-	vertice_index(vertices.size() + c);
+Mesh& Mesh::Triangle(const Index & a, const Index & b, const Index & c){
+	VerticeIndex(a);
+	VerticeIndex(b);
+	VerticeIndex(c);
 
 	return (*this);
 }
 
-bool Mesh::importOBJ(const std::string & filename)
+Mesh& Mesh::TriangleLast(const int & a, const int & b, const int & c){
+	VerticeIndex(vertices.size() + a);
+	VerticeIndex(vertices.size() + b);
+	VerticeIndex(vertices.size() + c);
+
+	return (*this);
+}
+
+bool Mesh::ImportOBJ(const std::string & filename)
 {
 	FILE* file = fopen( filename.c_str(), "r" );
 
@@ -119,7 +119,7 @@ bool Mesh::importOBJ(const std::string & filename)
 		return false;
 	}
 
-	clear();
+	Clear();
 
 	while( true ){
 
@@ -131,15 +131,15 @@ bool Mesh::importOBJ(const std::string & filename)
 		if( strcmp( lineHeader, "v" ) == 0 ){
 			Vector3 vertex;
 			fscanf(file, "%lf %lf %lf", &vertex.x, &vertex.y, &vertex.z);
-			vertice(vertex);
+			Vertice(vertex);
 		}else if(strcmp( lineHeader, "vt" ) == 0 ){
 			Vector2 uv;
 			fscanf(file, "%lf %lf", &uv.x, &uv.y);
-			texture(uv);
+			Texture(uv);
 		}else if(strcmp( lineHeader, "vn" ) == 0 ){
 			Vector3 n;
 			fscanf(file, "%lf %lf %lf", &n.x, &n.y, &n.z);
-			normal(n);
+			Normal(n);
 		}else if ( strcmp( lineHeader, "f" ) == 0 ){
 		    std::string vertex1, vertex2, vertex3;
 		    unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
@@ -151,22 +151,22 @@ bool Mesh::importOBJ(const std::string & filename)
 		        printf("File can't be read by our simple parser : ( Try exporting with other options )\n");
 		        return false;
 		    }
-		    vertice_index(vertexIndex[0]);
-		    vertice_index(vertexIndex[1]);
-		    vertice_index(vertexIndex[2]);
-		    texture_index(uvIndex[0]);
-		    texture_index(uvIndex[1]);
-		    texture_index(uvIndex[2]);
-		    normal_index(normalIndex[0]);
-		    normal_index(normalIndex[1]);
-		    normal_index(normalIndex[2]);
+		    VerticeIndex(vertexIndex[0]);
+		    VerticeIndex(vertexIndex[1]);
+		    VerticeIndex(vertexIndex[2]);
+		    TextureIndex(uvIndex[0]);
+		    TextureIndex(uvIndex[1]);
+		    TextureIndex(uvIndex[2]);
+		    NormalIndex(normalIndex[0]);
+		    NormalIndex(normalIndex[1]);
+		    NormalIndex(normalIndex[2]);
 		}
 	}
 
 	return true;
 }
 
-bool Mesh::exportOBJ(const std::string & filename, const double scale)
+bool Mesh::ExportOBJ(const std::string & filename, const double scale)
 {
 	std::ofstream ofs( filename );
 
@@ -221,7 +221,7 @@ bool Mesh::exportOBJ(const std::string & filename, const double scale)
 	return true;
 }
 
-Mesh& Mesh::merge(const Mesh& _m)
+Mesh& Mesh::Merge(const Mesh& _m)
 {
 	unsigned int 	v_size = vertices.size(),
 					t_size = textures.size(),
@@ -244,7 +244,7 @@ Mesh& Mesh::merge(const Mesh& _m)
 }
 
 
-void Mesh::bounds(Point_t<double>& pmin, Point_t<double>& pmax)
+void Mesh::Bounds(Point_t<double>& pmin, Point_t<double>& pmax)
 {
 	pmin = Point(vertices[0]);
 	pmax = pmin;
@@ -255,7 +255,7 @@ void Mesh::bounds(Point_t<double>& pmin, Point_t<double>& pmax)
 	}
 }
 
-void Mesh::resize(const double& scale){
+void Mesh::Resize(const double& scale){
 	for(unsigned int i = 0; i < vertices.size(); i++)
 		vertices[i] = vertices[i] * scale;
 
@@ -266,7 +266,7 @@ void Mesh::resize(const double& scale){
 		normals[i] = normals[i] * scale;
 }
 
-void Mesh::clear()
+void Mesh::Clear()
 {
 	vertices.clear();
 	textures.clear();
@@ -281,24 +281,24 @@ Mesh Mesh::Cube(const double & size){
 	float offset = size/2;
 	// Génération des vertices
 	for(int i = 0; i < 8; i++)
-		m.vertice(
+		m.Vertice(
 			((i&4) == 4 ? 1 : -1) * offset,
 			((i&2) == 2 ? 1 : -1) * offset,
 			((i&1) == 1 ? 1 : -1) * offset
 			);
 	// Génération des faces
-	m	.triangle(0, 1, 3)
-		.triangle(0, 3, 2)
-		.triangle(1, 5, 7)
-		.triangle(1, 7, 3)
-		.triangle(5, 4, 6)
-		.triangle(5, 6, 7)
-		.triangle(4, 0, 2)
-		.triangle(4, 2, 6)
-		.triangle(4, 5, 1)
-		.triangle(4, 1, 0)
-		.triangle(2, 3, 7)
-		.triangle(2, 7, 6);
+	m	.Triangle(0, 1, 3)
+		.Triangle(0, 3, 2)
+		.Triangle(1, 5, 7)
+		.Triangle(1, 7, 3)
+		.Triangle(5, 4, 6)
+		.Triangle(5, 6, 7)
+		.Triangle(4, 0, 2)
+		.Triangle(4, 2, 6)
+		.Triangle(4, 5, 1)
+		.Triangle(4, 1, 0)
+		.Triangle(2, 3, 7)
+		.Triangle(2, 7, 6);
 	return m;
 }
 
@@ -311,7 +311,7 @@ Mesh Mesh::Sphere(const double & radius, const unsigned int lod){
 		// Dessin des faces liées au sommet haut de la sphère
 		Index 	actual = i * lod,
 				next = (actual + lod) % nb_vert;
-		m.triangle(	nb_vert, next, actual);
+		m.Triangle(	nb_vert, next, actual);
 		// Dessin des vertexs et des portions de la sphère
 		for(unsigned int j = 1; j <= lod; j++){
 			double 	portion_x = (i / (double)lod) * (2 * MESH_PI),
@@ -321,24 +321,24 @@ Mesh Mesh::Sphere(const double & radius, const unsigned int lod){
 					v_x = cos(portion_x) * delta,
 					v_z = sin(portion_x) * delta;
 			Vector3 _v(v_x * radius, v_y * radius, v_z * radius);
-			Index start = m.vertice(_v);
-			m.normal(_v);
+			Index start = m.Vertice(_v);
+			m.Normal(_v);
 
 			// Dessin des portions
 			if(j % lod != 0){
-				m	.triangle(start, (start + lod) % nb_vert, (start + lod + 1) % nb_vert )
-					.triangle(start, (start + lod + 1) % nb_vert, start + 1 );
+				m	.Triangle(start, (start + lod) % nb_vert, (start + lod + 1) % nb_vert )
+					.Triangle(start, (start + lod + 1) % nb_vert, start + 1 );
 			}
 		}
 		// Dessin des faces liées au sommet bas de la sphère
-		m.triangle( v_last_index, ((lod * i) - 1) % nb_vert, (lod * (i+1)) - 1 );
+		m.Triangle( v_last_index, ((lod * i) - 1) % nb_vert, (lod * (i+1)) - 1 );
 	}
 	// Sommet haut de la sphère
-	m.vertice(0,radius,0);
-	m.normal(0,radius,0);
+	m.Vertice(0,radius,0);
+	m.Normal(0,radius,0);
 	// Sommet bas de la sphère
-	m.vertice(0,-radius,0);
-	m.normal(0,-radius,0);
+	m.Vertice(0,-radius,0);
+	m.Normal(0,-radius,0);
 
 	return m;	
 }

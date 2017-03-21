@@ -37,8 +37,8 @@ class Mesh{
 
 		Mesh(){}
 		Mesh(const Mesh& _m) = default;
-		Mesh(const std::string & filename){	importOBJ(filename);	}
-		void release();
+		Mesh(const std::string & filename){	ImportOBJ(filename);	}
+		void Release();
 
 		// Translation
 		Mesh& operator+=(const Vector3_t<double> & t);
@@ -49,54 +49,54 @@ class Mesh{
 		Mesh operator*(const double & s){	return (*this) *= s; }
 		Mesh operator*(const Vector3_t<double> & s){	return (*this) *= s; }
 		
-		MeshVertices & getVertices(){	return vertices;	}
-		MeshTextures & getTextures(){	return textures;	}
-		MeshNormals & getNormals(){	return normals;	}
-		MeshVerticesIndex & getVerticesIndex(){	return vertices_index;	}
-		MeshTexturesIndex & getTexturesIndex(){	return textures_index;	}
-		MeshNormalsIndex & getNormalsIndex(){	return normals_index;	}
+		MeshVertices & GetVertices(){	return vertices;	}
+		MeshTextures & GetTextures(){	return textures;	}
+		MeshNormals & GetNormals(){	return normals;	}
+		MeshVerticesIndex & GetVerticesIndex(){	return vertices_index;	}
+		MeshTexturesIndex & GetTexturesIndex(){	return textures_index;	}
+		MeshNormalsIndex & GetNormalsIndex(){	return normals_index;	}
 
-		MeshVertices const & getVertices() const{	return vertices;	}
-		MeshTextures const & getTextures() const{	return textures;	}
-		MeshNormals const & getNormals() const{	return normals;	}
-		MeshVerticesIndex const & getVerticesIndex() const{	return vertices_index;	}
-		MeshTexturesIndex const & getTexturesIndex() const{	return textures_index;	}
-		MeshNormalsIndex const & getNormalsIndex() const{	return normals_index;	}
+		MeshVertices const & GetVertices() const{	return vertices;	}
+		MeshTextures const & GetTextures() const{	return textures;	}
+		MeshNormals const & GetNormals() const{	return normals;	}
+		MeshVerticesIndex const & GetVerticesIndex() const{	return vertices_index;	}
+		MeshTexturesIndex const & GetTexturesIndex() const{	return textures_index;	}
+		MeshNormalsIndex const & GetNormalsIndex() const{	return normals_index;	}
 
-		Index vertice(const Vector3_t<double> & _v);
-		Index vertice(const double& x, const double& y, const double& z);
+		Index Vertice(const Vector3_t<double> & _v);
+		Index Vertice(const double& x, const double& y, const double& z);
 
-		Mesh& texture(const Vector2_t<double> & _t);
-		Mesh& texture(const double& x, const double& y);
+		Mesh& Texture(const Vector2_t<double> & _t);
+		Mesh& Texture(const double& x, const double& y);
 
-		Mesh& normal(const Vector3_t<double> & _n);
-		Mesh& normal(const double& x, const double& y, const double& z);
+		Mesh& Normal(const Vector3_t<double> & _n);
+		Mesh& Normal(const double& x, const double& y, const double& z);
 
-		Mesh& vertice_index(const Index & _vi);
-		Mesh& texture_index(const Index & _ti);
-		Mesh& normal_index(const Index & _ni);
+		Mesh& VerticeIndex(const Index & _vi);
+		Mesh& TextureIndex(const Index & _ti);
+		Mesh& NormalIndex(const Index & _ni);
 
 		//! Insère une face dont a, b, c sont les nouveaux sommets à insérer
-		Mesh& triangle(const Vector3_t<double> & a, const Vector3_t<double> & b, const Vector3_t<double> & c);
+		Mesh& Triangle(const Vector3_t<double> & a, const Vector3_t<double> & b, const Vector3_t<double> & c);
 		//! Insère une face dont a, b, c sont les indices des sommets
-		Mesh& triangle(const Index & a, const Index & b, const Index & c);
+		Mesh& Triangle(const Index & a, const Index & b, const Index & c);
 		/*! Insère une face dont a, b, c sont les indices des sommets en comptant en partant du dernier
 		\code
-		m.vertice(v0);
-		m.vertice(v1);
-		m.vertice(v2);
-		m.triangle_last(-3,-2,-1);
+		m.Vertice(v0);
+		m.Vertice(v1);
+		m.Vertice(v2);
+		m.Triangle_last(-3,-2,-1);
 		\endcode
 		*/
-		Mesh& triangle_last(const int & a, const int & b, const int & c);
+		Mesh& TriangleLast(const int & a, const int & b, const int & c);
 
-		bool importOBJ(const std::string & filename);
-		bool exportOBJ(const std::string & filename, const double scale = 0.01);
+		bool ImportOBJ(const std::string & filename);
+		bool ExportOBJ(const std::string & filename, const double scale = 0.01);
 
-		Mesh& merge(const Mesh & _m);
-		void bounds(Point_t<double>& pmin, Point_t<double>& pmax);
-		void resize(const double& scale);
-		void clear();
+		Mesh& Merge(const Mesh & _m);
+		void Bounds(Point_t<double>& pmin, Point_t<double>& pmax);
+		void Resize(const double& scale);
+		void Clear();
 
 		static Mesh Cube(const double & size);
 		static Mesh Sphere(const double & radius, const unsigned int lod = 100);

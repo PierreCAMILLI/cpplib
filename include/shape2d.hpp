@@ -33,7 +33,8 @@ class Line_t : public Shape2D_t<T>{
 		
 		T Length() const;
 		bool IsUpside(const Vector2_t<T> & point);
-		bool Cross(Vector2_t<T>& point);
+		bool Cross(const Line_t<T>& line, Vector2_t<T>& point);
+		Vector2_t<T> Projection(const Vector2_t<T>& point) const;
 
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
@@ -41,6 +42,10 @@ class Line_t : public Shape2D_t<T>{
 		void Bounds(Vector2_t<T>& min, Vector2_t<T>& max);
 		bool operator()(const Raycast2D_t<T>& ray, RaycastHit2D_t<T>& hit);
 };
+
+typedef Line_t<double> Line;
+typedef Line_t<float> Linef;
+typedef Line_t<int> Linei;
 
 template<typename T>
 class Circle_t : public Shape2D_t<T>{

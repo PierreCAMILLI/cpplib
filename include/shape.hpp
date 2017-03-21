@@ -66,6 +66,26 @@ class Triangle_t : public Shape_t<T>
 		bool operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit);	
 };
 
+template<typename T>
+class Box_t : public Shape_t<T>
+{
+	private:
+		Vector3_t<T> min, max;
+	public:
+		Box_t<T>(const Box_t<T>& t) = default;
+		Box_t<T>(
+			const Vector3_t<T>& _min = Vector3_t<T>(),
+			const Vector3_t<T>& _max = Vector3_t<T>()) : min(_min), max(_max){}
+
+		bool Contains(const Vector3_t<T>& point);
+
+		void Translate(const Vector3_t<T>& translation);
+		void Resize(const Vector3_t<T>& size);
+		T Distance(const Vector3_t<T>& point) const;
+		void Bounds(Vector3_t<T>& min, Vector3_t<T>& max);
+		bool operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit);	
+};
+
 class MeshShape : public Shape_t<double>
 {
 	private:
