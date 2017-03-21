@@ -25,6 +25,7 @@ typedef Raycast_t<int> Raycasti;
 
 template <typename T>
 struct RaycastHit_t{
+	bool hit;
 	Vector3_t<T> origin;
 	Vector3_t<T> point;
 	Vector3_t<T> normal;
@@ -56,12 +57,15 @@ typedef Raycast2D_t<int> Raycast2Di;
 
 template <typename T>
 struct RaycastHit2D_t{
+	bool hit = false;
 	Vector2_t<T> origin;
 	Vector2_t<T> point;
 	Vector2_t<T> normal;
 
 	RaycastHit2D_t(){}
 	RaycastHit2D_t(const RaycastHit2D_t& _raycastHit2d) = default;
+
+	operator bool() const{	return hit;	}
 
 	T Distance() const{	return (point - origin).Length();	}
 };

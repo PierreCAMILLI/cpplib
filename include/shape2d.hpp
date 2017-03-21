@@ -16,6 +16,8 @@ class Shape2D_t{
 	private:
 
 	public:
+		virtual RaycastHit2D_t<T> operator()(const Raycast2D_t<T>& ray){	RaycastHit2D_t<T> hit;	(*this)(ray, hit);	return hit;	};
+
 		virtual void Translate(const Vector2_t<T>& translation) = 0;
 		virtual void Resize(const Vector2_t<T>& size) = 0;
 		virtual T Distance(const Vector2_t<T>& point) const = 0;
@@ -38,6 +40,8 @@ class Line_t : public Shape2D_t<T>{
 		bool Cross(const Line_t<T>& line, Vector2_t<T>& point);
 		Vector2_t<T> Projection(const Vector2_t<T>& point) const;
 
+		RaycastHit2D_t<T> operator()(const Raycast2D_t<T>& ray) {	return Shape2D_t<T>::operator()(ray);	};
+
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
 		T Distance(const Vector2_t<T>& point) const;
@@ -58,12 +62,20 @@ class Circle_t : public Shape2D_t<T>{
 		Circle_t<T>(const Circle_t<T> & c) = default;
 		Circle_t<T>(const Vector2_t<T>& _center = Vector2_t<T>(), const T & _radius = T()) : center(_center), radius(_radius){}
 		
+		bool IsInside(const Vector2_t<T>& point);
+
+		RaycastHit2D_t<T> operator()(const Raycast2D_t<T>& ray) {	return Shape2D_t<T>::operator()(ray);	};
+
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
 		T Distance(const Vector2_t<T>& point) const;
 		void Bounds(Vector2_t<T>& min, Vector2_t<T>& max);
 		bool operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit);
 };
+
+typedef Circle_t<double> Circle;
+typedef Circle_t<float> Circlef;
+typedef Circle_t<int> Circlei;
 
 template<typename T>
 class Triangle2D_t : public Shape2D_t<T>{
@@ -77,6 +89,8 @@ class Triangle2D_t : public Shape2D_t<T>{
 			const Vector2_t<T>& _c = Vector2_t<T>()) : a(_a), b(_b), c(_c){}
 
 		bool IsInside(const Vector2_t<T>& point);
+		Vector2_t<T> CircumscribedCenter() const;
+		Vector2_t<T> InscribedCenter() const;
 
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);

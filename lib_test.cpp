@@ -39,11 +39,12 @@ int main(int argc, char** argv){
 	std::cout << point << std::endl;
 	*/
 
-	Line l1(Vector2(-3.0, 3.0), Vector2(3.0, -3.0));
+	// Line l1(Vector2(-3.0, 3.0), Vector2(3.0, -3.0));
 	// l1.Translate(Vector2(0.0, -3.0));
-	Raycast2D ray(Vector2(-3.0, 0.0), Vector2(1.0, 0.0));
-	RaycastHit2D hit;
-	if(l1(ray, hit)){
+	Circle c(Vector2(0.0, 1.0), 2.0);
+	Raycast2D ray(Vector2(-3.0, 0.0), Vector2(2.0, 0.0));
+	RaycastHit2D hit = c(ray);
+	if(hit){
 		std::cout << "Origine : " << hit.origin << std::endl;
 		std::cout << "Intersection : " << hit.point << std::endl;
 		std::cout << "Normale : " << hit.normal.Normalized() << std::endl;
