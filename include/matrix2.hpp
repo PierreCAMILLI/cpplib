@@ -1,18 +1,13 @@
 #pragma once
 
-#include "includes.hpp"
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <math.h>
 
-template<typename T>
-struct Vector2_t;
+#include <iostream>
 
-template<typename T>
-struct Vector3_t;
-
-template<typename T>
-struct Point_t;
-
-template<typename T>
-struct Vector4_t;
+#include "vector.hpp"
 
 template<typename T, unsigned int U, unsigned int V>
 class Matrix_r{

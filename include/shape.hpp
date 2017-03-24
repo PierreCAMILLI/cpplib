@@ -1,17 +1,7 @@
 #pragma once
 
-#include "includes.hpp"
-
-template<typename T>
-struct Vector2_t;
-
-template<typename T>
-struct Vector3_t;
-
-template<typename T>
-struct Point_t;
-
-class Mesh;
+#include "ray.hpp"
+#include "mesh.hpp"
 
 template<typename T>
 struct Raycast_t;
@@ -27,6 +17,19 @@ class Shape_t{
 		virtual T Distance(const Vector3_t<T>& point) const = 0;
 		virtual void Bounds(Vector3_t<T>& min, Vector3_t<T>& max) = 0;
 		virtual bool operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit) = 0;
+};
+
+template<typename T>
+class Plane_t{
+	private:
+		Vector3_t<T> origin;
+		Vector3_t<T> normal;
+	public:
+		void Translate(const Vector3_t<T>& translation);
+		void Resize(const Vector3_t<T>& size);
+		T Distance(const Vector3_t<T>& point) const;
+		void Bounds(Vector3_t<T>& min, Vector3_t<T>& max);
+		bool operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit);
 };
 
 template<typename T>

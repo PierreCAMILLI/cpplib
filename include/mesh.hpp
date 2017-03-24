@@ -1,18 +1,15 @@
 #pragma once
 
-#include "includes.hpp"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <fstream>
+#include <vector>
+
 #include "vector.hpp"
 
 #define MESH_PI 3.14159265359
-
-template<typename T>
-struct Vector2_t;
-
-template<typename T>
-struct Vector3_t;
-
-template<typename T>
-struct Point_t;
 
 typedef unsigned int Index;
 typedef std::vector<Vector3_t<double> > MeshVertices;

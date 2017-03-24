@@ -12,7 +12,9 @@ T Line_t<T>::Length() const{
 
 template<typename T>
 bool Line_t<T>::IsUpside(const Vector2_t<T> & point){
-	return ((b.x - a.x) * (point.y - a.y) - (b.y - a.y) * (point.x - a.x)) > T(0);
+	Vector2_t<T> 	A = Vector(),
+					B = point - a;
+	return (A.x * B.y - A.y * B.x) > T(0);
 }
 
 template<typename T>
@@ -44,8 +46,19 @@ Vector2_t<T> Line_t<T>::Projection(const Vector2_t<T>& point) const{
 	const T squaredLength = v.SquaredLength();
 	if(squaredLength == 0.0f)	return a;
 
-	const T t = std::max((T)0.0, std::min((T)1.0, (point - a).Dot(v) / squaredLength));
+	const T t = std::max(T(0), std::min(T(1), (point - a).Dot(v) / squaredLength));
 	return a + (v) * t;
+}
+
+template<typename T>
+bool Line_t<T>::IsInside(const Vector2_t<T>& point){
+	Vector2_t<T> 	A(point - a),
+					B(b - a);
+	T 	deltaX = (A.x / B.x),
+		deltaY = (A.y / B.y);
+	return (deltaX >= T(0) && deltaX <= T(1) &&
+			deltaY >= T(0) && deltaY <= T(1) &&
+			deltaX == deltaY);
 }
 
 template<typename T>
@@ -95,7 +108,7 @@ bool Line_t<T>::operator()(const Raycast2D_t<T>& ray, RaycastHit2D_t<T>& hit){
 		// Gestion de la normale
 		hit.normal(-A.y, A.x);
 		if(!AreInSameSide(ray.origin, hit.point + hit.normal)){
-			hit.normal *= -1;
+			hit.normal *= T(-1);
 		}
 		hit.hit = true;
 	}
@@ -158,7 +171,7 @@ bool Circle_t<T>::operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit)
 		}
 
 		// Check de distance
-		if(ray.maxDistance >= 0 && dist * ray.direction.Length() > ray.maxDistance){
+		if(ray.maxDistance >= T(0) && dist * ray.direction.Length() > ray.maxDistance){
 			hit.hit = false;
 		}else{
 			hit.hit = true;

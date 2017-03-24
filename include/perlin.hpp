@@ -1,6 +1,11 @@
 #pragma once
 
-#include "includes.hpp"
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <algorithm>
+#include <random>
+#include <vector>
 
 class PerlinNoise{
 

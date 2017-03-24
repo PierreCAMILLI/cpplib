@@ -81,7 +81,7 @@ T Vector2_t<T>::SquaredLength() const{
 
 template<typename T>
 T Vector2_t<T>::Length() const{
-	return sqrt(SquaredLength());
+	return std::sqrt(SquaredLength());
 }
 
 template<typename T>
@@ -186,7 +186,7 @@ T Vector3_t<T>::SquaredLength() const{
 
 template<typename T>
 T Vector3_t<T>::Length() const{
-	return sqrt(SquaredLength());
+	return std::sqrt(SquaredLength());
 }
 
 template<typename T>
@@ -404,7 +404,7 @@ T Vector4_t<T>::SquaredLength() const{
 
 template<typename T>
 T Vector4_t<T>::Length() const{
-	return sqrt(SquaredLength());
+	return std::sqrt(SquaredLength());
 }
 
 template<typename T>

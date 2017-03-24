@@ -1,9 +1,6 @@
 #pragma once
 
-#include "includes.hpp"
-
-template<typename T>
-struct Vector2_t;
+#include "ray.hpp"
 
 template<typename T>
 struct Raycast2D_t;
@@ -18,6 +15,7 @@ class Shape2D_t{
 	public:
 		virtual RaycastHit2D_t<T> operator()(const Raycast2D_t<T>& ray){	RaycastHit2D_t<T> hit;	(*this)(ray, hit);	return hit;	};
 
+		virtual bool IsInside(const Vector2_t<T>& point) = 0;
 		virtual void Translate(const Vector2_t<T>& translation) = 0;
 		virtual void Resize(const Vector2_t<T>& size) = 0;
 		virtual T Distance(const Vector2_t<T>& point) const = 0;
@@ -42,6 +40,7 @@ class Line_t : public Shape2D_t<T>{
 
 		RaycastHit2D_t<T> operator()(const Raycast2D_t<T>& ray) {	return Shape2D_t<T>::operator()(ray);	};
 
+		bool IsInside(const Vector2_t<T>& point);
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
 		T Distance(const Vector2_t<T>& point) const;
@@ -62,10 +61,10 @@ class Circle_t : public Shape2D_t<T>{
 		Circle_t<T>(const Circle_t<T> & c) = default;
 		Circle_t<T>(const Vector2_t<T>& _center = Vector2_t<T>(), const T & _radius = T()) : center(_center), radius(_radius){}
 		
-		bool IsInside(const Vector2_t<T>& point);
-
+		
 		RaycastHit2D_t<T> operator()(const Raycast2D_t<T>& ray) {	return Shape2D_t<T>::operator()(ray);	};
 
+		bool IsInside(const Vector2_t<T>& point);
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
 		T Distance(const Vector2_t<T>& point) const;
@@ -88,10 +87,10 @@ class Triangle2D_t : public Shape2D_t<T>{
 			const Vector2_t<T>& _b = Vector2_t<T>(),
 			const Vector2_t<T>& _c = Vector2_t<T>()) : a(_a), b(_b), c(_c){}
 
-		bool IsInside(const Vector2_t<T>& point);
-		Vector2_t<T> CircumscribedCenter() const;
+		Vector2_t<T> Circumcenter() const;
 		Vector2_t<T> InscribedCenter() const;
 
+		bool IsInside(const Vector2_t<T>& point);
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
 		T Distance(const Vector2_t<T>& point) const;
@@ -107,6 +106,7 @@ class Polygon2D_t : public Shape2D_t<T>
 		Polygon2D_t();
 		Polygon2D_t(const Polygon2D_t<T>& p) = default;
 
+		bool IsInside(const Vector2_t<T>& point);
 		void Translate(const Vector2_t<T>& translation);
 		void Resize(const Vector2_t<T>& size);
 		T Distance(const Vector2_t<T>& point) const;

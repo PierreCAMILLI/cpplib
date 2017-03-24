@@ -1,11 +1,12 @@
 #pragma once
 
-#include "includes.hpp"
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+
+#include "vector.hpp"
 
 #define CURVE_PI 3.14159265359
-
-template<typename T>
-struct Vector2_t;
 
 template<typename T>
 using VectorControl_t = std::vector<Vector2_t<T> >;

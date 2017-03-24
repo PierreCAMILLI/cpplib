@@ -1,6 +1,11 @@
 #pragma once
 
-#include "includes.hpp"
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+#include <cmath>
+#include <iostream>
 
 template<typename T>
 struct Vector3_t;

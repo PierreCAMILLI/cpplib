@@ -1,12 +1,6 @@
 #pragma once
 
-#include "includes.hpp"
-
-template<typename T>
-struct Vector2_t;
-
-template<typename T>
-struct Vector3_t;
+#include "vector.hpp"
 
 template <typename T>
 struct Raycast_t{
