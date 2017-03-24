@@ -220,7 +220,7 @@ struct Vector4_t
 
 	T SquaredLength() const;
 	T Length() const;
-	T Dot(const Vector3_t<T>& _v) const;
+	T Dot(const Vector4_t<T>& _v) const;
 	Vector4_t<T>& Normalize();
 	Vector4_t<T> Normalized() const{	return Vector4_t<T>(*this).Normalize();	};
 

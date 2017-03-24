@@ -408,7 +408,7 @@ T Vector4_t<T>::Length() const{
 }
 
 template<typename T>
-T Vector4_t<T>::Dot(const Vector3_t<T>& _v) const{
+T Vector4_t<T>::Dot(const Vector4_t<T>& _v) const{
 	return (x * _v.x) + (y * _v.y) + (z * _v.z) + (w * _v.w);
 }
 
@@ -428,11 +428,19 @@ void Vector4_t<T>::Display(){
 template class Vector2_t<double>;
 template class Vector2_t<float>;
 template class Vector2_t<int>;
+template class Vector2_t<unsigned int>;
 
 template class Vector3_t<double>;
 template class Vector3_t<float>;
 template class Vector3_t<int>;
+template class Vector3_t<unsigned int>;
 
 template class Point_t<double>;
 template class Point_t<float>;
 template class Point_t<int>;
+template class Point_t<unsigned int>;
+
+template class Vector4_t<double>;
+template class Vector4_t<float>;
+template class Vector4_t<int>;
+template class Vector4_t<unsigned int>;

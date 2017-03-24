@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ray.hpp"
+#include "triangulation.hpp"
 
 template<typename T>
 struct Raycast2D_t;
@@ -102,9 +103,10 @@ template<typename T>
 class Polygon2D_t : public Shape2D_t<T>
 {
 	private:
+		Triangulation * const triangulation;
 	public:
-		Polygon2D_t();
 		Polygon2D_t(const Polygon2D_t<T>& p) = default;
+		Polygon2D_t(Triangulation& _triangulation) : triangulation(&_triangulation){}
 
 		bool IsInside(const Vector2_t<T>& point);
 		void Translate(const Vector2_t<T>& translation);
