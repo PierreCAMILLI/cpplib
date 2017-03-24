@@ -36,6 +36,16 @@ struct Face{
 	}
 
 	bool HasInfiniteVertice(){	return HasVertice(VERTICE_INDEX_INFINITY);	}
+
+	bool SetFaceIndexTo(const FaceIndex& f1, const FaceIndex& f2){
+		for(FaceIndex i = 0; i < 3; ++i){
+			if(f1 == faces[i]){
+				faces[i] = f2;
+				return true;
+			}
+		}
+		return false;
+	}
 };
 
 typedef std::vector<Vector2_t<double> > TriangulationVertices;
@@ -47,14 +57,22 @@ class Triangulation
 		TriangulationVertices vertices;
 		TriangulationFaces faces;
 
-		void InsertInfiniteVertice();
-		void InsertInFace(const Vector2_t<double>& vertice, const FaceIndex& face);
+		void InsertLastVerticeInFace(const FaceIndex& index);
+		void InsertLastVerticeOutsideTriangulation();
 
 		// _a et _b vont de gauche à droite
 		static bool IsUpside(const Vector2_t<double>& _o, const Vector2_t<double>& _a, const Vector2_t<double>& _b);
 	public:
 		Triangulation(){}
 		Triangulation(const Triangulation& _triangulation) = default;
+
+		operator Mesh() const{	return ToMesh();	};
+
+		TriangulationVertices const & GetVertices() const{	return vertices;	}
+		TriangulationFaces const & GetFaces() const{	return faces;	}
+
+		TriangulationVertices& GetVertices(){	return vertices;	}
+		TriangulationFaces& GetFaces(){	return faces;	}
 
 		void ImportFile(const std::string& file);
 		Triangulation& AddVertice(const Vector2_t<double>& vertice);
@@ -65,7 +83,7 @@ class Triangulation
 		// Indique si le vertex est dans la triangulation, retourne la face correspondante, -1 sinon
 		FaceIndex IsInside(const Vector2_t<double>& vertice);
 		// Indique si le vertex est dans la face
-		bool IsInsideFace(const Vector2_t<double>& vertice, const FaceIndex& face);
+		bool IsInsideFace(const Vector2_t<double>& vertice, const FaceIndex& index);
 
 		void Delaunay();
 		void Crust();

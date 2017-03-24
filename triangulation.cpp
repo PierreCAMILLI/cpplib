@@ -21,16 +21,33 @@ Triangulation& Triangulation::AddVertice(const Vector2_t<double>& vertice){
 		// On regarde si le vertex est inclu dans un triangle
 		FaceIndex f = IsInside(vertice);
 		if(f >= 0){
-			InsertInFace(vertice, f);
+			InsertLastVerticeInFace(f);
+		}else{
+			// Le vertex n'est pas dans la triangulation
+			// On parcourt l'enveloppe convexe de la triangulation
+			// On vérifie si on peut linker le vertex avec les côtés de l'enveloppe convexe
+			InsertLastVerticeOutsideTriangulation();
 		}
-
-		// Le vertex n'est pas dans la triangulation
-		// On parcourt l'enveloppe convexe de la triangulation
-		// On vérifie si on peut linker le vertex avec les côtés de l'enveloppe convexe
-		// TODO
 	}
 
 	return (*this);
+}
+
+Mesh Triangulation::ToMesh() const{
+	Mesh m;
+
+	// Insertion des vertex
+	for(VerticeIndex i = 0; i < vertices.size(); ++i){
+		m.Vertice(vertices[i]);
+	}
+
+	// Insertion des faces
+	for(FaceIndex i = 0; i < faces.size(); ++i){
+		Face face = faces[i];
+		m.Triangle(face[0], face[1], face[2]);
+	}
+
+	return m;
 }
 
 bool Triangulation::IsUpside(const Vector2_t<double>& _o, const Vector2_t<double>& _a, const Vector2_t<double>& _b){
@@ -73,7 +90,30 @@ bool Triangulation::IsInsideFace(const Vector2_t<double>& vertice, const FaceInd
 				&&	IsUpside(vertice, c, a));
 }
 
-void Triangulation::InsertInFace(const Vector2_t<double>& vertice, const FaceIndex& face){
-	// TODO
+void Triangulation::InsertLastVerticeInFace(const FaceIndex& index){
+	VerticeIndex lastVerticeIndex = vertices.size() - 1;
+	Face face = faces[index];
+	FaceIndex 	secondFace = faces.size(),
+				thirdFace = faces.size() + 1;
+	
+	// On remplace la face courante par une des faces que l'on souhaite ajouter
+	VerticeIndex verticeReplaced = face[0];
+	faces[index][0] = lastVerticeIndex;
 
+	// On créé les nouvelles faces
+	faces.push_back(Face(	lastVerticeIndex, verticeReplaced, face[1],
+							thirdFace, face(0), index));
+	faces.push_back(Face(	lastVerticeIndex, face[2], verticeReplaced,
+							index, face(2), secondFace));
+
+	// On met à jour les faces adjacentes de la face courante
+	faces[face(0)].SetFaceIndexTo(index, secondFace);
+	faces[face(2)].SetFaceIndexTo(index, thirdFace);
+
+	faces[index](0) = secondFace;
+	faces[index](2) = thirdFace;
+}
+
+void Triangulation::InsertLastVerticeOutsideTriangulation(){
+	// TODO
 }
