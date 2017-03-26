@@ -1,7 +1,26 @@
 #include "include/triangulation.hpp"
 
 void Triangulation::ImportFile(const std::string& file){
+	std::string line;
+    std::ifstream myfile (file.c_str());
 
+    if(myfile.is_open()){
+    	Clear();
+
+    	// On alloue le nombre de vertices présents
+    	unsigned int verSize;
+    	myfile >> verSize;
+    	vertices.reserve(verSize);
+
+    	for(unsigned int i = 0; i < verSize; ++i){
+    		getline(myfile, line);
+
+    		// On lit les coordonnées du point
+    		double x, y;
+    		myfile >> x >> y;
+    		AddVertice(Vector2_t<double>(x, y));
+    	} 
+    }
 }
 
 Triangulation& Triangulation::AddVertice(const Vector2_t<double>& vertice){
@@ -19,8 +38,8 @@ Triangulation& Triangulation::AddVertice(const Vector2_t<double>& vertice){
 	
 	}else if(vertices.size() > 3){
 		// On regarde si le vertex est inclu dans un triangle
-		FaceIndex f = IsInside(vertice);
-		if(f >= 0){
+		FaceIndex f;
+		if(IsInside(vertice, f)){
 			InsertLastVerticeInFace(f);
 		}else{
 			// Le vertex n'est pas dans la triangulation
@@ -33,18 +52,25 @@ Triangulation& Triangulation::AddVertice(const Vector2_t<double>& vertice){
 	return (*this);
 }
 
+void Triangulation::Clear(){
+	vertices.clear();
+	faces.clear();
+}
+
 Mesh Triangulation::ToMesh() const{
 	Mesh m;
 
 	// Insertion des vertex
+	m.GetVertices().reserve(vertices.size());
 	for(VerticeIndex i = 0; i < vertices.size(); ++i){
 		m.Vertice(vertices[i]);
 	}
 
 	// Insertion des faces
+	m.GetVerticesIndex().reserve(vertices.size() * 3);
 	for(FaceIndex i = 0; i < faces.size(); ++i){
 		Face face = faces[i];
-		m.Triangle(face[0], face[1], face[2]);
+		if(!face.HasInfiniteVertice())	m.Triangle(face[0], face[1], face[2]);
 	}
 
 	return m;
@@ -57,7 +83,6 @@ bool Triangulation::IsUpside(const Vector2_t<double>& _o, const Vector2_t<double
 }
 
 void Triangulation::SortVertices(VerticeIndex& _a, VerticeIndex& _b, VerticeIndex& _c){
-	// TODO
 	Vector2_t<double>	a = vertices[_a],
 						b = vertices[_b],
 						c = vertices[_c];
@@ -69,13 +94,14 @@ void Triangulation::SortVertices(VerticeIndex& _a, VerticeIndex& _b, VerticeInde
 	}
 }
 
-FaceIndex Triangulation::IsInside(const Vector2_t<double>& vertice){
+bool Triangulation::IsInside(const Vector2_t<double>& vertice, FaceIndex& face){
 	for(FaceIndex i = 0; i < faces.size(); ++i){
 		if(IsInsideFace(vertice, i)){
-			return i;
+			face = i;
+			return true;
 		}
 	}
-	return -1;
+	return false;
 }
 
 bool Triangulation::IsInsideFace(const Vector2_t<double>& vertice, const FaceIndex& _face){
@@ -90,30 +116,45 @@ bool Triangulation::IsInsideFace(const Vector2_t<double>& vertice, const FaceInd
 				&&	IsUpside(vertice, c, a));
 }
 
-void Triangulation::InsertLastVerticeInFace(const FaceIndex& index){
-	VerticeIndex lastVerticeIndex = vertices.size() - 1;
-	Face face = faces[index];
+void Triangulation::InsertVerticeInFace(const VerticeIndex& vindex, const FaceIndex& findex){
+	Face face = faces[findex];
+	
+	// Index des futures faces créées
 	FaceIndex 	secondFace = faces.size(),
 				thirdFace = faces.size() + 1;
 	
 	// On remplace la face courante par une des faces que l'on souhaite ajouter
 	VerticeIndex verticeReplaced = face[0];
-	faces[index][0] = lastVerticeIndex;
+	faces[findex][0] = vindex;
 
 	// On créé les nouvelles faces
-	faces.push_back(Face(	lastVerticeIndex, verticeReplaced, face[1],
-							thirdFace, face(0), index));
-	faces.push_back(Face(	lastVerticeIndex, face[2], verticeReplaced,
-							index, face(2), secondFace));
+	faces.push_back(Face(	vindex, verticeReplaced, face[1],
+							thirdFace, face(0), findex));
+	faces.push_back(Face(	vindex, face[2], verticeReplaced,
+							findex, face(2), secondFace));
 
 	// On met à jour les faces adjacentes de la face courante
-	faces[face(0)].SetFaceIndexTo(index, secondFace);
-	faces[face(2)].SetFaceIndexTo(index, thirdFace);
+	faces[face(0)].SetFaceIndexTo(findex, secondFace);
+	faces[face(2)].SetFaceIndexTo(findex, thirdFace);
 
-	faces[index](0) = secondFace;
-	faces[index](2) = thirdFace;
+	faces[findex](0) = secondFace;
+	faces[findex](2) = thirdFace;
 }
 
 void Triangulation::InsertLastVerticeOutsideTriangulation(){
-	// TODO
+	Vector2_t<double> lastVertice = vertices[vertices.size() - 1];
+	FacesCirculator
+		fc = GetFacesCirculator(VERTICE_INDEX_INFINITY),
+		fc_end = fc;
+	do{
+		// TODO
+		Face face = fc.GetFace();
+		VerticeIndex va, vb;
+				if(face.vertices.x == VERTICE_INDEX_INFINITY)	{	va = face.vertices.y;	vb = face.vertices.z;	}
+		else	if(face.vertices.y == VERTICE_INDEX_INFINITY)	{	va = face.vertices.z;	vb = face.vertices.x;	}
+		else													{	va = face.vertices.x;	vb = face.vertices.y;	}
+		if(IsUpside(lastVertice, va, vb)){
+			InsertLastVerticeInFace(*fc);
+		}
+	}while(fc != fc_end);
 }

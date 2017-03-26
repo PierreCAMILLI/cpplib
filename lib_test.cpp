@@ -16,6 +16,7 @@ int main(int argc, char** argv){
 	std::cout << point << std::endl;
 	*/
 
+	/*
 	Line l(Vector2(-3.0, 3.0), Vector2(3.0, -3.0));
 	// l1.Translate(Vector2(0.0, -3.0));
 	Circle c(Vector2(0.0, 1.0), 2.0);
@@ -32,4 +33,11 @@ int main(int argc, char** argv){
 
 	std::cout << l.IsInside(Vector2(-3.0, 3.0)) << std::endl;
 	std::cout << l.IsInside(Vector2(0.0, 1.0)) << std::endl;
+	*/
+
+	Triangulation t;
+	t.ImportFile("line0.tri");
+	std::cout << "Nombre de vertices : " << t.GetVertices().size() << std::endl;
+	std::cout << "Nombre de faces : " << t.GetFaces().size() << std::endl;
+	t.ToMesh().ExportOBJ("triangulation.obj");
 }
