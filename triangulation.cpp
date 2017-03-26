@@ -147,7 +147,7 @@ void Triangulation::InsertLastVerticeOutsideTriangulation(){
 		fc = GetFacesCirculator(VERTICE_INDEX_INFINITY),
 		fc_end = fc;
 	do{
-		// TODO
+		++fc;
 		Face face = fc.GetFace();
 		VerticeIndex va, vb;
 				if(face.vertices.x == VERTICE_INDEX_INFINITY)	{	va = face.vertices.y;	vb = face.vertices.z;	}

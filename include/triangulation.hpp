@@ -85,18 +85,18 @@ class Triangulation
 				}
 				VerticesCirculator(const VerticesCirculator& _circulator) = default;
 
-				VerticeIndex operator++() const{
-					FaceIndex _temp = *(*this);
-					++(*this);
-					return _temp;
-				}
-
-				VerticeIndex operator++(int) {
+				VerticeIndex operator++() {
 					Face face = triangulation->GetFaces()[currentFace];
 							if(face.vertices.x == vertice)	currentFace = face.faces.x;
 					else 	if(face.vertices.y == vertice)	currentFace = face.faces.y;
 					else 	if(face.vertices.z == vertice)	currentFace = face.faces.z;
 					return *(*this);
+				}
+
+				VerticeIndex operator++(int) {
+					FaceIndex _temp = *(*this);
+					++(*this);
+					return _temp;
 				}
 
 				bool operator==(const VerticesCirculator& ci){
@@ -138,18 +138,18 @@ class Triangulation
 				}
 				FacesCirculator(const FacesCirculator& _circulator) = default;
 
-				FaceIndex operator++() const{
-					FaceIndex _temp = *(*this);
-					++(*this);
-					return _temp;
-				}
-
-				FaceIndex operator++(int) {
+				FaceIndex operator++() {
 					Face face = GetFace();
 							if(face.vertices.x == vertice)	currentFace = face.faces.x;
 					else 	if(face.vertices.y == vertice)	currentFace = face.faces.y;
 					else 	if(face.vertices.z == vertice)	currentFace = face.faces.z;
 					return *(*this);
+				}
+
+				FaceIndex operator++(int) {
+					FaceIndex _temp = *(*this);
+					++(*this);
+					return _temp;
 				}
 
 				bool operator==(const FacesCirculator& ci){
