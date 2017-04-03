@@ -79,7 +79,7 @@ Mesh Triangulation::ToMesh() const{
 bool Triangulation::IsUpside(const Vector2_t<double>& _o, const Vector2_t<double>& _a, const Vector2_t<double>& _b){
 	Vector2_t<double>	AB = _b - _a,
 						AO = _o - _a;
-	return (AB.x * AO.y) > (AB.y * AO.x);
+	return (AB.x * AO.y) >= (AB.y * AO.x);
 }
 
 void Triangulation::SortVertices(VerticeIndex& _a, VerticeIndex& _b, VerticeIndex& _c){
@@ -124,14 +124,14 @@ void Triangulation::InsertVerticeInFace(const VerticeIndex& vindex, const FaceIn
 				thirdFace = faces.size() + 1;
 	
 	// On remplace la face courante par une des faces que l'on souhaite ajouter
-	VerticeIndex verticeReplaced = face[0];
-	faces[findex][0] = vindex;
+	VerticeIndex verticeReplaced = face.vertices.x;
+	faces[findex].vertices.x = vindex;
 
 	// On créé les nouvelles faces
-	faces.push_back(Face(	vindex, verticeReplaced, face[1],
-							thirdFace, face(0), findex));
-	faces.push_back(Face(	vindex, face[2], verticeReplaced,
-							findex, face(2), secondFace));
+	faces.push_back(Face(	vindex, verticeReplaced, face.vertices.y,
+							thirdFace, face.faces.x, findex));
+	faces.push_back(Face(	vindex, face.vertices.z, verticeReplaced,
+							findex, face.faces.z, secondFace));
 
 	// On met à jour les faces adjacentes de la face courante
 	faces[face(0)].SetFaceIndexTo(findex, secondFace);
@@ -142,19 +142,34 @@ void Triangulation::InsertVerticeInFace(const VerticeIndex& vindex, const FaceIn
 }
 
 void Triangulation::InsertLastVerticeOutsideTriangulation(){
-	Vector2_t<double> lastVertice = vertices[vertices.size() - 1];
+	// TODO
+	VerticeIndex lastVerticeIndex = vertices.size() - 1;
+	Vector2_t<double> lastVertice = vertices[lastVerticeIndex];
 	FacesCirculator
 		fc = GetFacesCirculator(VERTICE_INDEX_INFINITY),
-		fc_end = fc;
+		fc_end(fc);
+	Face 	faceA(lastVerticeIndex, VERTICE_INDEX_INFINITY, 0, 0, 0, 0),
+			faceB(0, VERTICE_INDEX_INFINITY, lastVerticeIndex, 0, 0, 0);
+	bool hiddenFaceFound = false;
+	
 	do{
-		++fc;
 		Face face = fc.GetFace();
 		VerticeIndex va, vb;
 				if(face.vertices.x == VERTICE_INDEX_INFINITY)	{	va = face.vertices.y;	vb = face.vertices.z;	}
 		else	if(face.vertices.y == VERTICE_INDEX_INFINITY)	{	va = face.vertices.z;	vb = face.vertices.x;	}
 		else													{	va = face.vertices.x;	vb = face.vertices.y;	}
 		if(IsUpside(lastVertice, va, vb)){
-			InsertLastVerticeInFace(*fc);
+			// InsertLastVerticeInFace(*fc);
+			faces[fc++].SetVerticeIndexTo(VERTICE_INDEX_INFINITY, lastVerticeIndex);
+
+			
+		}else{
+			if(!hiddenFaceFound){
+				fc_end = fc;
+				hiddenFaceFound = true;
+			}
 		}
-	}while(fc != fc_end);
+	}while(!hiddenFaceFound && fc != fc_end);
+	faces.push_back(faceA);
+	faces.push_back(faceB);
 }

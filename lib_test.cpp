@@ -34,10 +34,37 @@ int main(int argc, char** argv){
 	std::cout << l.IsInside(Vector2(-3.0, 3.0)) << std::endl;
 	std::cout << l.IsInside(Vector2(0.0, 1.0)) << std::endl;
 	*/
-
+	/*
 	Triangulation t;
-	t.ImportFile("line0.tri");
+	t.ImportFile("tri/line0.tri");
 	std::cout << "Nombre de vertices : " << t.GetVertices().size() << std::endl;
 	std::cout << "Nombre de faces : " << t.GetFaces().size() << std::endl;
-	t.ToMesh().ExportOBJ("triangulation.obj");
+	t.ToMesh().ExportOBJ("mesh/triangulation.obj");
+	*/
+	/*
+	Actor actor(1, "Mon acteur");
+	actor.AddComponent<Renderer>(Renderer(5));
+	std::cout << actor.GetComponent<Renderer>()->a << std::endl;
+	*/
+	MultitypesContainer<ActorComponent> components;
+	components.AddElement(Renderer(5));
+	Renderer * renderer = components.GetElement<Renderer>();
+	std::cout << renderer->a << std::endl;
+	components.RemoveElements<Renderer>();
+	std::cout << renderer->a << std::endl;
+	if(components.GetElement<Renderer>()){
+		std::cout << "Il reste un renderer dans le conteneur." << std::endl;
+	}else{
+		std::cout << "Le conteneur n'a pas de renderer." << std::endl;
+	}
+	components.AddElement(renderer);
+	if(Renderer * renderer2 = components.GetElement<Renderer>()){
+		std::cout << "Il reste un renderer dans le conteneur." << std::endl;
+		renderer2->a = 8;
+	}else{
+		std::cout << "Le conteneur n'a pas de renderer." << std::endl;
+	}
+	std::cout << renderer->a << std::endl;
+	renderer->a = 10;
+	std::cout << renderer->a << std::endl;
 }

@@ -37,13 +37,17 @@ struct Face{
 
 	bool HasInfiniteVertice(){	return HasVertice(VERTICE_INDEX_INFINITY);	}
 
+	bool SetVerticeIndexTo(const VerticeIndex& v1, const VerticeIndex& v2){
+		if(vertices.x == v1){	vertices.x = v2;	return true;	}
+		if(vertices.y == v1){	vertices.y = v2;	return true;	}
+		if(vertices.z == v1){	vertices.z = v2;	return true;	}
+		return false;
+	}
+
 	bool SetFaceIndexTo(const FaceIndex& f1, const FaceIndex& f2){
-		for(FaceIndex i = 0; i < 3; ++i){
-			if(f1 == faces[i]){
-				faces[i] = f2;
-				return true;
-			}
-		}
+		if(faces.x == f1){	faces.x = f2;	return true;	}
+		if(faces.y == f1){	faces.y = f2;	return true;	}
+		if(faces.z == f1){	faces.z = f2;	return true;	}
 		return false;
 	}
 };
@@ -107,6 +111,11 @@ class Triangulation
 
 				bool operator!=(const VerticesCirculator& ci){	return !((*this) == ci);	}
 
+				VerticesCirculator& operator=(const VerticesCirculator& _vc){
+					currentFace = _vc.currentFace;
+					return (*this);
+				}
+
 				VerticeIndex operator*() const{
 					Face face = triangulation->GetFaces()[currentFace];
 					if(face.vertices.x == vertice)	return face.vertices.y;
@@ -114,7 +123,7 @@ class Triangulation
 					return face.vertices.x;
 				}
 
-				Vector2_t<double> GetVertice() const{
+				Vector2_t<double>& GetVertice() const{
 					return triangulation->GetVertices()[*(*this)];
 				}
 		};
@@ -160,11 +169,16 @@ class Triangulation
 
 				bool operator!=(const FacesCirculator& ci){	return !((*this) == ci);	}
 
+				FacesCirculator& operator=(const FacesCirculator& _fc){
+					currentFace = _fc.currentFace;
+					return (*this);
+				}
+
 				FaceIndex operator*() const{
 					return currentFace;
 				}
 
-				Face GetFace() const{
+				Face& GetFace() const{
 					return triangulation->GetFaces()[currentFace];
 				}
 		};
