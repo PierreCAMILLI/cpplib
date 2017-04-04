@@ -1,5 +1,37 @@
 #include "include/image.hpp"
 
+Image::Image(const std::string & _source){
+	// Récupération du fichier
+	FILE * file = fopen(_source.c_str(), "rb");
+	if(!file){
+		printf("ERREUR: Le fichier n'a pas pu être ouvert.");
+		return;
+	}
+
+	unsigned char info[54];
+	fread(info, sizeof(unsigned char), 54, file);
+
+	// Extraction des informations du header
+	width = *(int*)&info[18];
+	height = *(int*)&info[22];
+
+	int size = 3 * width * height;
+	unsigned char * data = new unsigned char[size];
+	fread(data, sizeof(unsigned char), size, file);
+	fclose(file);
+
+	Allocate();
+
+	// Pixel classés dans l'ordre BGR dans le fichier
+	for(ImageDimension i = 0; i < (width * height); ++i){
+		pixels[i].b = (float)data[(i * 3)] / 255.f;
+		pixels[i].g = (float)data[(i * 3) + 1] / 255.f;
+		pixels[i].r = (float)data[(i * 3) + 2] / 255.f;
+	}
+
+	free(data);
+}
+
 Image Image::Copy() const{
 	Image im(width, height);
 	for(ImageDimension j = 0; j < height; ++j){
@@ -8,10 +40,6 @@ Image Image::Copy() const{
 		}
 	}
 	return im;
-}
-
-void Image::Import(const std::string & _source){
-
 }
 
 void Image::Export(const std::string & _destination){

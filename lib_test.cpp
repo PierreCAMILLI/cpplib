@@ -34,7 +34,7 @@ int main(int argc, char** argv){
 
 	// std::cout << Color::Red() * 0.5f << std::endl;
 
-	
+	/*
 	Image im(500,500);
 	const Color	color = Color::Red(),
 				backgroundColor = Color::Black();
@@ -51,5 +51,15 @@ int main(int argc, char** argv){
 		}
 	}
 	im.Export("ImageTest.bmp");
-	
+	*/
+	Image im("ImageTest.bmp");
+	for(unsigned int j = 0; j < im.GetHeight(); ++j){
+		for(unsigned int i = 0; i < im.GetWidth(); ++i){
+			int	xCheck = ((((int) floor(i / 10)) % 2) == 0 ? 1 : -1),
+				yCheck = ((((int) floor(j / 10)) % 2) == 0 ? 1 : -1);
+			if( xCheck * yCheck > 0)
+				im(i,j) = Color::Blue();
+		}
+	}
+	im.Export("ImageTest2.bmp");
 }
