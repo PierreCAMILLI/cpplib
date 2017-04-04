@@ -8,10 +8,11 @@ Image::Image(const std::string & _source){
 		return;
 	}
 
-	unsigned char info[54];
-	fread(info, sizeof(unsigned char), 54, file);
+	const int headerSize = 54;
+	unsigned char info[headerSize];
+	fread(info, sizeof(unsigned char), headerSize, file);
 
-	// Extraction des informations du header
+	// Extraction des informations
 	width = *(int*)&info[18];
 	height = *(int*)&info[22];
 
@@ -20,13 +21,15 @@ Image::Image(const std::string & _source){
 	fread(data, sizeof(unsigned char), size, file);
 	fclose(file);
 
+	// Allocation de l'espace mémoire nécessaire
 	Allocate();
 
-	// Pixel classés dans l'ordre BGR dans le fichier
+	// Conversion et copie des pixels 
+	// /!\ Couleurs classées dans l'ordre GRB dans le fichier
 	for(ImageDimension i = 0; i < (width * height); ++i){
-		pixels[i].b = (float)data[(i * 3)] / 255.f;
-		pixels[i].g = (float)data[(i * 3) + 1] / 255.f;
-		pixels[i].r = (float)data[(i * 3) + 2] / 255.f;
+		pixels[i].g = (float)data[headerSize + (i * 3)] / 255.f;
+		pixels[i].r = (float)data[headerSize + (i * 3) + 1] / 255.f;
+		pixels[i].b = (float)data[headerSize + (i * 3) + 2] / 255.f;
 	}
 
 	free(data);
@@ -34,10 +37,8 @@ Image::Image(const std::string & _source){
 
 Image Image::Copy() const{
 	Image im(width, height);
-	for(ImageDimension j = 0; j < height; ++j){
-		for(ImageDimension i = 0; i < width; ++i){
-			im(i,j) = (*this)(i,j);
-		}
+	for(ImageDimension i = 0; i < (width * height); ++i){
+		im.pixels[i] = pixels[i];
 	}
 	return im;
 }
@@ -100,7 +101,7 @@ void Image::Export(const std::string & _destination){
 	fwrite(&bih, 1, sizeof(bih), file);
 
 	// Ecriture du fichier
-	for (int y = bih.biHeight-1; y>=0; --y) /*Scanline loop backwards*/
+	for (int y = 0; y < bih.biHeight; ++y) /*Scanline loop backwards*/
     {
     	for (int x = 0; x < bih.biWidth; ++x) /*Column loop forwards*/
         {
@@ -117,9 +118,15 @@ void Image::Export(const std::string & _destination){
 	fclose(file);
 }
 
+void Image::Filter(const Color & c){
+	for(ImageDimension i = 0; i < (width * height); ++i){
+		pixels[i] *= c;
+	}
+}
+
 void Image::ToCanvas(const Color & c1, const Color & c2, const ImageDimension & _size){
-	for(unsigned int i = 0; i < width; ++i){
-		for(unsigned int j = 0; j < height; ++j){
+	for(ImageDimension i = 0; i < width; ++i){
+		for(ImageDimension j = 0; j < height; ++j){
 			int	xCheck = ((((int) floor(i / _size)) % 2) == 0 ? 1 : -1),
 				yCheck = ((((int) floor(j / _size)) % 2) == 0 ? 1 : -1);
 			if( xCheck * yCheck > 0)

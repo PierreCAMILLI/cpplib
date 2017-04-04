@@ -52,7 +52,8 @@ int main(int argc, char** argv){
 	}
 	im.Export("ImageTest.bmp");
 	*/
-	Image im("ImageTest.bmp");
+	Image im("megaman.bmp");
+	/*
 	for(unsigned int j = 0; j < im.GetHeight(); ++j){
 		for(unsigned int i = 0; i < im.GetWidth(); ++i){
 			int	xCheck = ((((int) floor(i / 10)) % 2) == 0 ? 1 : -1),
@@ -61,5 +62,13 @@ int main(int argc, char** argv){
 				im(i,j) = Color::Blue();
 		}
 	}
-	im.Export("ImageTest2.bmp");
+	im.Filter(Color::Magenta());
+	*/
+	for(unsigned int j = 0; j < 50; ++j){
+		for(unsigned int i = 0; i < 100; ++i){
+			im(i,j) = Color::Red();
+		}
+	}
+	std::cout << "Export" << std::endl;
+	im.Export("megamantest.bmp");
 }

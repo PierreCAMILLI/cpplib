@@ -31,5 +31,6 @@ class Image{
 		ImageDimension const & GetWidth() const{	return width;	}
 		ImageDimension const & GetHeight() const{	return height;	}
 
+		void Filter(const Color & c);
 		void ToCanvas(const Color & c1, const Color & c2, const ImageDimension & _size);
 };
