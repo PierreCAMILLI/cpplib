@@ -88,3 +88,16 @@ void Image::Export(const std::string & _destination){
     }
 	fclose(file);
 }
+
+void Image::ToCanvas(const Color & c1, const Color & c2, const ImageDimension & _size){
+	for(unsigned int i = 0; i < width; ++i){
+		for(unsigned int j = 0; j < height; ++j){
+			int	xCheck = ((((int) floor(i / _size)) % 2) == 0 ? 1 : -1),
+				yCheck = ((((int) floor(j / _size)) % 2) == 0 ? 1 : -1);
+			if( xCheck * yCheck > 0)
+				(*this)(i,j) = c1;
+			else
+				(*this)(i,j) = c2;
+		}
+	}
+}

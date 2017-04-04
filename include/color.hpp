@@ -33,6 +33,8 @@ struct Color3{
 	Color3 const Grayscale() const;
 	fixed const & MaxColorComponent() const;
 
+	static Color3 const Lerp(const Color3 & c1, const Color3 & c2, const float & _delta);
+
 	static Color3 const Black(){	return Color3(0.0f, 0.0f, 0.0f);	}
 	static Color3 const Blue(){	return Color3(0.0f, 0.0f, 1.0f);	}
 	static Color3 const Green(){	return Color3(0.0f, 1.0f, 0.0f);	}
@@ -75,6 +77,8 @@ struct Color{
 	void ClampValues01();
 	Color const Grayscale() const;
 	fixed const & MaxColorComponent() const;
+
+	static Color const Lerp(const Color & c1, const Color & c2, const float & _delta);
 
 	static Color const Blank(){	return Color(0.0f, 0.0f, 0.0f, 0.0f);	}
 	static Color const Black(){	return Color(0.0f, 0.0f, 0.0f);	}

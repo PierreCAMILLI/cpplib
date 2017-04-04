@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -22,6 +23,8 @@ class Image{
 
 		Image Copy() const;
 		void Release(){	free(pixels);	}
+		void Import(const std::string & _source);
+		void Export(const std::string & _destination);
 
 		Color & operator()(const ImageDimension & _x, const ImageDimension & _y){	return pixels[(_y * width) + _x];	}
 		Color operator()(const ImageDimension & _x, const ImageDimension & _y) const{	return pixels[(_y * width) + _x];	}
@@ -29,6 +32,5 @@ class Image{
 		ImageDimension const & GetWidth() const{	return width;	}
 		ImageDimension const & GetHeight() const{	return height;	}
 
-		void Import(const std::string & _source);
-		void Export(const std::string & _destination);
+		void ToCanvas(const Color & c1, const Color & c2, const ImageDimension & _size);
 };

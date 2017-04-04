@@ -32,24 +32,24 @@ int main(int argc, char** argv){
 	std::cout << actor.GetComponent<Renderer>()->a << std::endl;
 	*/
 
-	Image im(100,100);
-	const unsigned int cellSize = 10;
-	for(unsigned int i = 0; i < im.GetWidth(); ++i){
-		for(unsigned int j = 0; j < im.GetHeight(); ++j){
-			int xCheck = (((int) floor(i / cellSize) % 2) == 0 ? 1 : -1);
-			int yCheck = (((int) floor(j / cellSize) % 2) == 0 ? 1 : -1);
-			if( xCheck * yCheck > 0)
-				im(i,j) = Color::Red();
-			else
-				im(i,j) = Color::Blue();
-		}
-	}
+	// std::cout << Color::Red() * 0.5f << std::endl;
 
 	
-	for(unsigned int i = 0; i < im.GetWidth(); ++i){
-		im(i,i) = Color::Yellow();
+	Image im(500,500);
+	const Color	color = Color::Red(),
+				backgroundColor = Color::Black();
+	const unsigned int	dCenter = (im.GetWidth() / 2),
+						maxDistance = dCenter * dCenter;
+
+	for(unsigned int j = 0; j < im.GetHeight(); ++j){
+		for(unsigned int i = 0; i < im.GetWidth(); ++i){
+			unsigned int 	deltaX = i - dCenter,
+							deltaY = j - dCenter,
+							distance = (deltaX * deltaX) + (deltaY * deltaY);
+			Color c = Color::Lerp(color, backgroundColor, (float)distance/maxDistance);
+			im(i,j) = c;
+		}
 	}
-	
 	im.Export("ImageTest.bmp");
-	im.Release();
+	
 }
