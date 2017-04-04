@@ -14,7 +14,7 @@ BIND 		= 	bin
 
 EXEC 		=	lib_test
 
-OBJFILES 	=	lib_test.o multitypescontainer.o perlin.o vector.o transform.o matrix2.o curve.o mesh.o triangulation.o ray.o shape.o shape2d.o component.o renderer.o actor.o
+OBJFILES 	=	lib_test.o multitypescontainer.o perlin.o vector.o color.o image.o transform.o matrix2.o curve.o mesh.o triangulation.o ray.o shape.o shape2d.o actor.o actortransform.o component.o renderer.o
 OBJS 		= 	$(OBJFILES:%.o=$(OBJD)/%.o)
 
 NO_COLOR	=	$(shell $(ECHO) "\033[0;0m")

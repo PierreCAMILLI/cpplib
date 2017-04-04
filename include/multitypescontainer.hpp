@@ -7,20 +7,22 @@
 
 template<typename Base>
 class MultitypesContainer{
+	typedef std::vector<Base*> BaseContainer;
+
 	private:
-		std::vector<Base*> container;
+		BaseContainer container;
 	public:
 		MultitypesContainer(){}
 		MultitypesContainer(const MultitypesContainer& _container) = default;
 
-		std::vector<Base*> const & GetVector() const{	return container;	}
-		std::vector<Base*> & GetVector(){	return container;	}
+		BaseContainer const & GetVector() const{	return container;	}
+		BaseContainer & GetVector(){	return container;	}
 
 		template<typename Derived>
 		void AddElement(const Derived & _element){	container.push_back(new Derived(_element));	}
 		template<typename Derived>
 		void AddElement(Derived * const & _element){	container.push_back(_element);	};
-		void AddElements(const std::vector<Base*>& _elements){	container.insert(container.begin(), _elements.begin(), _elements.end());	};
+		void AddElements(const BaseContainer& _elements){	container.insert(container.begin(), _elements.begin(), _elements.end());	};
 
 		template<typename Derived>
 		Derived * const GetElement();

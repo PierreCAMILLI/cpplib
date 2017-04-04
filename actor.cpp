@@ -1,5 +1,8 @@
 #include "actor.hpp"
 
+Actor::Actor(const ActorLayer& _layer, const ActorName& _name)
+	: parent(nullptr), enabled(true), layer(_layer), name(_name), transform(ActorTransform(this)){}
+
 void Actor::AppendChild(const Actor& child){
 	children.push_back(Actor(this,child));
 }
@@ -24,17 +27,4 @@ void Actor::DisplayTreeChildren(const unsigned int& tab){
 	for(unsigned int i = 0; i < tab; ++i)	std::cout << "\t";
 	std::cout << name << std::endl;
 	for(unsigned int i = 0; i < children.size(); ++i)	children[i].DisplayTreeChildren(tab + 1);
-}
-
-template<typename T>
-Vector3_t<T> const Transform_t<T>::GetPosition() const{
-	Vector3_t<T> worldPosition(position);
-	Actor * _actor = actor;
-
-	while(actor->HasParent()){
-		_actor = _actor->GetParent();
-		worldPosition += _actor->GetTransform().GetLocalPosition();
-	}
-
-	return worldPosition;
 }

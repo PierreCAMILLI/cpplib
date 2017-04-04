@@ -1,21 +1,6 @@
 #include "include/includes.hpp"
 
 int main(int argc, char** argv){
-	// Mesh::Cube(1.0).exportOBJ("cube.obj");
-	// Mesh::Sphere(5.0, 100).exportOBJ("sphere.obj");
-	// Mesh::Sphere(5.0, 100).merge(Mesh::Cube(1.0) + Vector3(10,0,0)).exportOBJ("merged.obj");
-
-	/*
-	Line l1(Vector2(-3.0, 0.0), Vector2(5.0, -2.5));
-	Vector2 point(2.5, 5.0);
-	std::cout << "Projection : " << l1.Projection(point) << std::endl;
-	std::cout << "Distance : " << l1.Distance(point) << std::endl;
-
-	Line l2(Vector2(0.0, -2.0), Vector2(2.0, 0.0));
-	std::cout << l1.Cross(l2, point) << std::endl;
-	std::cout << point << std::endl;
-	*/
-
 	/*
 	Line l(Vector2(-3.0, 3.0), Vector2(3.0, -3.0));
 	// l1.Translate(Vector2(0.0, -3.0));
@@ -43,28 +28,28 @@ int main(int argc, char** argv){
 	*/
 	/*
 	Actor actor(1, "Mon acteur");
-	actor.AddComponent<Renderer>(Renderer(5));
+	actor.AddComponent(Renderer(5));
 	std::cout << actor.GetComponent<Renderer>()->a << std::endl;
 	*/
-	MultitypesContainer<ActorComponent> components;
-	components.AddElement(Renderer(5));
-	Renderer * renderer = components.GetElement<Renderer>();
-	std::cout << renderer->a << std::endl;
-	components.RemoveElements<Renderer>();
-	std::cout << renderer->a << std::endl;
-	if(components.GetElement<Renderer>()){
-		std::cout << "Il reste un renderer dans le conteneur." << std::endl;
-	}else{
-		std::cout << "Le conteneur n'a pas de renderer." << std::endl;
+
+	Image im(100,100);
+	const unsigned int cellSize = 10;
+	for(unsigned int i = 0; i < im.GetWidth(); ++i){
+		for(unsigned int j = 0; j < im.GetHeight(); ++j){
+			int xCheck = (((int) floor(i / cellSize) % 2) == 0 ? 1 : -1);
+			int yCheck = (((int) floor(j / cellSize) % 2) == 0 ? 1 : -1);
+			if( xCheck * yCheck > 0)
+				im(i,j) = Color::Red();
+			else
+				im(i,j) = Color::Blue();
+		}
 	}
-	components.AddElement(renderer);
-	if(Renderer * renderer2 = components.GetElement<Renderer>()){
-		std::cout << "Il reste un renderer dans le conteneur." << std::endl;
-		renderer2->a = 8;
-	}else{
-		std::cout << "Le conteneur n'a pas de renderer." << std::endl;
+
+	
+	for(unsigned int i = 0; i < im.GetWidth(); ++i){
+		im(i,i) = Color::Yellow();
 	}
-	std::cout << renderer->a << std::endl;
-	renderer->a = 10;
-	std::cout << renderer->a << std::endl;
+	
+	im.Export("ImageTest.bmp");
+	im.Release();
 }

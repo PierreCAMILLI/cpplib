@@ -4,27 +4,30 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <iostream>
 #include <vector>
 
 #include "multitypescontainer.hpp"
-#include "transform.hpp"
-#include "component.hpp"
+#include "actortransform.hpp"
+
+class ActorComponent;
 
 typedef unsigned long long ActorLayer;
 typedef std::string ActorName;
-typedef std::vector<Actor> ActorChildren;
 typedef MultitypesContainer<ActorComponent> ActorComponents;
 
 constexpr ActorLayer DEFAULT_LAYER = 1;
 
 class Actor{
+	typedef std::vector<Actor> ActorChildren;
+
 	private:
 		Actor * parent;
 
 		bool enabled = true;
 		ActorLayer layer = DEFAULT_LAYER;
 		ActorName name;
-		Transform transform;
+		ActorTransform transform;
 
 		ActorChildren children;
 		ActorComponents components;
@@ -32,8 +35,7 @@ class Actor{
 		void DisplayTreeChildren(const unsigned int& tab = 0);
 		Actor(Actor * const& _parent, const Actor& _actor) : Actor(_actor){	parent = _parent;	}
 	public:
-		Actor(const ActorLayer& _layer = DEFAULT_LAYER, const ActorName& _name = "New Actor")
-			: parent(nullptr), enabled(true), layer(_layer), name(_name), transform(Transform(this)){}
+		Actor(const ActorLayer& _layer = DEFAULT_LAYER, const ActorName& _name = "New Actor");
 		Actor(const Actor& _actor) = default;
 
 		bool HasParent(){	return parent != nullptr;	}
@@ -52,8 +54,8 @@ class Actor{
 		ActorName const & GetName() const{	return name;	}
 		void Rename(const ActorName& _name) {	name = _name;	}
 
-		Transform const & GetTransform() const{	return transform;	}
-		Transform& GetTransform(){	return transform;	}
+		ActorTransform const & GetTransform() const{	return transform;	}
+		ActorTransform& GetTransform(){	return transform;	}
 
 		ActorChildren const & GetChildren() const{	return children;	}
 		ActorChildren& GetChildren(){	return children;	}

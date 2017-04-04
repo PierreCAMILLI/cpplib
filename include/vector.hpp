@@ -64,8 +64,7 @@ struct Vector2_t
 
 template<typename T>
 std::ostream& operator<<(std::ostream& o, const Vector2_t<T>& _v){
-	o << "v(" << _v.x << "," << _v.y << ")";
-	return o;
+	return o << "v(" << _v.x << "," << _v.y << ")";
 }
 
 template<typename T>
@@ -118,8 +117,7 @@ struct Vector3_t
 
 template<typename T>
 std::ostream& operator<<(std::ostream& o, const Vector3_t<T>& _v){
-	o << "v(" << _v.x << "," << _v.y << "," << _v.z << ")";
-	return o;
+	return o << "v(" << _v.x << "," << _v.y << "," << _v.z << ")";
 }
 
 template<typename T>
@@ -170,8 +168,7 @@ struct Point_t
 
 template<typename T>
 std::ostream& operator<<(std::ostream& o, const Point_t<T>& _p){
-	o << "p(" << _p.x << "," << _p.y << "," << _p.z << ")";
-	return o;
+	return o << "p(" << _p.x << "," << _p.y << "," << _p.z << ")";
 }
 
 template<typename T>
@@ -229,8 +226,7 @@ struct Vector4_t
 
 template<typename T>
 std::ostream& operator<<(std::ostream& o, const Vector4_t<T>& _v){
-	o << "v(" << _v.x << "," << _v.y << "," << _v.z << "," << _v.w << ")";
-	return o;
+	return o << "v(" << _v.x << "," << _v.y << "," << _v.z << "," << _v.w << ")";
 }
 
 typedef Vector2_t<double> Vector2;
