@@ -35,14 +35,14 @@ struct Color3{
 
 	static Color3 const Lerp(const Color3 & c1, const Color3 & c2, const float & _delta);
 
-	static Color3 const Black(){	return Color3(0.0f, 0.0f, 0.0f);	}
-	static Color3 const Blue(){	return Color3(0.0f, 0.0f, 1.0f);	}
-	static Color3 const Green(){	return Color3(0.0f, 1.0f, 0.0f);	}
-	static Color3 const Cyan(){	return Color3(0.0f, 1.0f, 1.0f);	}
-	static Color3 const Red(){	return Color3(1.0f, 0.0f, 0.0f);	}
-	static Color3 const Magenta(){	return Color3(1.0f, 0.0f, 1.0f);	}
-	static Color3 const Yellow(){	return Color3(1.0f, 1.0f, 0.0f);	}
-	static Color3 const White(){	return Color3(1.0f, 1.0f, 1.0f);	}
+	static Color3 const Black(){	return Color3(fixed(0), fixed(0), fixed(0));	}
+	static Color3 const Blue(){		return Color3(fixed(0), fixed(0), fixed(1));	}
+	static Color3 const Green(){	return Color3(fixed(0), fixed(1), fixed(0));	}
+	static Color3 const Cyan(){		return Color3(fixed(0), fixed(1), fixed(1));	}
+	static Color3 const Red(){		return Color3(fixed(1), fixed(0), fixed(0));	}
+	static Color3 const Magenta(){	return Color3(fixed(1), fixed(0), fixed(1));	}
+	static Color3 const Yellow(){	return Color3(fixed(1), fixed(1), fixed(0));	}
+	static Color3 const White(){	return Color3(fixed(1), fixed(1), fixed(1));	}
 };
 
 inline std::ostream& operator<<(std::ostream& o, const Color3& _c){
@@ -54,9 +54,9 @@ struct Color{
 
 	Color() : r(fixed()), g(fixed()), b(fixed()), a(fixed()){}
 	Color(const fixed & _c) : r(_c), g(_c), b(_c), a(_c){}
-	Color(const fixed & _r, const fixed & _g, const fixed & _b, const fixed & _a = 1.0f)
+	Color(const fixed & _r, const fixed & _g, const fixed & _b, const fixed & _a = fixed(1))
 		: r(_r), g(_g), b(_b), a(_a){}
-	Color(const Color3 & _c, const fixed & _a = 1.0f)
+	Color(const Color3 & _c, const fixed & _a = fixed(1))
 		: r(_c.r), g(_c.g), b(_c.b), a(_a){}
 	Color(const Color & _c) = default;
 
@@ -80,15 +80,15 @@ struct Color{
 
 	static Color const Lerp(const Color & c1, const Color & c2, const float & _delta);
 
-	static Color const Blank(){	return Color(0.0f, 0.0f, 0.0f, 0.0f);	}
-	static Color const Black(){	return Color(0.0f, 0.0f, 0.0f);	}
-	static Color const Blue(){	return Color(0.0f, 0.0f, 1.0f);	}
-	static Color const Green(){	return Color(0.0f, 1.0f, 0.0f);	}
-	static Color const Cyan(){	return Color(0.0f, 1.0f, 1.0f);	}
-	static Color const Red(){	return Color(1.0f, 0.0f, 0.0f);	}
-	static Color const Magenta(){	return Color(1.0f, 0.0f, 1.0f);	}
-	static Color const Yellow(){	return Color(1.0f, 1.0f, 0.0f);	}
-	static Color const White(){	return Color(1.0f, 1.0f, 1.0f);	}
+	static Color const Blank(){		return Color(fixed(0), fixed(0), fixed(0), fixed(0));	}
+	static Color const Black(){		return Color(fixed(0), fixed(0), fixed(0));	}
+	static Color const Blue(){		return Color(fixed(0), fixed(0), fixed(1));	}
+	static Color const Green(){		return Color(fixed(0), fixed(1), fixed(0));	}
+	static Color const Cyan(){		return Color(fixed(0), fixed(1), fixed(1));	}
+	static Color const Red(){		return Color(fixed(1), fixed(0), fixed(0));	}
+	static Color const Magenta(){	return Color(fixed(1), fixed(0), fixed(1));	}
+	static Color const Yellow(){	return Color(fixed(1), fixed(1), fixed(0));	}
+	static Color const White(){		return Color(fixed(1), fixed(1), fixed(1));	}
 };
 
 inline std::ostream& operator<<(std::ostream& o, const Color& _c){

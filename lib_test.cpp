@@ -52,18 +52,8 @@ int main(int argc, char** argv){
 	}
 	im.Export("ImageTest.bmp");
 	*/
-	Image im("megaman.bmp");
 	/*
-	for(unsigned int j = 0; j < im.GetHeight(); ++j){
-		for(unsigned int i = 0; i < im.GetWidth(); ++i){
-			int	xCheck = ((((int) floor(i / 10)) % 2) == 0 ? 1 : -1),
-				yCheck = ((((int) floor(j / 10)) % 2) == 0 ? 1 : -1);
-			if( xCheck * yCheck > 0)
-				im(i,j) = Color::Blue();
-		}
-	}
-	im.Filter(Color::Magenta());
-	*/
+	Image im("megaman.bmp");
 	for(unsigned int j = 0; j < 50; ++j){
 		for(unsigned int i = 0; i < 100; ++i){
 			im(i,j) = Color::Red();
@@ -71,4 +61,19 @@ int main(int argc, char** argv){
 	}
 	std::cout << "Export" << std::endl;
 	im.Export("megamantest.bmp");
+	*/
+
+	// Plane plane(Vector3(0,0,0), Vector3(0,1,0));
+	Sphere s(Vector3(0,-1,-1), 2);
+
+	Raycast ray(Vector3(-1,3,-1), Vector3(0,-1,0));
+	RaycastHit hit;
+	s(ray, hit);
+
+	if(hit){
+		std::cout << "Origine : " << hit.origin << std::endl;
+		std::cout << "Intersection : " << hit.point << std::endl;
+		std::cout << "Normale : " << hit.normal.Normalized() << std::endl;
+		std::cout << "Distance : " << hit.Distance() << std::endl;
+	}
 }

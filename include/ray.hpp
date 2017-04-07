@@ -19,7 +19,7 @@ typedef Raycast_t<int> Raycasti;
 
 template <typename T>
 struct RaycastHit_t{
-	bool hit;
+	bool hit = false;
 	Vector3_t<T> origin;
 	Vector3_t<T> point;
 	Vector3_t<T> normal;
@@ -27,7 +27,15 @@ struct RaycastHit_t{
 	RaycastHit_t(){}
 	RaycastHit_t(const RaycastHit_t& _raycastHit) = default;
 
-	T Distance() const{	return (point - origin).Length();	}
+	operator bool() const{	return hit;	}
+	bool operator< (const RaycastHit_t<T> & _raycastHit)
+		{	return Vector3_t<T>::SquaredDistance(origin,point) < Vector3_t<T>::SquaredDistance(_raycastHit.origin,_raycastHit.point);	}
+	bool operator<=(const RaycastHit_t<T> & _raycastHit)
+		{	return Vector3_t<T>::SquaredDistance(origin,point) <= Vector3_t<T>::SquaredDistance(_raycastHit.origin,_raycastHit.point);	}
+	bool operator> (const RaycastHit_t<T> & _raycastHit){	return !((*this) <= _raycastHit);	}
+	bool operator>=(const RaycastHit_t<T> & _raycastHit){	return !((*this) < _raycastHit);	}
+
+	T Distance() const{	return Vector3_t<T>::Distance(origin, point);	}
 };
 
 typedef RaycastHit_t<double> RaycastHit;
@@ -60,8 +68,14 @@ struct RaycastHit2D_t{
 	RaycastHit2D_t(const RaycastHit2D_t& _raycastHit2d) = default;
 
 	operator bool() const{	return hit;	}
+	bool operator< (const RaycastHit2D_t<T> & _raycastHit2d)
+		{	return Vector2_t<T>::SquaredDistance(origin,point) < Vector2_t<T>::SquaredDistance(_raycastHit2d.origin,_raycastHit2d.point);	}
+	bool operator<=(const RaycastHit2D_t<T> & _raycastHit2d)
+		{	return Vector2_t<T>::SquaredDistance(origin,point) <= Vector2_t<T>::SquaredDistance(_raycastHit2d.origin,_raycastHit2d.point);	}
+	bool operator> (const RaycastHit2D_t<T> & _raycastHit2d){	return !((*this) <= _raycastHit2d);	}
+	bool operator>=(const RaycastHit2D_t<T> & _raycastHit2d){	return !((*this) < _raycastHit2d);	}
 
-	T Distance() const{	return (point - origin).Length();	}
+	T Distance() const{	return Vector2_t<T>::Distance(origin, point);	}
 };
 
 

@@ -11,19 +11,19 @@ T Line_t<T>::Length() const{
 }
 
 template<typename T>
-bool Line_t<T>::IsUpside(const Vector2_t<T> & point){
+bool Line_t<T>::IsUpside(const Vector2_t<T> & point) const{
 	Vector2_t<T> 	A = Vector(),
 					B = point - a;
 	return (A.x * B.y - A.y * B.x) > T(0);
 }
 
 template<typename T>
-bool Line_t<T>::AreInSameSide(const Vector2_t<T> & p1, const Vector2_t<T> & p2){
+bool Line_t<T>::AreInSameSide(const Vector2_t<T> & p1, const Vector2_t<T> & p2) const{
 	return IsUpside(p1) == IsUpside(p2);
 }
 
 template<typename T>
-bool Line_t<T>::Cross(const Line_t<T>& line, Vector2_t<T>& point){
+bool Line_t<T>::Cross(const Line_t<T>& line, Vector2_t<T>& point) const{
 	// Code piqué ici : http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
 	Vector2_t<T> 	A(Vector()),
 					B(line.Vector());
@@ -44,14 +44,14 @@ Vector2_t<T> Line_t<T>::Projection(const Vector2_t<T>& point) const{
 	// Code piqué ici : http://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
 	Vector2_t<T> v = Vector();
 	const T squaredLength = v.SquaredLength();
-	if(squaredLength == 0.0f)	return a;
+	if(squaredLength == T(0))	return a;
 
-	const T t = std::max(T(0), std::min(T(1), (point - a).Dot(v) / squaredLength));
+	const T t = std::max(T(0), std::min(T(1), Vector2_t<T>::Dot(point - a,v) / squaredLength));
 	return a + (v) * t;
 }
 
 template<typename T>
-bool Line_t<T>::IsInside(const Vector2_t<T>& point){
+bool Line_t<T>::Contains(const Vector2_t<T>& point) const{
 	Vector2_t<T> 	A(point - a),
 					B(b - a);
 	T 	deltaX = (A.x / B.x),
@@ -86,6 +86,10 @@ void Line_t<T>::Bounds(Vector2_t<T>& min, Vector2_t<T>& max){
 
 template<typename T>
 bool Line_t<T>::operator()(const Raycast2D_t<T>& ray, RaycastHit2D_t<T>& hit){
+	// Gestion de la distance avec la touchée précédente
+	T maxDistance = ray.maxDistance;
+	if(hit)	maxDistance = Vector2_t<T>::Distance(hit.origin, hit.point);	// Pas très opti...
+
 	Vector2_t<T> 	A(Vector()),
 					B(ray.direction);
 	T 	crossProduct = (-B.x * A.y) + (A.x * B.y),
@@ -95,9 +99,9 @@ bool Line_t<T>::operator()(const Raycast2D_t<T>& ray, RaycastHit2D_t<T>& hit){
 	// Test de respect de distance
 	bool distanceCheck = true;
 	Vector2_t<T> point(a.x + (t * A.x), a.y + (t * A.y));
-	if(ray.maxDistance >= T(0)){
+	if(maxDistance >= T(0)){
 		T distance = (point - ray.origin).SquaredLength();
-		distanceCheck = (distance <= (ray.maxDistance * ray.maxDistance));
+		distanceCheck = (distance <= (maxDistance * maxDistance));
 	}
 
 	// On checke si le rayon touche la ligne
@@ -111,9 +115,10 @@ bool Line_t<T>::operator()(const Raycast2D_t<T>& ray, RaycastHit2D_t<T>& hit){
 			hit.normal *= T(-1);
 		}
 		hit.hit = true;
+		return hit.hit;
 	}
 
-	return hit.hit;
+	return false;
 }
 
 template class Line_t<double>;
@@ -121,8 +126,13 @@ template class Line_t<float>;
 template class Line_t<int>;
 
 template<typename T>
-bool Circle_t<T>::IsInside(const Vector2_t<T>& point){
-	return (point - center).SquaredLength() <= (radius * radius);
+T Circle_t<T>::Area() const{
+	return SHAPE_PI * radius * radius;
+}
+
+template<typename T>
+bool Circle_t<T>::Contains(const Vector2_t<T>& point) const{
+	return Vector2_t<T>::SquaredDistance(point,center) <= (radius * radius);
 }
 
 template<typename T>
@@ -132,8 +142,7 @@ void Circle_t<T>::Translate(const Vector2_t<T>& translation){
 
 template<typename T>
 void Circle_t<T>::Resize(const Vector2_t<T>& size){
-	T r = size.x * size.y;
-	radius *= r;
+	radius *= size.Length();
 }
 
 template<typename T>
@@ -151,38 +160,157 @@ void Circle_t<T>::Bounds(Vector2_t<T>& min, Vector2_t<T>& max){
 template<typename T>
 bool Circle_t<T>::operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit){
 	// Code piqué et adapté de gKit
-	Vector2_t<T> distance(ray.origin - center);
-	T	a = ray.direction.Dot(ray.direction),
-		b = T(2) * ray.direction.Dot(distance),
-		c = distance.Dot(distance) - (radius * radius),
+	
+	// Gestion de la distance avec la touchée précédente
+	T maxDistance = ray.maxDistance;
+	if(hit)	maxDistance = Vector2_t<T>::Distance(hit.origin, hit.point);	// Pas très opti...
+
+	// Optimisation
+	if(maxDistance >= T(0) && Vector2_t<T>::SquaredDistance(ray.origin, center) > (maxDistance * maxDistance)){
+		return false;
+	}
+
+	// Calcul des points d'intersection
+	const Vector2_t<T> distance(ray.origin - center);
+	T	a = Vector2_t<T>::Dot(ray.direction, ray.direction),
+		b = T(2) * Vector2_t<T>::Dot(ray.direction, distance),
+		c = Vector2_t<T>::Dot(distance, distance) - (radius * radius),
 		delta = (b * b) - (T(4) * a * c);
 
 	if(delta <= T(0)){		// 0 intersections
-		hit.hit = false;
+		return false;
 	}else{
 		T dist;
 
 		if (delta == T(0)){	// 1 intersection
-			dist = -b / (2 * a);
+			dist = -b / (T(2) * a);
 		}else{				// 2 intersections
-			T	t1 = (-b + sqrtf(delta))/(T(2) * a),
-				t2 = (-b - sqrtf(delta))/(T(2) * a);
-			dist = (t1 < t2 ? t1 : t2);
+			T	t1 = (-b + std::sqrt(delta))/(T(2) * a),
+				t2 = (-b - std::sqrt(delta))/(T(2) * a);
+				dist = (t1 < t2 ? t1 : t2);
 		}
 
 		// Check de distance
-		if(ray.maxDistance >= T(0) && dist * ray.direction.Length() > ray.maxDistance){
-			hit.hit = false;
+		if(maxDistance >= T(0) && dist * ray.direction.Length() > maxDistance){
+			return false;
 		}else{
 			hit.hit = true;
 			hit.origin = ray.origin;
 			hit.point = ray.origin + (ray.direction * dist);
 			hit.normal = hit.point - center;
+			return hit.hit;
 		}
 	}
-	return hit.hit;
+	return false;
 }
 
 template class Circle_t<double>;
 template class Circle_t<float>;
 template class Circle_t<int>;
+
+template<typename T>
+T Triangle2D_t<T>::Area() const{
+	Vector2_t<T> BC = Line_t<T>(b,c).Projection(a);
+	return (Vector2_t<T>::Distance(b,c) * Vector2_t<T>::Distance(a,BC)) / T(2);
+}
+
+template<typename T>
+Vector2_t<T> Triangle2D_t<T>::Circumcenter() const{
+	// Peut-être un moyen d'avoir quelque chose de plus opti...
+	Vector2_t<T>	BC = Line_t<T>(b,c).Projection(a),
+					CA = Line_t<T>(c,a).Projection(b),
+					point;
+	Line_t<T>::Cross(Line_t<T>(a,BC),Line_t<T>(b,CA), point);
+	return point;
+}
+
+template<typename T>
+Vector2_t<T> Triangle2D_t<T>::Incenter() const{
+	T 	A = Vector2_t<T>::Distance(b,c),
+		B = Vector2_t<T>::Distance(c,a),
+		C = Vector2_t<T>::Distance(a,b),
+		P = A + B + C;
+	return Vector2_t<T>((Vector2_t<T>(a * A) + Vector2_t<T>(b * B) + Vector2_t<T>(c * C)) / P);
+}
+
+template<typename T>
+Vector2_t<T> Triangle2D_t<T>::Centroid() const{
+	// Peut-être un moyen d'avoir quelque chose de plus opti...
+	Vector2_t<T>	BC = Vector2_t<T>::Middle(b,c),
+					CA = Vector2_t<T>::Middle(c,a),
+					point;
+	Line_t<T>::Cross(Line_t<T>(a,BC),Line_t<T>(b,CA), point);
+	return point;
+}
+
+template<typename T>
+T Triangle2D_t<T>::AspectRatio() const{
+	// Absolument pas du tout optimisé...
+	Vector2_t<T>	incenter = Incenter(),
+					circumcenter = Circumcenter();
+	T	incenterRadius = Vector2_t<T>::Distance(Line_t<T>(a,b).Projection(incenter), incenter),
+		circumcenterRadius = Vector2_t<T>::Distance(circumcenter, a);
+	return incenterRadius / circumcenterRadius;
+}
+
+template<typename T>
+bool Triangle2D_t<T>::Contains(const Vector2_t<T>& point) const{
+	Vector2_t<T> 	A = b - a,
+					B = point - a;
+	bool check1 = (A.x * B.y - A.y * B.x) >= T(0);
+	A = c - b;
+	B = point - b;
+	bool check2 = (A.x * B.y - A.y * B.x) >= T(0);
+	A = a - c;
+	B = point - c;
+	bool check3 = (A.x * B.y - A.y * B.x) >= T(0);
+	return (check1 == check2) && (check2 == check3);
+}
+
+template<typename T>
+void Triangle2D_t<T>::Translate(const Vector2_t<T>& translation){
+	a += translation;
+	b += translation;
+	c += translation;
+}
+
+template<typename T>
+void Triangle2D_t<T>::Resize(const Vector2_t<T>& size){
+	a *= size;
+	b *= size;
+	c *= size;
+}
+
+template<typename T>
+T Triangle2D_t<T>::Distance(const Vector2_t<T>& point) const{
+	if(Contains(point))	return T(0);
+	T	d1 = Line_t<T>(a,b).Distance(point),
+		d2 = Line_t<T>(b,c).Distance(point),
+		d3 = Line_t<T>(c,a).Distance(point);
+	return (d1 <= d2 ? d1 : d2 <= d3 ? d2 : d3);
+}
+
+template<typename T>
+void Triangle2D_t<T>::Bounds(Vector2_t<T>& min, Vector2_t<T>& max){
+	min(std::min(std::min(a.x, b.x), c.x), std::min(std::min(a.y, b.y), c.y));
+	max(std::max(std::max(a.x, b.x), c.x), std::max(std::max(a.y, b.y), c.y));
+}
+
+template<typename T>
+bool Triangle2D_t<T>::operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit){
+	if(Contains(ray.origin)){
+		hit.hit = true;
+		hit.origin = ray.origin;
+		hit.point = ray.origin;
+		hit.normal = Vector2_t<T>(T(0),T(0));
+		return hit.hit;
+	}
+	bool 	check1 = Line_t<T>(a,b)(ray, hit),
+			check2 = Line_t<T>(b,c)(ray, hit),
+			check3 = Line_t<T>(c,a)(ray, hit);
+	return check1 || check2 || check3;
+}
+
+template class Triangle2D_t<double>;
+template class Triangle2D_t<float>;
+template class Triangle2D_t<int>;

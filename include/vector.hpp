@@ -41,7 +41,7 @@ struct Vector2_t
 
 	Vector2_t<T> operator+(const Vector2_t<T>& _v) const{	return Vector2_t<T>(*this) += _v;	};
 	Vector2_t<T> operator+(const T& n) const{	return Vector2_t<T>(*this) += n;	};
-	Vector2_t<T> operator-() const{	return (*this) * (-1);	};
+	Vector2_t<T> operator-() const{	return (*this) * T(-1);	};
 	Vector2_t<T> operator-(const Vector2_t<T>& _v) const{	return Vector2_t<T>(*this) -= _v;	};
 	Vector2_t<T> operator-(const T& n) const{	return Vector2_t<T>(*this) -= n;	};
 	Vector2_t<T> operator*(const Vector2_t<T>& _v) const{	return Vector2_t<T>(*this) *= _v;	};
@@ -60,6 +60,11 @@ struct Vector2_t
 	Vector2_t<T> Normalized() const{	return Vector2_t<T>(*this).Normalize();	};
 
 	void Display();
+
+	static T const Dot(const Vector2_t<T>& _v1, const Vector2_t<T>& _v2){	return _v1.Dot(_v2);	}
+	static T const SquaredDistance(const Vector2_t<T>& _v1, const Vector2_t<T>& _v2){	return (_v1 - _v2).SquaredLength();	}
+	static T const Distance(const Vector2_t<T>& _v1, const Vector2_t<T>& _v2){	return (_v1 - _v2).Length();	}
+	static Vector2_t<T> const Middle(const Vector2_t<T>& _v1, const Vector2_t<T>& _v2){	return (_v1 + _v2) / T(2);	}
 };
 
 template<typename T>
@@ -94,7 +99,7 @@ struct Vector3_t
 
 	Vector3_t<T> operator+(const Vector3_t<T>& _v) const{	return Vector3_t<T>(*this) += _v;	};
 	Vector3_t<T> operator+(const T& n) const{	return Vector3_t<T>(*this) += n;	};
-	Vector3_t<T> operator-() const{	return (*this) * (-1);	};
+	Vector3_t<T> operator-() const{	return (*this) * T(-1);	};
 	Vector3_t<T> operator-(const Vector3_t<T>& _v) const{	return Vector3_t<T>(*this) -= _v;	};
 	Vector3_t<T> operator-(const T& n) const{	return Vector3_t<T>(*this) -= n;	};
 	Vector3_t<T> operator*(const Vector3_t<T>& _v) const{	return Vector3_t<T>(*this) *= _v;	};
@@ -113,6 +118,11 @@ struct Vector3_t
 	Vector3_t<T> Normalized() const{	return Vector3_t<T>(*this).Normalize();	};
 
 	void Display();
+
+	static T const Dot(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return _v1.Dot(_v2);	}
+	static T const SquaredDistance(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return (_v1 - _v2).SquaredLength();	}
+	static T const Distance(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return (_v1 - _v2).Length();	}
+	static Vector3_t<T> const Middle(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return (_v1 + _v2) / T(2);	}
 };
 
 template<typename T>
@@ -147,7 +157,7 @@ struct Point_t
 
 	Point_t<T> operator+(const Vector3_t<T>& _v) const{	return Point_t<T>(*this) += _v;	};
 	Point_t<T> operator+(const T& n) const{	return Point_t<T>(*this) += n;	};
-	Point_t<T> operator-() const{	return Point_t<T>(*this) * (-1);	};
+	Point_t<T> operator-() const{	return Point_t<T>(*this) * T(-1);	};
 	Point_t<T> operator-(const Vector3_t<T>& _v) const{	return Point_t<T>(*this) -= _v;	};
 	Point_t<T> operator-(const T& n) const{	return Point_t<T>(*this) -= n;	};
 	Point_t<T> operator*(const Vector3_t<T>& _v) const{	return Point_t<T>(*this) *= _v;	};
@@ -204,7 +214,7 @@ struct Vector4_t
 
 	Vector4_t<T> operator+(const Vector4_t<T>& _v) const{	return Vector4_t<T>(*this) += _v;	};
 	Vector4_t<T> operator+(const T& n) const{	return Vector4_t<T>(*this) += n;	};
-	Vector4_t<T> operator-() const{	return (*this) * (-1);	};
+	Vector4_t<T> operator-() const{	return (*this) * T(-1);	};
 	Vector4_t<T> operator-(const Vector4_t<T>& _v) const{	return Vector4_t<T>(*this) -= _v;	};
 	Vector4_t<T> operator-(const T& n) const{	return Vector4_t<T>(*this) -= n;	};
 	Vector4_t<T> operator*(const Vector4_t<T>& _v) const{	return Vector4_t<T>(*this) *= _v;	};
@@ -222,6 +232,11 @@ struct Vector4_t
 	Vector4_t<T> Normalized() const{	return Vector4_t<T>(*this).Normalize();	};
 
 	void Display();
+
+	static T const Dot(const Vector4_t<T>& _v1, const Vector4_t<T>& _v2){	return _v1.Dot(_v2);	}
+	static T const SquaredDistance(const Vector4_t<T>& _v1, const Vector4_t<T>& _v2){	return (_v1 - _v2).SquaredLength();	}
+	static T const Distance(const Vector4_t<T>& _v1, const Vector4_t<T>& _v2){	return (_v1 - _v2).Length();	}
+	static Vector4_t<T> const Middle(const Vector4_t<T>& _v1, const Vector4_t<T>& _v2){	return (_v1 + _v2) / T(2);	}
 };
 
 template<typename T>

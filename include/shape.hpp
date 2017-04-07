@@ -12,6 +12,9 @@ struct RaycastHit_t;
 template<typename T>
 class Shape_t{
 	public:
+		virtual RaycastHit_t<T> operator()(const Raycast_t<T>& ray){	RaycastHit_t<T> hit;	(*this)(ray, hit);	return hit;	};
+
+		virtual bool Contains(const Vector3_t<T>& point) = 0;
 		virtual void Translate(const Vector3_t<T>& translation) = 0;
 		virtual void Resize(const Vector3_t<T>& size) = 0;
 		virtual T Distance(const Vector3_t<T>& point) const = 0;
@@ -25,12 +28,22 @@ class Plane_t{
 		Vector3_t<T> origin;
 		Vector3_t<T> normal;
 	public:
+		Plane_t(const Plane_t<T>& p) = default;
+		Plane_t(const Vector3_t<T>& _origin, const Vector3_t<T> & _normal) : origin(_origin), normal(_normal){}
+
+		// RaycastHit_t<T> operator()(const Raycast_t<T>& ray) {	return Shape_t<T>::operator()(ray);	};
+
+		bool Contains(const Vector3_t<T>& point);
 		void Translate(const Vector3_t<T>& translation);
 		void Resize(const Vector3_t<T>& size);
 		T Distance(const Vector3_t<T>& point) const;
 		void Bounds(Vector3_t<T>& min, Vector3_t<T>& max);
 		bool operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit);
 };
+
+typedef Plane_t<double> Plane;
+typedef Plane_t<float> Planef;
+typedef Plane_t<int> Planei;
 
 template<typename T>
 class Sphere_t : public Shape_t<T>
@@ -42,13 +55,19 @@ class Sphere_t : public Shape_t<T>
 		Sphere_t(const Sphere_t<T>& s) = default;
 		Sphere_t(const Vector3_t<T>& _center, const T & _radius) : center(_center), radius(_radius){}
 
+		RaycastHit_t<T> operator()(const Raycast_t<T>& ray) {	return Shape_t<T>::operator()(ray);	};
+
+		bool Contains(const Vector3_t<T>& point);
 		void Translate(const Vector3_t<T>& translation);
 		void Resize(const Vector3_t<T>& size);
 		T Distance(const Vector3_t<T>& point) const;
 		void Bounds(Vector3_t<T>& min, Vector3_t<T>& max);
 		bool operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit);
-	
 };
+
+typedef Sphere_t<double> Sphere;
+typedef Sphere_t<float> Spheref;
+typedef Sphere_t<int> Spherei;
 
 template<typename T>
 class Triangle_t : public Shape_t<T>
@@ -62,6 +81,9 @@ class Triangle_t : public Shape_t<T>
 			const Vector3_t<T>& _b = Vector3_t<T>(),
 			const Vector3_t<T>& _c = Vector3_t<T>()) : a(_a), b(_b), c(_c){}
 
+		RaycastHit_t<T> operator()(const Raycast_t<T>& ray) {	return Shape_t<T>::operator()(ray);	};
+
+		bool Contains(const Vector3_t<T>& point);
 		void Translate(const Vector3_t<T>& translation);
 		void Resize(const Vector3_t<T>& size);
 		T Distance(const Vector3_t<T>& point) const;
@@ -80,8 +102,9 @@ class Box_t : public Shape_t<T>
 			const Vector3_t<T>& _min = Vector3_t<T>(),
 			const Vector3_t<T>& _max = Vector3_t<T>()) : min(_min), max(_max){}
 
-		bool Contains(const Vector3_t<T>& point);
+		RaycastHit_t<T> operator()(const Raycast_t<T>& ray) {	return Shape_t<T>::operator()(ray);	};
 
+		bool Contains(const Vector3_t<T>& point);
 		void Translate(const Vector3_t<T>& translation);
 		void Resize(const Vector3_t<T>& size);
 		T Distance(const Vector3_t<T>& point) const;
@@ -97,6 +120,9 @@ class MeshShape : public Shape_t<double>
 		MeshShape(const MeshShape& ms) = default;
 		MeshShape(Mesh& _m) : m(&_m){} 
 
+		RaycastHit_t<double> operator()(const Raycast_t<double>& ray) {	return Shape_t<double>::operator()(ray);	};
+
+		bool Contains(const Vector3_t<double>& point);
 		void Translate(const Vector3_t<double>& translation);
 		void Resize(const Vector3_t<double>& size);
 		double Distance(const Vector3_t<double>& point) const;
