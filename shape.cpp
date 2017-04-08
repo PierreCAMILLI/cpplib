@@ -39,7 +39,7 @@ bool Plane_t<T>::operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit){
 
 	T t = Vector3_t<T>::Dot(origin - ray.origin, normal) / dotProduct;
 
-	if( t < T(0) ){
+	if( t < T(0) || (ray.maxDistance >= T(0) && t > ray.maxDistance)){
 		return false;
 	}else{
 		hit.hit = true;
