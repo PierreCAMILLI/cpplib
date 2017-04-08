@@ -33,6 +33,8 @@ class Plane_t{
 
 		// RaycastHit_t<T> operator()(const Raycast_t<T>& ray) {	return Shape_t<T>::operator()(ray);	};
 
+		Vector3_t<T> Projection(const Vector3_t<T>& point);
+
 		bool Contains(const Vector3_t<T>& point);
 		void Translate(const Vector3_t<T>& translation);
 		void Resize(const Vector3_t<T>& size);
@@ -81,6 +83,8 @@ class Triangle_t : public Shape_t<T>
 			const Vector3_t<T>& _b = Vector3_t<T>(),
 			const Vector3_t<T>& _c = Vector3_t<T>()) : a(_a), b(_b), c(_c){}
 
+		Vector3_t<T> Normal() const{	return Vector3_t<T>::Cross(a - b, a - c);	}
+
 		RaycastHit_t<T> operator()(const Raycast_t<T>& ray) {	return Shape_t<T>::operator()(ray);	};
 
 		bool Contains(const Vector3_t<T>& point);
@@ -90,6 +94,10 @@ class Triangle_t : public Shape_t<T>
 		void Bounds(Vector3_t<T>& min, Vector3_t<T>& max);
 		bool operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit);	
 };
+
+typedef Triangle_t<double> Triangle;
+typedef Triangle_t<float> Trianglef;
+typedef Triangle_t<int> Trianglei;
 
 template<typename T>
 class Box_t : public Shape_t<T>

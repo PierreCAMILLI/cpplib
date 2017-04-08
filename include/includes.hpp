@@ -14,6 +14,7 @@
 #include <random>
 #include <vector>
 
+#include "timer.hpp"
 #include "multitypescontainer.hpp"
 #include "perlin.hpp"
 #include "vector.hpp"

@@ -87,8 +87,6 @@ void Line_t<T>::Bounds(Vector2_t<T>& min, Vector2_t<T>& max){
 template<typename T>
 bool Line_t<T>::operator()(const Raycast2D_t<T>& ray, RaycastHit2D_t<T>& hit){
 	// Gestion de la distance avec la touchée précédente
-	T maxDistance = ray.maxDistance;
-	if(hit)	maxDistance = Vector2_t<T>::Distance(hit.origin, hit.point);	// Pas très opti...
 
 	Vector2_t<T> 	A(Vector()),
 					B(ray.direction);
@@ -99,9 +97,9 @@ bool Line_t<T>::operator()(const Raycast2D_t<T>& ray, RaycastHit2D_t<T>& hit){
 	// Test de respect de distance
 	bool distanceCheck = true;
 	Vector2_t<T> point(a.x + (t * A.x), a.y + (t * A.y));
-	if(maxDistance >= T(0)){
+	if(ray.maxDistance >= T(0)){
 		T distance = (point - ray.origin).SquaredLength();
-		distanceCheck = (distance <= (maxDistance * maxDistance));
+		distanceCheck = (distance <= (ray.maxDistance * ray.maxDistance));
 	}
 
 	// On checke si le rayon touche la ligne
@@ -142,6 +140,7 @@ void Circle_t<T>::Translate(const Vector2_t<T>& translation){
 
 template<typename T>
 void Circle_t<T>::Resize(const Vector2_t<T>& size){
+	center *= size;
 	radius *= size.Length();
 }
 
@@ -160,13 +159,8 @@ void Circle_t<T>::Bounds(Vector2_t<T>& min, Vector2_t<T>& max){
 template<typename T>
 bool Circle_t<T>::operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit){
 	// Code piqué et adapté de gKit
-	
-	// Gestion de la distance avec la touchée précédente
-	T maxDistance = ray.maxDistance;
-	if(hit)	maxDistance = Vector2_t<T>::Distance(hit.origin, hit.point);	// Pas très opti...
-
 	// Optimisation
-	if(maxDistance >= T(0) && Vector2_t<T>::SquaredDistance(ray.origin, center) > (maxDistance * maxDistance)){
+	if(ray.maxDistance >= T(0) && Vector2_t<T>::SquaredDistance(ray.origin, center) > (ray.maxDistance * ray.maxDistance)){
 		return false;
 	}
 
@@ -191,7 +185,7 @@ bool Circle_t<T>::operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit)
 		}
 
 		// Check de distance
-		if(maxDistance >= T(0) && dist * ray.direction.Length() > maxDistance){
+		if(ray.maxDistance >= T(0) && dist * ray.direction.Length() > ray.maxDistance){
 			return false;
 		}else{
 			hit.hit = true;
@@ -298,17 +292,37 @@ void Triangle2D_t<T>::Bounds(Vector2_t<T>& min, Vector2_t<T>& max){
 
 template<typename T>
 bool Triangle2D_t<T>::operator()(const Raycast2D_t<T> & ray, RaycastHit2D_t<T>& hit){
-	if(Contains(ray.origin)){
-		hit.hit = true;
-		hit.origin = ray.origin;
-		hit.point = ray.origin;
-		hit.normal = Vector2_t<T>(T(0),T(0));
-		return hit.hit;
+	// A optimiser...
+	RaycastHit2D_t<T> hit1, hit2, hit3;
+	Line_t<T>(a,b)(ray, hit1),
+	Line_t<T>(b,c)(ray, hit2),
+	Line_t<T>(c,a)(ray, hit3);
+
+	// Gestion de l'intersection avec le segment le plus proche
+	T	dist_temp_,
+		dist_temp = std::numeric_limits<T>::max();
+	// Gestion de la distance au premier segment
+	if(hit1){
+		hit = hit1;
+		dist_temp = Vector2_t<T>::SquaredDistance(hit.origin, hit.point);
 	}
-	bool 	check1 = Line_t<T>(a,b)(ray, hit),
-			check2 = Line_t<T>(b,c)(ray, hit),
-			check3 = Line_t<T>(c,a)(ray, hit);
-	return check1 || check2 || check3;
+	// Gestion de la distance au second segment
+	if(hit2){
+		dist_temp_ = Vector2_t<T>::SquaredDistance(hit2.origin, hit2.point);
+		if(dist_temp_ < dist_temp){
+			hit = hit2;
+			dist_temp = dist_temp_;
+		}
+	}
+	// Gestion de la distance au troisième segment
+	if(hit3){
+		dist_temp_ = Vector2_t<T>::SquaredDistance(hit3.origin, hit3.point);
+		if(dist_temp_ < dist_temp){
+			hit = hit3;
+		}
+	}
+
+	return hit1 || hit2 || hit3;
 }
 
 template class Triangle2D_t<double>;

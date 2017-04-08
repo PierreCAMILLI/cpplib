@@ -1,6 +1,11 @@
 #include "include/shape.hpp"
 
 template<typename T>
+Vector3_t<T> Projection(const Vector3_t<T>& point){
+	return Vector3_t<T>();
+}
+
+template<typename T>
 bool Plane_t<T>::Contains(const Vector3_t<T>& point){
 	return false;
 }
@@ -28,7 +33,11 @@ void Plane_t<T>::Bounds(Vector3_t<T>& min, Vector3_t<T>& max){
 template<typename T>
 bool Plane_t<T>::operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit){
 	// Code piqué et adapté de gKit
-	T t = Vector3_t<T>::Dot(ray.origin - origin, normal) / Vector3_t<T>::Dot(ray.direction, normal);
+	T dotProduct = Vector3_t<T>::Dot(ray.direction, normal);
+	if(dotProduct == T(0))
+		return false;
+
+	T t = Vector3_t<T>::Dot(origin - ray.origin, normal) / dotProduct;
 
 	if( t < T(0) ){
 		return false;
@@ -36,7 +45,7 @@ bool Plane_t<T>::operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit){
 		hit.hit = true;
 		hit.origin = ray.origin;
 		hit.normal = normal;
-		hit.point = ray.direction * t;
+		hit.point = ray.origin + (ray.direction * t);
 		return true;
 	}
 
@@ -65,7 +74,7 @@ void Sphere_t<T>::Resize(const Vector3_t<T>& size){
 
 template<typename T>
 T Sphere_t<T>::Distance(const Vector3_t<T>& point) const{
-	return Vector3_t<T>::Distance(point, center) - radius;
+	return abs(Vector3_t<T>::Distance(point, center) - radius);
 }
 
 template<typename T>
@@ -96,7 +105,7 @@ bool Sphere_t<T>::operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit){
 				dist = (t1 < t2 ? t1 : t2);
 		}
 
-		if(ray.maxDistance >= T(0) && dist * ray.direction.Length() > ray.maxDistance){
+		if(ray.maxDistance >= T(0) && dist > ray.maxDistance){
 			return false;
 		}else{
 			hit.hit = true;
@@ -113,3 +122,92 @@ bool Sphere_t<T>::operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit){
 template class Sphere_t<double>;
 template class Sphere_t<float>;
 template class Sphere_t<int>;
+
+template<typename T>
+bool Triangle_t<T>::Contains(const Vector3_t<T>& point){
+	return false;
+}
+
+template<typename T>
+void Triangle_t<T>::Translate(const Vector3_t<T>& translation){
+	a += translation;
+	b += translation;
+	c += translation;
+}
+
+template<typename T>
+void Triangle_t<T>::Resize(const Vector3_t<T>& size){
+	a *= size;
+	b *= size;
+	c *= size;
+}
+
+template<typename T>
+T Triangle_t<T>::Distance(const Vector3_t<T>& point) const{
+	return T();
+}
+
+template<typename T>
+void Triangle_t<T>::Bounds(Vector3_t<T>& min, Vector3_t<T>& max){
+	min(std::min(std::min(a.x, b.x), c.x), std::min(std::min(a.y, b.y), c.y));
+	max(std::max(std::max(a.x, b.x), c.x), std::max(std::max(a.y, b.y), c.y));
+}
+
+template<typename T>
+bool Triangle_t<T>::operator()(const Raycast_t<T> & ray, RaycastHit_t<T>& hit){
+	/* From gKit */
+	// Find vectors for two edges sharing a
+	Vector3_t<T> 	edge1 = (a - b),
+					edge2 = (a - c),
+
+	// Begin calculating determinant - also used to calculate U parameter
+					pvec = Vector3_t<T>::Cross(ray.direction,edge2);
+
+	// If determinant is near zero, ray lies in plane of triangle
+	T det = Vector3_t<T>::Dot(edge1,pvec);
+
+	/*
+	constexpr double EPSILON = 0.000001;
+	if(det > -EPSILON && det < EPSILON)
+		return false;
+	*/
+	if(det == T(0))
+		return false;
+	T inv_det = T(1)/det;
+
+	// Calculate distance from triangle.p1 to ray origin
+	Vector3_t<T> tvec = a - ray.origin;
+
+	// Calculate U parameter and test bounds
+	T u = Vector3_t<T>::Dot(tvec,pvec) * inv_det;
+	if(u < T(0) || u > T(1))
+		return false;
+
+	// Prepare to test V parameter
+	Vector3_t<T> qvec = Vector3_t<T>::Cross(tvec,edge1);
+
+	// Calculate V parameter and test bounds
+	T v = Vector3_t<T>::Dot(ray.direction,qvec) * inv_det;
+	if(v < T(0) || u+v > T(1))
+		return false;
+
+	// Calculate T, ray intersects triangle
+	T dist = - Vector3_t<T>::Dot(edge2,qvec) * inv_det;
+	if(ray.maxDistance >= T(0) && dist > ray.maxDistance){
+		return false;
+	}else{
+		hit.hit = true;
+		hit.origin = ray.origin;
+		hit.point = ray.origin + (ray.direction * dist);
+		// hit.normal = Normal();
+		hit.normal = Vector3_t<T>::Cross(edge1,edge2);
+
+		return hit.hit;
+	}
+
+	return false;
+}
+
+template class Triangle_t<double>;
+template class Triangle_t<float>;
+template class Triangle_t<int>;

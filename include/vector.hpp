@@ -120,6 +120,7 @@ struct Vector3_t
 	void Display();
 
 	static T const Dot(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return _v1.Dot(_v2);	}
+	static Vector3_t<T> const Cross(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return _v1.Cross(_v2);	}
 	static T const SquaredDistance(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return (_v1 - _v2).SquaredLength();	}
 	static T const Distance(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return (_v1 - _v2).Length();	}
 	static Vector3_t<T> const Middle(const Vector3_t<T>& _v1, const Vector3_t<T>& _v2){	return (_v1 + _v2) / T(2);	}

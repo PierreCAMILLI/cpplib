@@ -1,79 +1,61 @@
 #include "include/includes.hpp"
+#include <ctime>
 
 int main(int argc, char** argv){
-	/*
-	Line l(Vector2(-3.0, 3.0), Vector2(3.0, -3.0));
-	// l1.Translate(Vector2(0.0, -3.0));
-	Circle c(Vector2(0.0, 1.0), 2.0);
-	Raycast2D ray(Vector2(-3.0, 0.0), Vector2(2.0, 0.0));
-	RaycastHit2D hit = c(ray);
-	if(hit){
-		std::cout << "Origine : " << hit.origin << std::endl;
-		std::cout << "Intersection : " << hit.point << std::endl;
-		std::cout << "Normale : " << hit.normal.Normalized() << std::endl;
-		std::cout << "Distance : " << hit.Distance() << std::endl;
+	
+	// const double PI = 3.14159265359;
+	// 2D
+	Triangle2D t(Vector2(0.0, 0.0), Vector2(5.0, 0.0), Vector2(2.5, 5 * (sqrt(3)/2)));
+	Timer::Reset();
+	const Vector2	origin = Vector2(0.0, 1.0),
+					center = t.Incenter();
+	Raycast2D ray2(origin, center);
+	RaycastHit2D hit2 = t(ray2);
+	if(hit2){
+		std::cout << hit2 << std::endl;
 	}else{
 		std::cout << "Non touché" << std::endl;
 	}
+	std::cout << "Temps d'exécution : " << Timer::Duration() << std::endl;
 
-	std::cout << l.IsInside(Vector2(-3.0, 3.0)) << std::endl;
-	std::cout << l.IsInside(Vector2(0.0, 1.0)) << std::endl;
-	*/
-	/*
-	Triangulation t;
-	t.ImportFile("tri/line0.tri");
-	std::cout << "Nombre de vertices : " << t.GetVertices().size() << std::endl;
-	std::cout << "Nombre de faces : " << t.GetFaces().size() << std::endl;
-	t.ToMesh().ExportOBJ("mesh/triangulation.obj");
-	*/
-	/*
-	Actor actor(1, "Mon acteur");
-	actor.AddComponent(Renderer(5));
-	std::cout << actor.GetComponent<Renderer>()->a << std::endl;
-	*/
+	std::cout << "///////////////////" << std::endl;
 
-	// std::cout << Color::Red() * 0.5f << std::endl;
-
-	/*
-	Image im(500,500);
-	const Color	color = Color::Red(),
-				backgroundColor = Color::Black();
-	const unsigned int	dCenter = (im.GetWidth() / 2),
-						maxDistance = dCenter * dCenter;
-
-	for(unsigned int j = 0; j < im.GetHeight(); ++j){
-		for(unsigned int i = 0; i < im.GetWidth(); ++i){
-			unsigned int 	deltaX = i - dCenter,
-							deltaY = j - dCenter,
-							distance = (deltaX * deltaX) + (deltaY * deltaY);
-			Color c = Color::Lerp(color, backgroundColor, (float)distance/maxDistance);
-			im(i,j) = c;
-		}
-	}
-	im.Export("ImageTest.bmp");
-	*/
-	/*
-	Image im("megaman.bmp");
-	for(unsigned int j = 0; j < 50; ++j){
-		for(unsigned int i = 0; i < 100; ++i){
-			im(i,j) = Color::Red();
-		}
-	}
-	std::cout << "Export" << std::endl;
-	im.Export("megamantest.bmp");
-	*/
-
-	// Plane plane(Vector3(0,0,0), Vector3(0,1,0));
+	// 3D
+	Timer::Reset();
 	Sphere s(Vector3(0,-1,-1), 2);
-
 	Raycast ray(Vector3(-1,3,-1), Vector3(0,-1,0));
 	RaycastHit hit;
 	s(ray, hit);
-
 	if(hit){
-		std::cout << "Origine : " << hit.origin << std::endl;
-		std::cout << "Intersection : " << hit.point << std::endl;
-		std::cout << "Normale : " << hit.normal.Normalized() << std::endl;
-		std::cout << "Distance : " << hit.Distance() << std::endl;
+		std::cout << hit << std::endl;
+	}else{
+		std::cout << "Non touché" << std::endl;
 	}
+	std::cout << "Temps d'exécution : " << Timer::Duration() << std::endl;
+
+	std::cout << "///////////////////" << std::endl;	
+
+	Timer::Reset();
+	Triangle t3(Vector3(0.0,0.0,0.0), Vector3(5.0, 5.0, 5.0), Vector3(10.0,0.0,0.0));
+	Raycast ray3(Vector3(5.0,2.0,-1.0), Vector3(0.0,0.0,1.0));
+	RaycastHit hit3;
+	if(t3(ray3, hit3)){
+		std::cout << hit3 << std::endl;
+	}else{
+		std::cout << "Non touché" << std::endl;
+	}
+	std::cout << "Temps d'exécution : " << Timer::Duration() << std::endl;
+
+	std::cout << "///////////////////" << std::endl;	
+
+	Timer::Reset();
+	Plane plane(Vector3(0.0,0.0,0.0), Vector3(0.0, 1.0, 0.0));
+	Raycast ray4(Vector3(0.0,-1.0,0.0), Vector3(0.0,1.0,0.0));
+	RaycastHit hit4;
+	if(plane(ray4, hit4)){
+		std::cout << hit4 << std::endl;
+	}else{
+		std::cout << "Non touché" << std::endl;
+	}
+	std::cout << "Temps d'exécution : " << Timer::Duration() << std::endl;
 }
